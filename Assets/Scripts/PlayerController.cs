@@ -26,6 +26,7 @@ namespace UrbanNinja
         private void OnEnable()
         {
             _inputActions.Enable();
+            GameManager.SetPlayerController(this);
         }
         private void OnDisable()
         {
