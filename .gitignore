@@ -106,3 +106,6 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 /.vscode
 *.slnx
+
+# Visual studio config
+.vsconfig
