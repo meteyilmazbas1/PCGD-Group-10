@@ -1,9 +1,9 @@
 # 🥷 Urban Ninja
 
-**Urban Ninja** is a stylized retro-themed **2D beat ’em up game** inspired by classic NES titles such as *River City Ransom* and *Double Dragon*.  
-The game challenges players to survive **endless waves of enemies** in an urban environment and compete for the **highest score**.
+Urban Ninja is a stylized retro-themed 2D beat ’em up game inspired by classic NES titles such as *River City Ransom* and *Double Dragon*.  
+The game challenges players to survive endless waves of enemies in an urban environment and compete for the highest score.
 
-This project is developed as part of a **Game Development course**.
+This project is developed as part of a Game Development course.
 
 ---
 
@@ -11,7 +11,7 @@ This project is developed as part of a **Game Development course**.
 
 The goal of *Urban Ninja* is simple but challenging:
 
-> **Survive as long as possible against increasingly difficult enemy waves and achieve the highest score.**
+> Survive as long as possible against increasingly difficult enemy waves and achieve the highest score.
 
 The game focuses on fast-paced combat, simple controls, and classic arcade-style gameplay.
 
@@ -36,20 +36,20 @@ The player can:
 - Kick
 - Jump
 - Move freely (up, down, left, right)
-- Use weapons (e.g. **baseball bat**, if time allows)
+- Use weapons (e.g. baseball bat, if time allows)
 
 ---
 
 ## 🎨 Visual & Audio Style
 
 ### Graphics
-- Retro **pixel art** style
+- Retro pixel art style
 - 2D side-scrolling beat ’em up
 - Urban city environments
 - Parallax cityscape backgrounds for depth
 
 ### Audio
-- Lo-fi **8-bit style sound effects**
+- Lo-fi 8-bit style sound effects
 - Retro-inspired background music
 - Punching, kicking, jumping, and impact sounds
 
@@ -76,21 +76,6 @@ The player can:
 
 ---
 
-## 🛠️ Development Status
-
-- Core combat mechanics implemented
-- Retro visual direction established
-- Enemy wave system in progress
-- Audio and polish ongoing
-
----
-
-## 📂 Repository
-
-GitHub repository:  
-👉 https://github.com/meteyilmazbas1/PCGD-Group-10
-
----
 
 ## 🚀 Future Improvements (If Time Allows)
 
@@ -99,9 +84,3 @@ GitHub repository:
 - Improved animations
 - Difficulty balancing
 - Sound and visual polish
-
----
-
-## 📜 License
-
-This project is developed for educational purposes as part of a university course.
