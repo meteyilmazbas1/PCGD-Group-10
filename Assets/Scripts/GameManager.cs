@@ -1,9 +1,10 @@
-using UnityEngine;
-using UrbanNinja;
 
-public static class GameManager
+namespace UrbanNinja
 {
-    private static PlayerController s_player;
-    public static PlayerController GetPlayerController() { return s_player; }
-    public static void SetPlayerController(PlayerController player) { s_player = player; }
+    public static class GameManager
+    {
+        private static PlayerController s_player;
+        public static PlayerController GetPlayerController() { return s_player; }
+        public static void SetPlayerController(PlayerController player) { s_player = player; }
+    }
 }

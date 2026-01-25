@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackPower: 1
   _attackDistance: 2.5
-  _movementSpeed: 5
-  _name: Yellow ninja
+  _movementSpeedX: 2.5
+  _movementSpeedY: 1
+  _name: Thug
+  _hitPoints: 10
+  _scoreYield: 15

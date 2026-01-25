@@ -36,6 +36,15 @@ namespace UrbanNinja
         {
             Move();
         }
+        /// <summary>
+        /// Get position relative to jump level.
+        /// </summary>
+        /// <returns>Vector2 position based on the jump level.</returns>
+        public Vector2 GetPositionRelativeToJump()
+        {
+            if (isGrounded) return transform.position;
+            return new Vector2(transform.position.x, _jumpLevel);
+        }
 
         /// <summary>
         /// Get the required component references.
