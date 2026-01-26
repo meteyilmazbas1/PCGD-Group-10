@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: data_enemy_easy
   m_EditorClassIdentifier: 
   _attackPower: 1
-  _attackDistance: 2.5
-  _movementSpeedX: 2.5
-  _movementSpeedY: 1
+  _attackDistance: 0.5
+  _movementSpeedX: 1
+  _movementSpeedY: 0.5
   _name: Thug
   _hitPoints: 10
   _scoreYield: 15
