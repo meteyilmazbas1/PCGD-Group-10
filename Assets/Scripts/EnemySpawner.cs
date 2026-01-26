@@ -72,7 +72,7 @@ namespace UrbanNinja
 
             Vector2 playerPosition = GameManager.GetPlayerController().transform.position;
             int sign = Random.Range(-10, 11) < 0 ? -1 : 1;
-            return new Vector2(playerPosition.x + sign * 20f, 0f);
+            return new Vector2(playerPosition.x + sign * 10f, 0f);
         }
     }
 }

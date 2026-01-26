@@ -13,10 +13,15 @@ namespace UrbanNinja
         private float _movementRandomizer;
         private float _yThreshold = 0.05f;
         private float _xThreshold = 0.2f;
+        private AnimationHandler _animationHandler;
+        private float _attackCooldown  = 0f;
+        private float _baseCooldown = 1f;
         void Start()
         {
             _playerController = GameManager.GetPlayerController();
             _movementRandomizer = Random.Range(0.8f, 1.2f);
+            _animationHandler = GetComponent<AnimationHandler>();
+            _baseCooldown *= _movementRandomizer;
         }
 
         void FixedUpdate()
@@ -50,7 +55,14 @@ namespace UrbanNinja
                 _movementDirection += positionDifference.x < 0 ? Vector2.left : Vector2.right;
                 _canAttack = false;
             }
-
+            if(_movementDirection != Vector2.zero)
+            {
+                _animationHandler.Request("walk");
+            }
+            else
+            {
+                _animationHandler.Request("idle");
+            }
             transform.Translate(_movementDirection.normalized * _enemyData.MovementSpeedX * _movementRandomizer * Time.deltaTime);
         }
         /// <summary>
@@ -75,6 +87,15 @@ namespace UrbanNinja
         private void Attack()
         {
             if (!_canAttack) return;
+            if (_attackCooldown > 0)
+            {
+                _attackCooldown-= Time.deltaTime;
+                return;
+            }
+            _attackCooldown = _baseCooldown;
+            int select = Random.Range(0,2);
+            string attack = select == 1 ? "punch" : "kick";
+            _animationHandler.Request(attack);
             Debug.Log($"Enemy {_enemyData.Name} attacking player");
         }
     }

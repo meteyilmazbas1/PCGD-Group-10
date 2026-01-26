@@ -7,6 +7,8 @@ namespace UrbanNinja
     {
         [SerializeField] private float _moveSpeed = 0.1f;
         [SerializeField] private float _jumpImpulse = 0.1f;
+        [SerializeField] private GameObject _fist;
+        [SerializeField] private GameObject _foot;
 
         private GameplayInput _inputActions;
         private Rigidbody2D _rigidbody2D;
@@ -16,11 +18,13 @@ namespace UrbanNinja
         private Collider2D _collider;
         private bool isGrounded;
         private float _jumpLevel;
+        private AnimationHandler _animationHandler;
 
         private void Awake()
         {
             GetReferences();
             InitInput();
+            DisableFistAndFoot();
         }
 
         private void OnEnable()
@@ -53,6 +57,7 @@ namespace UrbanNinja
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _collider = GetComponent<Collider2D>();
+            _animationHandler = GetComponent<AnimationHandler>();
         }
 
         /// <summary>
@@ -96,6 +101,7 @@ namespace UrbanNinja
         private void Jump()
         {
             if (!CanJump()) return;
+            _animationHandler.Request("jump");
             isGrounded = false;
             _collider.enabled = false;
             _jumpLevel = _rigidbody2D.position.y;
@@ -108,7 +114,7 @@ namespace UrbanNinja
         /// </summary>
         private void Move()
         {
-
+           
             if (!isGrounded && _rigidbody2D.position.y < _jumpLevel)
             {
                 _collider.enabled = true;
@@ -120,17 +126,33 @@ namespace UrbanNinja
             {
                 _rigidbody2D.linearVelocity = new Vector2(_moveVector.x * _moveSpeed * Time.deltaTime, _rigidbody2D.linearVelocity.y);
             }
-            else
+            else if(!_movementBlocked)
             {
                 _rigidbody2D.linearVelocity = _moveVector * _moveSpeed * Time.deltaTime;
+                if (isGrounded && _rigidbody2D.linearVelocity.magnitude > 0)
+                {
+                    _animationHandler.Request("walk");
+                }
+                else
+                {
+                    _animationHandler.Request("idle");
+                }
             }
+            else
+            {
+                _rigidbody2D.linearVelocity = Vector2.zero;
+            }
+ 
         }
+        private bool _movementBlocked;
         /// <summary>
         /// Callback for Punch input.
         /// </summary>
         private void Punch()
         {
             Debug.Log("PUNCH!");
+            _movementBlocked = true;
+            _animationHandler.Request("punch", onAnimationEnd: UnBlockMovement);
         }
         /// <summary>
         /// Callback for Kick input.
@@ -138,6 +160,8 @@ namespace UrbanNinja
         private void Kick()
         {
             Debug.Log("KICK!");
+            _movementBlocked = true;
+            _animationHandler.Request("kick", onAnimationEnd: UnBlockMovement);
         }
         /// <summary>
         /// Check if the player can jump
@@ -146,7 +170,25 @@ namespace UrbanNinja
         /// <returns>True if player can jump.</returns>
         private bool CanJump()
         {
-            return isGrounded;
+            return isGrounded && !_movementBlocked;
+        }
+        private void UnBlockMovement()
+        {
+            _movementBlocked = false;
+            DisableFistAndFoot();
+        }
+        private void DisableFistAndFoot()
+        {
+            _fist.SetActive(false);
+            _foot.SetActive(false);
+        }
+        public void ActivateFist()
+        {
+            _fist.SetActive(true);
+        }
+        public void ActivateFoot()
+        {
+            _foot.SetActive(true);
         }
     }
 
