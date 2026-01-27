@@ -16,12 +16,25 @@ namespace UrbanNinja
         private AnimationHandler _animationHandler;
         private float _attackCooldown  = 0f;
         private float _baseCooldown = 1f;
+        private Health _enemyHealth;
         void Start()
         {
-            _playerController = GameManager.GetPlayerController();
+            GetReferences();
+            Randomize();
+            _enemyHealth.SetMaxHealth(_enemyData.HitPoints);
+        }
+
+        private void Randomize()
+        {
             _movementRandomizer = Random.Range(0.8f, 1.2f);
-            _animationHandler = GetComponent<AnimationHandler>();
             _baseCooldown *= _movementRandomizer;
+        }
+
+        private void GetReferences()
+        {
+            _playerController = GameManager.GetPlayerController();
+            _animationHandler = GetComponent<AnimationHandler>();
+            _enemyHealth = GetComponent<Health>();
         }
 
         void FixedUpdate()
@@ -96,7 +109,7 @@ namespace UrbanNinja
             int select = Random.Range(0,2);
             string attack = select == 1 ? "punch" : "kick";
             _animationHandler.Request(attack);
-            Debug.Log($"Enemy {_enemyData.Name} attacking player");
+            //Debug.Log($"Enemy {_enemyData.Name} attacking player");
         }
     }
 }

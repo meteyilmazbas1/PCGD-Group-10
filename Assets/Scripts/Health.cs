@@ -4,10 +4,33 @@ namespace UrbanNinja
 {
     public class Health : MonoBehaviour
     {
-        [SerializeField] private int _maxHealth = 3;
+        private int _maxHealth = 3;
         private int _currentHealth;
 
-        private void Awake()
+        /// <summary>
+        /// Set max health here, because it might vary
+        /// between spawns when the asset is reused by
+        /// the object pool.
+        /// </summary>
+        /// <param name="hitPoints">Hitpoints from data.</param>
+        public void SetMaxHealth(int hitPoints)
+        {
+            _maxHealth = hitPoints;
+            ResetHealth();
+        }
+
+        /// <summary>
+        /// Reset health here, because enemies etc.
+        /// are being spawned from an object pool.
+        /// They are not destroyed, but disabled and
+        /// enabled repeatedly.
+        /// </summary>
+        private void OnEnable()
+        {
+            ResetHealth();
+        }
+
+        private void ResetHealth()
         {
             _currentHealth = _maxHealth;
         }
@@ -15,7 +38,7 @@ namespace UrbanNinja
         public void TakeDamage(int amount)
         {
             _currentHealth -= amount;
-            Debug.Log($"{gameObject.name} took {amount} damage. HP now: {_currentHealth}");
+            //Debug.Log($"{gameObject.name} took {amount} damage. HP now: {_currentHealth}");
 
             if (_currentHealth <= 0)
             {
@@ -25,8 +48,8 @@ namespace UrbanNinja
 
         private void Die()
         {
-            Debug.Log($"{gameObject.name} died");
-            Destroy(gameObject);
+            //Debug.Log($"{gameObject.name} died");
+            gameObject.SetActive( false );
         }
     }
 }
