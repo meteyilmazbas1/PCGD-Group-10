@@ -150,7 +150,8 @@ namespace UrbanNinja
         /// </summary>
         private void Punch()
         {
-            Debug.Log("PUNCH!");
+            if (_movementBlocked) return;
+            //Debug.Log("PUNCH!");
             _movementBlocked = true;
             _animationHandler.Request("punch", onAnimationEnd: UnBlockMovement);
         }
@@ -159,7 +160,8 @@ namespace UrbanNinja
         /// </summary>
         private void Kick()
         {
-            Debug.Log("KICK!");
+            if (_movementBlocked) return;
+            //Debug.Log("KICK!");
             _movementBlocked = true;
             _animationHandler.Request("kick", onAnimationEnd: UnBlockMovement);
         }
@@ -172,24 +174,45 @@ namespace UrbanNinja
         {
             return isGrounded && !_movementBlocked;
         }
+        /// <summary>
+        /// Movement is blocked during attacks.
+        /// Unblocking also enables dealing damage again
+        /// so the foot and fist must be disabled here
+        /// for accidental damage.
+        /// </summary>
         private void UnBlockMovement()
         {
-            _movementBlocked = false;
             DisableFistAndFoot();
+            _movementBlocked = false;
         }
+        /// <summary>
+        /// Disabling fist and foot also
+        /// disables damage dealing.
+        /// </summary>
         private void DisableFistAndFoot()
         {
             _fist.SetActive(false);
             _foot.SetActive(false);
         }
+
+        /// <summary>
+        /// This is method to be called from an
+        /// animation event to time dealing damage
+        /// correctly.
+        /// </summary>
         public void ActivateFist()
         {
-            Debug.Log("Fist ACTIVE");
+            //Debug.Log("Fist ACTIVE");
             _fist.SetActive(true);
         }
+        /// <summary>
+        /// This is method to be called from an
+        /// animation event to time dealing damage
+        /// correctly.
+        /// </summary>
         public void ActivateFoot()
         {
-            Debug.Log("FOOT ACTIVE");
+            //Debug.Log("FOOT ACTIVE");
             _foot.SetActive(true);
         }
     }
