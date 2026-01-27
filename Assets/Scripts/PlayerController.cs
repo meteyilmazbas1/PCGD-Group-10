@@ -184,10 +184,12 @@ namespace UrbanNinja
         }
         public void ActivateFist()
         {
+            Debug.Log("Fist ACTIVE");
             _fist.SetActive(true);
         }
         public void ActivateFoot()
         {
+            Debug.Log("FOOT ACTIVE");
             _foot.SetActive(true);
         }
     }
