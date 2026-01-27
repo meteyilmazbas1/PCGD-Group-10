@@ -19,7 +19,7 @@ namespace UrbanNinja
         /// accordingly.
         /// </summary>
         private void SortRelativeToYPosition()
-        {
+        {   
             if (c_layeredObjects.Count > 1)
             {
                 c_layeredObjects.Sort(Compare);
