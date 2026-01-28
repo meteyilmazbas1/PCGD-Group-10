@@ -17,5 +17,5 @@ MonoBehaviour:
   _movementSpeedX: 1
   _movementSpeedY: 0.5
   _name: Thug
-  _hitPoints: 10
+  _hitPoints: 1
   _scoreYield: 15

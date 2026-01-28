@@ -17,13 +17,17 @@ namespace UrbanNinja
         private float _attackCooldown  = 0f;
         private float _baseCooldown = 1f;
         private Health _enemyHealth;
-        void Start()
+        private void Awake()
         {
             GetReferences();
             Randomize();
             _enemyHealth.SetMaxHealth(_enemyData.HitPoints);
+            _enemyHealth.onDeath += OnDeath;
         }
-
+        private void OnDeath()
+        {
+            GameManager.AddScore(_enemyData.ScoreYield);
+        }
         private void Randomize()
         {
             _movementRandomizer = Random.Range(0.8f, 1.2f);
