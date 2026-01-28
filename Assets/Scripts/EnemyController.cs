@@ -22,10 +22,11 @@ namespace UrbanNinja
             GetReferences();
             Randomize();
             _enemyHealth.SetMaxHealth(_enemyData.HitPoints);
+            _enemyHealth.onDeath += OnDeath;
         }
-        private void OnDisable()
+        private void OnDeath()
         {
-            //TODO: Send score to high score
+            GameManager.AddScore(_enemyData.ScoreYield);
         }
         private void Randomize()
         {

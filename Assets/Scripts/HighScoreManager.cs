@@ -51,7 +51,7 @@ namespace UrbanNinja
                 foreach (HighScoreEntry entry in _highScores)
                 {
                     sb.Append(entry.Name);
-                    sb.Append("\t\t\t\t\t");
+                    sb.Append("\t");
                     sb.Append(entry.Score);
                     sb.Append("\n");
                 }

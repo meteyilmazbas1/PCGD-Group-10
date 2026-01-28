@@ -32,22 +32,36 @@ namespace UrbanNinja
         private void Init()
         {
             s_highScoreManager = new HighScoreManager();
-            s_highScoreManager.SendScore("James1", 100);
-            s_highScoreManager.SendScore("James2", 10000);
-            s_highScoreManager.SendScore("James3", 1000);
-            Debug.Log("HIGH SCORES: ");
-            Debug.Log(s_highScoreManager.GetHighScoreString());
         }
 
-
+        static string currentPlayer;
+        static int currentScore;
+        static int currentRank = -1;
         public static void StartNewGame(string playerName)
         {
-            //TODO
+            currentPlayer = playerName;
+            currentScore = 0;
+            currentRank = -1;
         }
         public static void EndRound()
         {
-            //TODO: Add an entry to highscore
+            currentRank = s_highScoreManager.SendScore(currentPlayer, currentScore);
         }
+        public static string GetCurrentPlayerName()
+        {
+            return currentPlayer;
+        }
+        public static string GetHighScoreText()
+        {
+            return s_highScoreManager.GetHighScoreString();
+        }
+        public static void AddScore(int score)
+        {
+            currentScore += score;
+        }
+        /// <summary>
+        /// TODO: Maybe we need this
+        /// </summary>
         public void SpawnPlayer()
         {
             s_player = Instantiate<PlayerController>(_playerPrefab);

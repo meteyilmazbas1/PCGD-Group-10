@@ -7,6 +7,8 @@ namespace UrbanNinja
     {
         private int _maxHealth = 3;
         private int _currentHealth;
+        public delegate void OnDeath();
+        public event OnDeath onDeath;
 
         /// <summary>
         /// Set max health here, because it might vary
@@ -50,7 +52,9 @@ namespace UrbanNinja
         private void Die()
         {
             //Debug.Log($"{gameObject.name} died");
+            onDeath?.Invoke();
             gameObject.SetActive( false );
+
         }
     }
 }

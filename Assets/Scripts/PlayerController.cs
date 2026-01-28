@@ -107,6 +107,9 @@ namespace UrbanNinja
             _jumpLevel = _rigidbody2D.position.y;
             _rigidbody2D.linearVelocityY = _jumpImpulse;
             _rigidbody2D.gravityScale = 5f;
+
+            //DEBUG DEATH
+            OnPlayerDeath();
         }
         /// <summary>
         /// Handle movement according to the
@@ -214,6 +217,11 @@ namespace UrbanNinja
         {
             //Debug.Log("FOOT ACTIVE");
             _foot.SetActive(true);
+        }
+        private void OnPlayerDeath()
+        {
+            GameManager.EndRound();
+            SceneLoader.LoadHighScoreScene();
         }
     }
 
