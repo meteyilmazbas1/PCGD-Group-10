@@ -26,7 +26,7 @@ public class DamageDealer : MonoBehaviour
             health.TakeDamage(_damage);
             _audioSource.clip = RandomClip();
             _audioSource.Play();
-            //Debug.Log(gameObject.name+" Deals damage to "+(collision.name));
+            Debug.Log(gameObject.name+" Deals damage to "+(collision.name));
         }
     }
     private AudioClip RandomClip()
