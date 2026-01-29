@@ -5,6 +5,9 @@ namespace UrbanNinja
     public class EnemyController : MonoBehaviour
     {
         [SerializeField] private EnemyData _enemyData;
+        [SerializeField] private GameObject _fist;   // ADDED
+        [SerializeField] private GameObject _foot;   // ADDED
+        
         private PlayerController _playerController;
         private bool _canAttack;
         private Vector2 _movementDirection;
@@ -17,17 +20,15 @@ namespace UrbanNinja
         private float _attackCooldown  = 0f;
         private float _baseCooldown = 1f;
         private Health _enemyHealth;
-        private void Awake()
+        
+        void Start()
         {
             GetReferences();
             Randomize();
             _enemyHealth.SetMaxHealth(_enemyData.HitPoints);
-            _enemyHealth.onDeath += OnDeath;
+            DisableFistAndFoot();  // ADDED
         }
-        private void OnDeath()
-        {
-            GameManager.AddScore(_enemyData.ScoreYield);
-        }
+
         private void Randomize()
         {
             _movementRandomizer = Random.Range(0.8f, 1.2f);
@@ -47,11 +48,7 @@ namespace UrbanNinja
             FlipTransform();
             Attack();
         }
-        /// <summary>
-        /// A very basic AI movement. Position is applied with a random offset
-        /// based on _movementRandomizer. Position also is offset from the player
-        /// position such that enemies don't pile up on player.
-        /// </summary>
+        
         private void MoveToPlayer()
         {
             Vector2 positionDifference = _playerController.GetPositionRelativeToJump() - (Vector2)transform.position;
@@ -82,9 +79,7 @@ namespace UrbanNinja
             }
             transform.Translate(_movementDirection.normalized * _enemyData.MovementSpeedX * _movementRandomizer * Time.deltaTime);
         }
-        /// <summary>
-        /// Face movement direction.
-        /// </summary>
+        
         private void FlipTransform()
         {
             if (_movementDirection == Vector2.zero)
@@ -96,24 +91,38 @@ namespace UrbanNinja
             {
                 transform.localScale = _movementDirection.x > 0 ? _right : _left;
             }
-
         }
-        /// <summary>
-        /// Attack player if possible.
-        /// </summary>
+        
         private void Attack()
         {
             if (!_canAttack) return;
             if (_attackCooldown > 0)
             {
-                _attackCooldown-= Time.deltaTime;
+                _attackCooldown -= Time.deltaTime;
                 return;
             }
             _attackCooldown = _baseCooldown;
             int select = Random.Range(0,2);
             string attack = select == 1 ? "punch" : "kick";
-            _animationHandler.Request(attack);
+            _animationHandler.Request(attack, onAnimationEnd: DisableFistAndFoot);  // CHANGED
             //Debug.Log($"Enemy {_enemyData.Name} attacking player");
+        }
+
+        // ADDED: These three methods
+        private void DisableFistAndFoot()
+        {
+            if (_fist != null) _fist.SetActive(false);
+            if (_foot != null) _foot.SetActive(false);
+        }
+
+        public void ActivateFist()
+        {
+            if (_fist != null) _fist.SetActive(true);
+        }
+
+        public void ActivateFoot()
+        {
+            if (_foot != null) _foot.SetActive(true);
         }
     }
 }
