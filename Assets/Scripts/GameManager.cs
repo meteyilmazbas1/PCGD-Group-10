@@ -1,4 +1,7 @@
 
+using NUnit.Framework;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UrbanNinja
@@ -51,9 +54,9 @@ namespace UrbanNinja
         {
             return currentPlayer;
         }
-        public static string GetHighScoreText()
+        public static List<HighScoreManager.HighScoreEntry> GetHighscore()
         {
-            return s_highScoreManager.GetHighScoreString();
+            return s_highScoreManager.GetHighScoresList();
         }
         public static void AddScore(int score)
         {

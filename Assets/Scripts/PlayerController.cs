@@ -29,7 +29,7 @@ namespace UrbanNinja
             DisableFistAndFoot();
 
             _playerHealth.SetMaxHealth(10);  // Player has 20 HP
-            _playerHealth.onDeath += OnPlayerDeath;
+            _playerHealth.OnDeathEvent += OnPlayerDeath;
         }
 
         private void OnEnable()
@@ -44,7 +44,7 @@ namespace UrbanNinja
             // Unsubscribe when disabled to prevent memory leaks
             if (_playerHealth != null)
             {
-                _playerHealth.onDeath -= OnPlayerDeath;
+                _playerHealth.OnDeathEvent -= OnPlayerDeath;
             }
         }
         private void FixedUpdate()
@@ -233,7 +233,7 @@ namespace UrbanNinja
         private void OnPlayerDeath()
         {
             GameManager.EndRound();
-            SceneLoader.LoadHighScoreScene();
+            SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
         }
     }
 

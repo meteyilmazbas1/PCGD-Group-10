@@ -14,7 +14,7 @@ namespace UrbanNinja
     {
 
         [System.Serializable]
-        private class HighScoreEntry
+        public class HighScoreEntry
         {
             public string Name;
             public int Score;
@@ -44,18 +44,6 @@ namespace UrbanNinja
                 if (x.Score == y.Score) return 0;
                 if (x.Score < y.Score) return 1;
                 return 0;
-            }
-            public override string ToString()
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (HighScoreEntry entry in _highScores)
-                {
-                    sb.Append(entry.Name);
-                    sb.Append("\t");
-                    sb.Append(entry.Score);
-                    sb.Append("\n");
-                }
-                return sb.ToString();
             }
         }
         const string HIGHSCORE_DATA_FILENAME = "urban_ninja_scoresheet.nnj";
@@ -108,9 +96,19 @@ namespace UrbanNinja
             SaveToFile();
             return rank;
         }
-        public string GetHighScoreString()
+        /// <summary>
+        /// Get a list of ScoreEntry.Entries are readily
+        /// sorted in descending order by Score.
+        /// </summary>
+        /// <returns>A list of ScoreEntry</returns>
+        public List<HighScoreEntry> GetHighScoresList()
         {
-            return _highScores.ToString();
+            List<HighScoreEntry> highscore = new List<HighScoreEntry>();
+            foreach(HighScoreEntry entry in _highScores.GetHighScores())
+            {
+                highscore.Add(new HighScoreEntry() { Name = entry.Name, Score = entry.Score});
+            }
+            return highscore;
         }
     }
 
