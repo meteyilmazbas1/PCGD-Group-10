@@ -20,11 +20,16 @@ namespace UrbanNinja
         private float _jumpLevel;
         private AnimationHandler _animationHandler;
 
+        private Health _playerHealth;
+
         private void Awake()
         {
             GetReferences();
             InitInput();
             DisableFistAndFoot();
+
+            _playerHealth.SetMaxHealth(10);  // Player has 20 HP
+            _playerHealth.onDeath += OnPlayerDeath;
         }
 
         private void OnEnable()
@@ -35,6 +40,12 @@ namespace UrbanNinja
         private void OnDisable()
         {
             _inputActions.Disable();
+
+            // Unsubscribe when disabled to prevent memory leaks
+            if (_playerHealth != null)
+            {
+                _playerHealth.onDeath -= OnPlayerDeath;
+            }
         }
         private void FixedUpdate()
         {
@@ -58,6 +69,7 @@ namespace UrbanNinja
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _collider = GetComponent<Collider2D>();
             _animationHandler = GetComponent<AnimationHandler>();
+            _playerHealth = GetComponent<Health>();
         }
 
         /// <summary>
@@ -109,7 +121,7 @@ namespace UrbanNinja
             _rigidbody2D.gravityScale = 5f;
 
             //DEBUG DEATH
-            OnPlayerDeath();
+            //OnPlayerDeath();
         }
         /// <summary>
         /// Handle movement according to the
