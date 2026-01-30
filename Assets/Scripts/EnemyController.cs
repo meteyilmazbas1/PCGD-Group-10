@@ -28,7 +28,20 @@ namespace UrbanNinja
             _enemyHealth.SetMaxHealth(_enemyData.HitPoints);
             DisableFistAndFoot();  // ADDED
         }
-
+        private void OnEnable()
+        {
+            if(_enemyHealth != null)
+            {
+                _enemyHealth.OnDeathEvent += OnDeath;
+            }
+        }
+        private void OnDisable()
+        {
+            if (_enemyHealth != null)
+            {
+                _enemyHealth.OnDeathEvent -= OnDeath;
+            }
+        }
         private void Randomize()
         {
             _movementRandomizer = Random.Range(0.8f, 1.2f);
@@ -123,6 +136,10 @@ namespace UrbanNinja
         public void ActivateFoot()
         {
             if (_foot != null) _foot.SetActive(true);
+        }
+        private void OnDeath()
+        {
+            GameManager.AddScore(_enemyData.ScoreYield);
         }
     }
 }

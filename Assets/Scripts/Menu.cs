@@ -7,7 +7,6 @@ public class Menu : MonoBehaviour
 {
     [SerializeField] private Button _loadGameSceneButton;
     [SerializeField] private Button _loadMainMenuSceneButton;
-    [SerializeField] private Button _loadNameSelectSceneButton;
     [SerializeField] private Button _restartButton;
     [SerializeField] private TextMeshProUGUI _nameField;
 
@@ -19,11 +18,7 @@ public class Menu : MonoBehaviour
         }
         if (_loadMainMenuSceneButton != null)
         {
-            _loadMainMenuSceneButton.onClick.AddListener(SceneLoader.LoadMainMenuScene);
-        }
-        if (_loadNameSelectSceneButton != null)
-        {
-            _loadNameSelectSceneButton.onClick.AddListener(SceneLoader.LoadNameSelectScene);
+            _loadMainMenuSceneButton.onClick.AddListener(LoadMainMenuScene);
         }
         if (_restartButton != null)
         {
@@ -38,27 +33,27 @@ public class Menu : MonoBehaviour
         }
         if (_loadMainMenuSceneButton != null)
         {
-            _loadMainMenuSceneButton.onClick.RemoveListener(SceneLoader.LoadMainMenuScene);
-        }
-        if (_loadNameSelectSceneButton != null)
-        {
-            _loadNameSelectSceneButton.onClick.RemoveListener(SceneLoader.LoadNameSelectScene);
+            _loadMainMenuSceneButton.onClick.RemoveListener(LoadMainMenuScene);
         }
         if (_restartButton != null)
         {
             _restartButton.onClick.RemoveListener(OnRestartGame);
         }
     }
+    private void LoadMainMenuScene()
+    {
+        SceneNavigationManager.Instance.LoadScene(Scenes.MainMenu);
+    }
     private void OnLoadGameScene()
     {
         string name = _nameField.text;
         GameManager.StartNewGame(name);
-        SceneLoader.LoadGameScene();
+        SceneNavigationManager.Instance.LoadScene(Scenes.GameScene);
     }
     private void OnRestartGame()
     {
         string name = GameManager.GetCurrentPlayerName();
         GameManager.StartNewGame(name);
-        SceneLoader.LoadGameScene();
+        SceneNavigationManager.Instance.LoadScene(Scenes.GameScene);
     }
 }

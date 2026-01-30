@@ -1,6 +1,7 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UrbanNinja;
 
 public class SceneNavigationManager : MonoBehaviour
 {
@@ -96,6 +97,10 @@ public class SceneNavigationManager : MonoBehaviour
     public void LoadScene(Scenes scene)
     {
         SceneManager.LoadScene((int)scene);
+        if(scene == Scenes.GameScene)
+        {
+            GameManager.StartNewGame(name);
+        }
     }
 }
 
