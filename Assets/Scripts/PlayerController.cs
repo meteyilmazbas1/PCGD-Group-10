@@ -235,6 +235,10 @@ namespace UrbanNinja
             GameManager.EndRound();
             SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
         }
+        public Health GetPlayerHealth()
+        {
+            return _playerHealth;
+        }
     }
 
 }

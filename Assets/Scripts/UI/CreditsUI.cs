@@ -1,16 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CreditsUI : MonoBehaviour
+namespace UrbanNinja
 {
-    [SerializeField] Button backButton;
-
-    void Awake()
+    public class CreditsUI : MonoBehaviour
     {
-        backButton.onClick.AddListener(() =>
+        [SerializeField] Button backButton;
+
+        void Awake()
         {
-            gameObject.SetActive(false);
-            SoundManager.Instance.PlayButtonClick();
-        });
+            backButton.onClick.AddListener(() =>
+            {
+                gameObject.SetActive(false);
+                SoundManager.Instance.PlayButtonClick();
+            });
+        }
     }
+
 }

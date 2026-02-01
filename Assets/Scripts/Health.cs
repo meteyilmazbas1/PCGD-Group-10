@@ -1,4 +1,4 @@
-using System;
+
 using UnityEngine;
 
 namespace UrbanNinja
@@ -7,8 +7,12 @@ namespace UrbanNinja
     {
         private int _maxHealth = 3;
         private int _currentHealth;
+
+        public int MaxHealth => _maxHealth;
         public delegate void OnDeath();
         public event OnDeath OnDeathEvent;
+        public delegate void OnHealthChanged(int currentHealth);
+        public event OnHealthChanged OnHealthChangedEvent;
 
         /// <summary>
         /// Set max health here, because it might vary
@@ -42,11 +46,16 @@ namespace UrbanNinja
         {
             _currentHealth -= amount;
             //Debug.Log($"{gameObject.name} took {amount} damage. HP now: {_currentHealth}");
-
+            OnHealthChangedEvent?.Invoke(_currentHealth);
             if (_currentHealth <= 0)
             {
                 Die();
             }
+        }
+        public void TakeHealing(int amount)
+        {
+            _currentHealth += amount;
+            OnHealthChangedEvent?.Invoke(_currentHealth);
         }
 
         private void Die()
