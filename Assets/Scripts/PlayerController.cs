@@ -28,20 +28,48 @@ namespace UrbanNinja
             InitInput();
             DisableFistAndFoot();
 
-            _playerHealth.SetMaxHealth(20);  // Player has 20 HP
+            if (_playerHealth != null)
+            {
+            _playerHealth.SetMaxHealth(10);  // Player has 20 HP
             _playerHealth.OnDeathEvent += OnPlayerDeath;
+            }
         }
 
         private void OnEnable()
         {
+            if (_inputActions == null)
+            {
+                InitInput();
+            }
+            if (_inputActions != null)
+        {
             _inputActions.Enable();
+            }
+            
+            if (_playerHealth == null)
+            {
+                GetReferences();
+            }
+            
             GameManager.SetPlayerController(this);
         }
         private void OnDisable()
         {
+            // Safely disable input actions
+            if (_inputActions != null)
+            {
+                try
+        {
             _inputActions.Disable();
+                }
+                catch
+                {
+                    // Input system may be destroyed already
+                }
+            }
 
             // Unsubscribe when disabled to prevent memory leaks
+            // Note: -= operator is safe even if OnDeathEvent is null
             if (_playerHealth != null)
             {
                 _playerHealth.OnDeathEvent -= OnPlayerDeath;
@@ -233,11 +261,7 @@ namespace UrbanNinja
         private void OnPlayerDeath()
         {
             GameManager.EndRound();
-            SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
-        }
-        public Health GetPlayerHealth()
-        {
-            return _playerHealth;
+            SceneLoader.LoadHighScoreScene();
         }
     }
 
