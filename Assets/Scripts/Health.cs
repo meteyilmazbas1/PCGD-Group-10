@@ -57,6 +57,16 @@ namespace UrbanNinja
 
         /// <summary>
         /// Restore health. Used by pickups etc.
+        /// </summary>
+        /// <param name="amount">Amount of health to restore.</param>
+        public void Heal(int amount)
+        {
+            _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
+            OnHealthChangedEvent?.Invoke(_currentHealth);
+        }
+
+        /// <summary>
+        /// Restore health. Used by pickups etc.
         /// Clamps health to max value.
         /// </summary>
         /// <param name="amount">Amount of health to restore.</param>
@@ -65,15 +75,6 @@ namespace UrbanNinja
             if (amount <= 0 || _currentHealth <= 0) return;
             _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
             OnHealthChangedEvent?.Invoke(_currentHealth);
-        }
-
-        /// <summary>
-        /// Alias for TakeHealing for compatibility with HealthPickup.
-        /// </summary>
-        /// <param name="amount">Amount of health to restore.</param>
-        public void Heal(int amount)
-        {
-            TakeHealing(amount);
         }
 
         private void Die()
