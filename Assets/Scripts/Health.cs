@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 namespace UrbanNinja
@@ -9,8 +8,11 @@ namespace UrbanNinja
         private int _currentHealth;
 
         public int MaxHealth => _maxHealth;
+        public int CurrentHealth => _currentHealth;
+        
         public delegate void OnDeath();
         public event OnDeath OnDeathEvent;
+        
         public delegate void OnHealthChanged(int currentHealth);
         public event OnHealthChanged OnHealthChangedEvent;
 
@@ -52,18 +54,33 @@ namespace UrbanNinja
                 Die();
             }
         }
+
+        /// <summary>
+        /// Restore health. Used by pickups etc.
+        /// Clamps health to max value.
+        /// </summary>
+        /// <param name="amount">Amount of health to restore.</param>
         public void TakeHealing(int amount)
         {
-            _currentHealth += amount;
+            if (amount <= 0 || _currentHealth <= 0) return;
+            _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
             OnHealthChangedEvent?.Invoke(_currentHealth);
+        }
+
+        /// <summary>
+        /// Alias for TakeHealing for compatibility with HealthPickup.
+        /// </summary>
+        /// <param name="amount">Amount of health to restore.</param>
+        public void Heal(int amount)
+        {
+            TakeHealing(amount);
         }
 
         private void Die()
         {
             //Debug.Log($"{gameObject.name} died");
             OnDeathEvent?.Invoke();
-            gameObject.SetActive( false );
-
+            gameObject.SetActive(false);
         }
     }
 }
