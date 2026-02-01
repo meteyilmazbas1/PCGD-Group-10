@@ -1,16 +1,31 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class GameUI : MonoBehaviour
+namespace UrbanNinja
 {
-
-    void Awake()
+    public class GameUI : MonoBehaviour
     {
-    }
+        [SerializeField] TextMeshProUGUI _playerName;
+        [SerializeField] TextMeshProUGUI _playerScore;
 
-    private void ButtonAction()
-    {
-        print("Button click");
-        SoundManager.Instance.PlayButtonClick();
+        private void OnEnable()
+        {
+            GameManager.OnScoreChanged += OnScoreUpdate;
+        }
+        private void OnDisable()
+        {
+            GameManager.OnScoreChanged -= OnScoreUpdate;
+        }
+        private void Start()
+        {
+            string name = GameManager.GetCurrentPlayerName();
+            Debug.Log("PLAYER NAME: "+name);
+            _playerName.text = name;
+            _playerScore.text = "0";
+        }
+        private void OnScoreUpdate(int score)
+        {
+            _playerScore.text = score.ToString();
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace UrbanNinja
         private static GameManager _instance;
         private static PlayerController s_player;
         private static HighScoreManager s_highScoreManager;
+        public delegate void ScoreChanged(int score);
+        public static ScoreChanged OnScoreChanged;
         public static PlayerController GetPlayerController() { return s_player; }
         public static void SetPlayerController(PlayerController player) { s_player = player; }
 
@@ -61,6 +63,7 @@ namespace UrbanNinja
         public static void AddScore(int score)
         {
             currentScore += score;
+            OnScoreChanged?.Invoke(currentScore);
         }
         /// <summary>
         /// TODO: Maybe we need this

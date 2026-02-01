@@ -9,17 +9,23 @@ public class DamageDealer : MonoBehaviour
     [SerializeField] private int _damage = 1;
     [SerializeField] private List<AudioClip> _hitClips;
     private AudioSource _audioSource;
+    private GameObject _owner;
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
         _audioSource.loop = false;
     }
+    public void SetOwner(GameObject owner)
+    {
+        _owner = owner;
+    }
+    public void SetDamage(int damage)
+    {
+        _damage = damage;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.LogWarning("TRIGGER");
-        if (collision.gameObject.layer == LayerMask.GetMask("Player")) return;
-        
-        
+        if (collision.gameObject == _owner) return; 
         Health health = collision.GetComponent<Health>();
         if (health != null)
         {

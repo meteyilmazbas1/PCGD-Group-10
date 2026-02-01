@@ -97,10 +97,6 @@ public class SceneNavigationManager : MonoBehaviour
     public void LoadScene(Scenes scene)
     {
         SceneManager.LoadScene((int)scene);
-        if(scene == Scenes.GameScene)
-        {
-            GameManager.StartNewGame(name);
-        }
     }
 }
 

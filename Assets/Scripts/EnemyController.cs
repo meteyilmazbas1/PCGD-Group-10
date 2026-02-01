@@ -5,8 +5,8 @@ namespace UrbanNinja
     public class EnemyController : MonoBehaviour
     {
         [SerializeField] private EnemyData _enemyData;
-        [SerializeField] private GameObject _fist;   // ADDED
-        [SerializeField] private GameObject _foot;   // ADDED
+        [SerializeField] private DamageDealer _fist;   // ADDED
+        [SerializeField] private DamageDealer _foot;   // ADDED
         
         private PlayerController _playerController;
         private bool _canAttack;
@@ -20,27 +20,44 @@ namespace UrbanNinja
         private float _attackCooldown  = 0f;
         private float _baseCooldown = 1f;
         private Health _enemyHealth;
-        
-        void Start()
+        private EnemyTier _tier;
+        private int _maxHealth;
+        private float _XmovementSpeed;
+        private int _attackPower;
+
+        private void Awake()
         {
+            _tier = new EnemyTier();
+            _fist.SetOwner(gameObject);
+            _foot.SetOwner(gameObject);
             GetReferences();
             Randomize();
-            _enemyHealth.SetMaxHealth(_enemyData.HitPoints);
             DisableFistAndFoot();  // ADDED
+            SetStats();
+        }
+
+        private void SetStats()
+        {
+            _maxHealth = Mathf.RoundToInt(_enemyData.HitPoints * _tier.GetMultiplier(EnemyTier.MultiplierType.Health));
+            _enemyHealth.SetMaxHealth(_maxHealth);
+            _XmovementSpeed = _enemyData.MovementSpeedX * _tier.GetMultiplier(EnemyTier.MultiplierType.Speed);
+            _attackPower = Mathf.RoundToInt(_enemyData.AttackPower * _tier.GetMultiplier(EnemyTier.MultiplierType.Attack));
+            _fist.SetDamage(_attackPower);
+            _foot.SetDamage(_attackPower);
         }
         private void OnEnable()
         {
-            if(_enemyHealth != null)
+            if(_enemyHealth == null)
             {
-                _enemyHealth.OnDeathEvent += OnDeath;
+                GetReferences();
             }
+            _enemyHealth.OnDeathEvent += OnDeath;
+            //Debug.Log($"Enemy spawn tier: {_tier.TierLevel}");
         }
         private void OnDisable()
         {
-            if (_enemyHealth != null)
-            {
-                _enemyHealth.OnDeathEvent -= OnDeath;
-            }
+            _tier.IncreaseTier();
+            _enemyHealth.OnDeathEvent -= OnDeath;
         }
         private void Randomize()
         {
@@ -90,7 +107,7 @@ namespace UrbanNinja
             {
                 _animationHandler.Request("idle");
             }
-            transform.Translate(_movementDirection.normalized * _enemyData.MovementSpeedX * _movementRandomizer * Time.deltaTime);
+            transform.Translate(_movementDirection.normalized * _XmovementSpeed * _movementRandomizer * Time.deltaTime);
         }
         
         private void FlipTransform()
@@ -124,22 +141,26 @@ namespace UrbanNinja
         // ADDED: These three methods
         private void DisableFistAndFoot()
         {
-            if (_fist != null) _fist.SetActive(false);
-            if (_foot != null) _foot.SetActive(false);
+            if (_fist != null) _fist.gameObject.SetActive(false);
+            if (_foot != null) _foot.gameObject.SetActive(false);
         }
 
         public void ActivateFist()
         {
-            if (_fist != null) _fist.SetActive(true);
+            if (_fist != null) _fist.gameObject.SetActive(true);
         }
 
         public void ActivateFoot()
         {
-            if (_foot != null) _foot.SetActive(true);
+            if (_foot != null) _foot.gameObject.SetActive(true);
         }
         private void OnDeath()
         {
             GameManager.AddScore(_enemyData.ScoreYield);
+        }
+        public EnemyTier GetTier()
+        {
+            return new EnemyTier(_tier.TierLevel);
         }
     }
 }
