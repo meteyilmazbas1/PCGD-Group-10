@@ -1,6 +1,4 @@
 
-using NUnit.Framework;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +14,11 @@ namespace UrbanNinja
         public delegate void ScoreChanged(int score);
         public static ScoreChanged OnScoreChanged;
         public static PlayerController GetPlayerController() { return s_player; }
-        public static void SetPlayerController(PlayerController player) { s_player = player; }
+        public static void SetPlayerController(PlayerController player) 
+        {
+            //Debug.Log("SET PLAYER");
+            s_player = player; 
+        }
 
         private void Awake()
         {

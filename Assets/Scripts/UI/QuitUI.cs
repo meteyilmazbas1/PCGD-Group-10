@@ -5,33 +5,37 @@ using UnityEngine.UI;
 using UnityEditor;
 #endif
 
-public class QuitUI : MonoBehaviour
+namespace UrbanNinja
 {
-    [SerializeField] Button yesButton;
-    [SerializeField] Button noButton;
-
-    void Awake()
+    public class QuitUI : MonoBehaviour
     {
-        yesButton.onClick.AddListener(YesButtonAction);
-        noButton.onClick.AddListener(NoButtonAction);
-    }
+        [SerializeField] Button yesButton;
+        [SerializeField] Button noButton;
 
-    void YesButtonAction()
-    {
-        SoundManager.Instance.PlayButtonClick();
-#if UNITY_EDITOR
-        if (EditorApplication.isPlaying)
+        void Awake()
         {
-            EditorApplication.isPlaying = false;
+            yesButton.onClick.AddListener(YesButtonAction);
+            noButton.onClick.AddListener(NoButtonAction);
         }
+
+        void YesButtonAction()
+        {
+            SoundManager.Instance.PlayButtonClick();
+#if UNITY_EDITOR
+            if (EditorApplication.isPlaying)
+            {
+                EditorApplication.isPlaying = false;
+            }
 #else
         Application.Quit();
 #endif
+        }
+
+        void NoButtonAction()
+        {
+            SoundManager.Instance.PlayButtonClick();
+            gameObject.SetActive(false);
+        }
     }
 
-    void NoButtonAction()
-    {
-        SoundManager.Instance.PlayButtonClick();
-        gameObject.SetActive(false);
-    }
 }

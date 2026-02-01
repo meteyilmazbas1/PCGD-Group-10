@@ -19,7 +19,7 @@ namespace UrbanNinja
         private void Start()
         {
             string name = GameManager.GetCurrentPlayerName();
-            Debug.Log("PLAYER NAME: "+name);
+            //Debug.Log("PLAYER NAME: "+name);
             _playerName.text = name;
             _playerScore.text = "0";
         }
