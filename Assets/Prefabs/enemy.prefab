@@ -283,8 +283,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: cf63373c3e128794dbe345e221cb1dbd, type: 2}
-  _fist: {fileID: 621246685785850135}
-  _foot: {fileID: 7702005264685024827}
+  _fist: {fileID: 3799778501580514914}
+  _foot: {fileID: 6641311625290621336}
 --- !u!114 &8765094644986834106
 MonoBehaviour:
   m_ObjectHideFlags: 0
