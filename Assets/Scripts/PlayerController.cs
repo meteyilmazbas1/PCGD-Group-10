@@ -90,6 +90,16 @@ namespace UrbanNinja
         }
 
         /// <summary>
+        /// Get the player's Health component.
+        /// Used by UI elements like SegmentedHealthBar.
+        /// </summary>
+        /// <returns>The Health component attached to the player.</returns>
+        public Health GetPlayerHealth()
+        {
+            return _playerHealth;
+        }
+
+        /// <summary>
         /// Get the required component references.
         /// </summary>
         private void GetReferences()
