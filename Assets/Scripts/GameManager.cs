@@ -67,12 +67,23 @@ namespace UrbanNinja
             currentScore += score;
             OnScoreChanged?.Invoke(currentScore);
         }
-        /// <summary>
-        /// TODO: Maybe we need this
-        /// </summary>
+       
         public void SpawnPlayer()
         {
+            if (s_player != null)
+            {
+                Debug.LogWarning("GameManager: Player already exists. Not spawning new player.");
+                return;
+            }
+            
+            if (_playerPrefab == null)
+            {
+                Debug.LogError("GameManager: _playerPrefab is not assigned! Cannot spawn player.");
+                return;
+            }
+            
             s_player = Instantiate<PlayerController>(_playerPrefab);
+            Debug.Log("GameManager: Player spawned successfully.");
         }
     }
 }
