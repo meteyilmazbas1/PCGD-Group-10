@@ -39,7 +39,7 @@ namespace UrbanNinja
         {
             for (int i = 0; i < _segments.Count; i++)
             {
-                bool active = i <= health;
+                bool active = i < health;
                 _segments[i].SetActive(active);
             }
         }
