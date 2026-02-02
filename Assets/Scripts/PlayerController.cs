@@ -271,7 +271,7 @@ namespace UrbanNinja
         private void OnPlayerDeath()
         {
             GameManager.EndRound();
-            SceneLoader.LoadHighScoreScene();
+            SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
         }
     }
 
