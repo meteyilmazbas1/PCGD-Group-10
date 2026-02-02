@@ -26,7 +26,7 @@ namespace UrbanNinja
             var health = collision.GetComponent<Health>();
             if (health == null) return;
 
-            health.Heal(_healAmount);
+            health.TakeHealing(_healAmount);
             gameObject.SetActive(false);
         }
     }
