@@ -55,6 +55,7 @@ namespace UrbanNinja
         public void TakeHealing(int amount)
         {
             _currentHealth += amount;
+            _currentHealth = Mathf.Min(_currentHealth, _maxHealth);
             OnHealthChangedEvent?.Invoke(_currentHealth);
         }
 

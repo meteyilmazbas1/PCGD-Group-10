@@ -30,9 +30,13 @@ namespace UrbanNinja
             Health health = collision.GetComponent<Health>();
             if (health != null)
             {
+                //Debug.Log($"{gameObject.name} HIT {collision.name} at {Time.time}");
                 health.TakeDamage(_damage);
-                _audioSource.clip = RandomClip();
-                _audioSource.Play();
+                if (_hitClips != null && _hitClips.Count > 0)
+                {
+                    _audioSource.clip = RandomClip();
+                    _audioSource.Play();
+                }
                 //Debug.Log(gameObject.name+" Deals damage to "+(collision.name));
             }
         }
