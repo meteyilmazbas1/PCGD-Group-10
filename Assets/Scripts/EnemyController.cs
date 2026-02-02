@@ -52,6 +52,8 @@ namespace UrbanNinja
                 GetReferences();
             }
             _enemyHealth.OnDeathEvent += OnDeath;
+            DisableFistAndFoot();
+            SetStats();
             //Debug.Log($"Enemy spawn tier: {_tier.TierLevel}");
         }
         private void OnDisable()
@@ -141,18 +143,35 @@ namespace UrbanNinja
         // ADDED: These three methods
         private void DisableFistAndFoot()
         {
-            if (_fist != null) _fist.gameObject.SetActive(false);
-            if (_foot != null) _foot.gameObject.SetActive(false);
+            if (_fist != null)
+            {
+                _fist.gameObject.SetActive(false);
+                //Debug.Log($"Enemy {name} FIST DISABLED at {Time.time}");
+            }
+
+            if (_foot != null)
+            {
+                _foot.gameObject.SetActive(false);
+                //Debug.Log($"Enemy {name} FOOT DISABLED at {Time.time}");
+            }
         }
 
         public void ActivateFist()
         {
-            if (_fist != null) _fist.gameObject.SetActive(true);
+            if (_fist != null && !_fist.gameObject.activeSelf)
+            {
+                _fist.gameObject.SetActive(true);
+                //Debug.Log($"Enemy {name} FIST ACTIVATED at {Time.time}");
+            }
         }
 
         public void ActivateFoot()
         {
-            if (_foot != null) _foot.gameObject.SetActive(true);
+            if (_foot != null && !_foot.gameObject.activeSelf)
+            {
+                _foot.gameObject.SetActive(true);
+                //Debug.Log($"Enemy {name} FOOT ACTIVATED at {Time.time}");
+            }
         }
         private void OnDeath()
         {
@@ -162,5 +181,7 @@ namespace UrbanNinja
         {
             return new EnemyTier(_tier.TierLevel);
         }
+
     }
+
 }
