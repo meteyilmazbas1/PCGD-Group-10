@@ -16,6 +16,7 @@ public class BackGroundParallax : MonoBehaviour
     private Vector2 _sumVector;
     private int pixelPerUnit;
     private int unitWidth;
+
     private void Awake()
     {
         pixelPerUnit = (int)_levelOneParallax[0].sprite.pixelsPerUnit;
@@ -29,32 +30,43 @@ public class BackGroundParallax : MonoBehaviour
         _sumVector += direction;
         direction.y = 0f;
         direction = direction.normalized;
-        
+        Vector2 translateVector = -direction * _levelOneparallaxSpeed * Time.deltaTime;
+        _sumVector -= translateVector;
 
-        foreach (SpriteRenderer sprite in _levelOneParallax)
-        {
-            sprite.transform.Translate(direction * _levelOneparallaxSpeed * Time.deltaTime);
-        }
-        
+        ParallaxMovement(translateVector);
+
         if (_sumVector.x > unitWidth || _sumVector.x < -unitWidth)
         {
             int shift = (int)(_sumVector.x * pixelPerUnit);
-            if (shift < 0)
-            {
-
-                SpriteRenderer sprite = _levelOneParallax[2];
-                sprite.transform.position += Vector3.left * unitWidth * 3;
-                _levelOneParallax.RemoveAt(2);
-                _levelOneParallax.Insert(0, sprite);
-            }
-            else
-            {
-                SpriteRenderer sprite = _levelOneParallax[0];
-                sprite.transform.position += Vector3.right * unitWidth * 3;
-                _levelOneParallax.RemoveAt(0);
-                _levelOneParallax.Add(sprite);
-            }
+            UpdateParallax(shift);
             _sumVector = Vector2.zero;
+        }
+    }
+
+    private void ParallaxMovement(Vector2 translateVector)
+    {
+        foreach (SpriteRenderer sprite in _levelOneParallax)
+        {
+            sprite.transform.Translate(translateVector);
+        }
+    }
+
+    private void UpdateParallax( int shiftDirection)
+    {
+        bool isNegativeShift = shiftDirection < 0;
+        int index = isNegativeShift ? 2 : 0;
+        SpriteRenderer sprite = _levelOneParallax[index];
+        Vector3 directionVector = isNegativeShift ? Vector2.left : Vector2.right;
+        sprite.transform.position += directionVector * unitWidth * 3;
+        int parallaxIndexToRemove = isNegativeShift ? 2 : 0;
+        _levelOneParallax.RemoveAt(parallaxIndexToRemove);
+        if (isNegativeShift) 
+        {
+            _levelOneParallax.Insert(0, sprite);
+        }
+        else
+        {
+            _levelOneParallax.Add(sprite);
         }
     }
 }

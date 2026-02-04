@@ -181,6 +181,7 @@ namespace UrbanNinja
             }
             else if(!_movementBlocked)
             {
+                DisableFistAndFoot();
                 _rigidbody2D.linearVelocity = _moveVector * _moveSpeed * Time.deltaTime;
                 if (isGrounded && _rigidbody2D.linearVelocity.magnitude > 0)
                 {
@@ -203,7 +204,7 @@ namespace UrbanNinja
         /// </summary>
         private void Punch()
         {
-            if (_movementBlocked) return;
+            if (_movementBlocked || !isGrounded) return;
             //Debug.Log("PUNCH!");
             _movementBlocked = true;
             _animationHandler.Request("punch", onAnimationEnd: UnBlockMovement);
@@ -213,7 +214,7 @@ namespace UrbanNinja
         /// </summary>
         private void Kick()
         {
-            if (_movementBlocked) return;
+            if (_movementBlocked || !isGrounded) return;
             //Debug.Log("KICK!");
             _movementBlocked = true;
             _animationHandler.Request("kick", onAnimationEnd: UnBlockMovement);
