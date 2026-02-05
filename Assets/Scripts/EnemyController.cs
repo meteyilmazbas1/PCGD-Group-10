@@ -175,6 +175,7 @@ namespace UrbanNinja
         }
         private void OnDeath()
         {
+            if(Random.Range(0,1f)<0.4f) RandomLootService.RequestLoot(transform.position);
             GameManager.AddScore(_enemyData.ScoreYield);
         }
         public EnemyTier GetTier()
