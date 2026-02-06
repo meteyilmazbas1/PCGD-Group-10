@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6d05c651cf21a46820d3115daa0ff8, type: 3}
+  m_Name: data_loot
+  m_EditorClassIdentifier: 
+  _lootDrop_prefabs:
+  - _prefab: {fileID: 4876820723973012073, guid: d0efaa98913961045a1dc4e05628e3ea, type: 3}
+    _probablityWeight: 100
