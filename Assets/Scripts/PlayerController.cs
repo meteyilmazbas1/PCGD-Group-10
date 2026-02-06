@@ -26,12 +26,31 @@ namespace UrbanNinja
         {
             GetReferences();
             InitInput();
+            InitDamageDealers();
             DisableFistAndFoot();
 
             if (_playerHealth != null)
             {
-            _playerHealth.SetMaxHealth(10);  // Player has 20 HP
-            _playerHealth.OnDeathEvent += OnPlayerDeath;
+                _playerHealth.SetMaxHealth(10);  // Player has 10 HP
+                _playerHealth.OnDeathEvent += OnPlayerDeath;
+            }
+        }
+        
+        /// <summary>
+        /// Initialize damage dealers with owner reference for combo tracking.
+        /// </summary>
+        private void InitDamageDealers()
+        {
+            if (_fist != null)
+            {
+                DamageDealer fistDealer = _fist.GetComponent<DamageDealer>();
+                if (fistDealer != null) fistDealer.SetOwner(gameObject);
+            }
+            
+            if (_foot != null)
+            {
+                DamageDealer footDealer = _foot.GetComponent<DamageDealer>();
+                if (footDealer != null) footDealer.SetOwner(gameObject);
             }
         }
 

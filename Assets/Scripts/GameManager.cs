@@ -62,10 +62,25 @@ namespace UrbanNinja
         {
             return s_highScoreManager.GetHighScoresList();
         }
-        public static void AddScore(int score)
+        public static void AddScore(int baseScore)
         {
-            currentScore += score;
+            // Apply combo multiplier if ComboManager exists
+            float multiplier = 1f;
+            if (ComboManager.Instance != null)
+            {
+                multiplier = ComboManager.Instance.GetMultiplier();
+            }
+            
+            int finalScore = Mathf.RoundToInt(baseScore * multiplier);
+            currentScore += finalScore;
             OnScoreChanged?.Invoke(currentScore);
+            
+            //Debug.Log($"Score: +{finalScore} (base: {baseScore} x {multiplier}) = Total: {currentScore}");
+        }
+        
+        public static int GetCurrentScore()
+        {
+            return currentScore;
         }
        
         public void SpawnPlayer()
