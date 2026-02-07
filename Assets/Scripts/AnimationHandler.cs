@@ -15,7 +15,11 @@ namespace UrbanNinja
         public void Request(string id, OnAnimationTrigger onAnimationEnd = null)
         {
             ResolveAnimation(id);
-            _onAnimationEnd = onAnimationEnd;
+            if(onAnimationEnd != null)
+            {
+                _onAnimationEnd = onAnimationEnd;
+            }
+            
         }
         /// <summary>
         /// Method to be called from an animation event
@@ -24,6 +28,7 @@ namespace UrbanNinja
         public void OnAnimationEnd()
         {
             _onAnimationEnd?.Invoke();
+            _onAnimationEnd = null;
         }
         private void ResolveAnimation(string id)
         {

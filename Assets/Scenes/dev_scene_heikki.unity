@@ -299,6 +299,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: IntroController
       objectReference: {fileID: 0}
+    - target: {fileID: 180999016025072820, guid: 88e1997de3c69f647aa403e2dac1f4bb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7810894607143757918, guid: 88e1997de3c69f647aa403e2dac1f4bb, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -558,6 +562,14 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 7632686286363127463}
+    - target: {fileID: 8847236345968159501, guid: 9c6cbf19ccd5d94469c393aa74afae73, type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847236345968159501, guid: 9c6cbf19ccd5d94469c393aa74afae73, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -742,6 +754,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 803637602218001230, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 803637602218001230, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 803637602218001230, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 803637602218001230, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 803637602218001230, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 803637602218001230, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3863094121905129539, guid: 560eab5b499801049b9c467081099e0d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -822,6 +858,62 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4679149358736758578, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621452012563574101, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621452012563574101, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621452012563574101, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621452012563574101, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621452012563574101, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621452012563574101, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801128524144189097, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801128524144189097, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801128524144189097, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801128524144189097, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801128524144189097, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801128524144189097, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7188709337400478773, guid: 560eab5b499801049b9c467081099e0d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7319431777058175205, guid: 560eab5b499801049b9c467081099e0d, type: 3}
       propertyPath: m_Camera
       value: 
@@ -883,6 +975,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1581260918160810203, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
+      propertyPath: _maxSpawDelay
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1581260918160810203, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
+      propertyPath: _pooledEnemiesCount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1581260918160810203, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
+      propertyPath: _enemyPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1581260918160810203, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
+      propertyPath: '_enemyPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 5004512161742840991, guid: c357b9c39ddfc8443bd09bfdea86ff64, type: 3}
+    - target: {fileID: 1581260918160810203, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
+      propertyPath: '_enemyPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 5004512161742840991, guid: c357b9c39ddfc8443bd09bfdea86ff64, type: 3}
     - target: {fileID: 4166967451513483448, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner
