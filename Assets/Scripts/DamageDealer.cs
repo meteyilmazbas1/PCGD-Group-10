@@ -11,14 +11,19 @@ namespace UrbanNinja
         [SerializeField] private List<AudioClip> _hitClips;
         private AudioSource _audioSource;
         private GameObject _owner;
+        private bool _isPlayerOwned;
+        
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
             _audioSource.loop = false;
         }
+        
         public void SetOwner(GameObject owner)
         {
             _owner = owner;
+            // Check if owner is the player for combo tracking
+            _isPlayerOwned = owner != null && owner.GetComponent<PlayerController>() != null;
         }
         public void SetDamage(int damage)
         {
@@ -32,6 +37,13 @@ namespace UrbanNinja
             {
                 //Debug.Log($"{gameObject.name} HIT {collision.name} at {Time.time}");
                 health.TakeDamage(_damage);
+                
+                // Register hit for combo system (only for player attacks)
+                if (_isPlayerOwned && ComboManager.Instance != null)
+                {
+                    ComboManager.Instance.RegisterHit();
+                }
+                
                 if (_hitClips != null && _hitClips.Count > 0)
                 {
                     //_audioSource.clip = RandomClip();
