@@ -6,7 +6,7 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: placeholder_thug_animationController
+  m_Name: placeholder_thug_controller
   m_Controller: {fileID: 9100000, guid: a3cb661641346ca4f895931a56eabb01, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 58931927613e4cf4c89f9c54d26b4bdf, type: 2}
@@ -19,3 +19,7 @@ AnimatorOverrideController:
     m_OverrideClip: {fileID: 7400000, guid: ee0bab2ce65e6e74e8eafe60e94a2139, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 5aab207c6fe787742a1264b86afab154, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 301c279cff2877449b19e14e28b7e035, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2860733f84f2ac34682cd1b2bf2805be, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4ff7f49eef2849547b32a5d8b9d8cec4, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b987d0c6dcf0f09468acfafb11689602, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4ff7f49eef2849547b32a5d8b9d8cec4, type: 2}
