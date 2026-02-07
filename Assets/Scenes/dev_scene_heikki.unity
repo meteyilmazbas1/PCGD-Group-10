@@ -119,17 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &196098291 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4740246313023906446, guid: 88e1997de3c69f647aa403e2dac1f4bb, type: 3}
-  m_PrefabInstance: {fileID: 1124108406}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &503601777
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,22 +299,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: IntroController
       objectReference: {fileID: 0}
-    - target: {fileID: 180999016025072820, guid: 88e1997de3c69f647aa403e2dac1f4bb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4241561100424916746, guid: 88e1997de3c69f647aa403e2dac1f4bb, type: 3}
-      propertyPath: m_fadeRate
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4241561100424916746, guid: 88e1997de3c69f647aa403e2dac1f4bb, type: 3}
-      propertyPath: m_introImage
-      value: 
-      objectReference: {fileID: 196098291}
-    - target: {fileID: 4241561100424916746, guid: 88e1997de3c69f647aa403e2dac1f4bb, type: 3}
-      propertyPath: m_overlayerImage
-      value: 
-      objectReference: {fileID: 2083286019}
     - target: {fileID: 7810894607143757918, guid: 88e1997de3c69f647aa403e2dac1f4bb, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -472,17 +445,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0efaa98913961045a1dc4e05628e3ea, type: 3}
---- !u!114 &2083286019 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6955410713270321919, guid: 88e1997de3c69f647aa403e2dac1f4bb, type: 3}
-  m_PrefabInstance: {fileID: 1124108406}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &138365937305749206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -534,10 +496,6 @@ PrefabInstance:
     - target: {fileID: 6478339871187564352, guid: e1d81b5b3fe350543b32a6dd2c2f1ea3, type: 3}
       propertyPath: m_Name
       value: City Parallax far
-      objectReference: {fileID: 0}
-    - target: {fileID: 6478339871187564352, guid: e1d81b5b3fe350543b32a6dd2c2f1ea3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -600,14 +558,6 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 7632686286363127463}
-    - target: {fileID: 8847236345968159501, guid: 9c6cbf19ccd5d94469c393aa74afae73, type: 3}
-      propertyPath: m_NormalizedViewPortRect.x
-      value: 0.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 8847236345968159501, guid: 9c6cbf19ccd5d94469c393aa74afae73, type: 3}
-      propertyPath: m_NormalizedViewPortRect.width
-      value: 0.75
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -665,10 +615,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 7288593940659004411, guid: feff3acbfbe8d214cbabe8e8e8781bb7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -685,10 +631,6 @@ PrefabInstance:
     - target: {fileID: 5313775398378928594, guid: 17d94bc6d2b9ffa438feb0d13c995b8d, type: 3}
       propertyPath: m_Name
       value: SkyParallax
-      objectReference: {fileID: 0}
-    - target: {fileID: 5313775398378928594, guid: 17d94bc6d2b9ffa438feb0d13c995b8d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9168876283941791401, guid: 17d94bc6d2b9ffa438feb0d13c995b8d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -746,10 +688,6 @@ PrefabInstance:
     - target: {fileID: 7372122793261958810, guid: 52fb02e64f887434a908b0e09704bffc, type: 3}
       propertyPath: m_Name
       value: City Parallax close
-      objectReference: {fileID: 0}
-    - target: {fileID: 7372122793261958810, guid: 52fb02e64f887434a908b0e09704bffc, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7961739708707899905, guid: 52fb02e64f887434a908b0e09704bffc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -884,14 +822,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4679149358736758578, guid: 560eab5b499801049b9c467081099e0d, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7188709337400478773, guid: 560eab5b499801049b9c467081099e0d, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7319431777058175205, guid: 560eab5b499801049b9c467081099e0d, type: 3}
       propertyPath: m_Camera
       value: 
@@ -899,10 +829,6 @@ PrefabInstance:
     - target: {fileID: 8885331841839269297, guid: 560eab5b499801049b9c467081099e0d, type: 3}
       propertyPath: m_Name
       value: Game UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 8885331841839269297, guid: 560eab5b499801049b9c467081099e0d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -957,25 +883,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1581260918160810203, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
-      propertyPath: _enemyPrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1581260918160810203, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
-      propertyPath: '_enemyPrefabs.Array.data[0]'
-      value: 
-      objectReference: {fileID: 5004512161742840991, guid: c357b9c39ddfc8443bd09bfdea86ff64, type: 3}
-    - target: {fileID: 1581260918160810203, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
-      propertyPath: '_enemyPrefabs.Array.data[1]'
-      value: 
-      objectReference: {fileID: 5004512161742840991, guid: c357b9c39ddfc8443bd09bfdea86ff64, type: 3}
     - target: {fileID: 4166967451513483448, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner
-      objectReference: {fileID: 0}
-    - target: {fileID: 4166967451513483448, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -990,10 +900,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3036045824498534864, guid: 9138d426d0597314289dd6ea153a511f, type: 3}
-      propertyPath: m_ColliderPaths.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6531071938196244667, guid: 9138d426d0597314289dd6ea153a511f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1037,10 +943,6 @@ PrefabInstance:
     - target: {fileID: 8990857733447780560, guid: 9138d426d0597314289dd6ea153a511f, type: 3}
       propertyPath: m_Name
       value: Tilemaps - level 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8990857733447780560, guid: 9138d426d0597314289dd6ea153a511f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1095,22 +997,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4905476915708576259, guid: cb7dfe97f6eb786448ddd291edb56b8f, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7652890333626757429, guid: cb7dfe97f6eb786448ddd291edb56b8f, type: 3}
       propertyPath: m_Name
       value: player
       objectReference: {fileID: 0}
-    - target: {fileID: 7652890333626757429, guid: cb7dfe97f6eb786448ddd291edb56b8f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7719394177107372839, guid: cb7dfe97f6eb786448ddd291edb56b8f, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: 67b5466f236750c4b933744f97555569, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
