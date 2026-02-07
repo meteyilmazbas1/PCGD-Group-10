@@ -79,7 +79,8 @@ namespace UrbanNinja
 
         private void Die()
         {
-            //Debug.Log($"{gameObject.name} died");
+            Debug.Log($"{gameObject.name} died");
+            
             OnDeathEvent?.Invoke();
             gameObject.SetActive(false);
         }

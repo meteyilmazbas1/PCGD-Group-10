@@ -114,7 +114,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -152,7 +152,7 @@ Animator:
   m_GameObject: {fileID: 7652890333626757429}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 6d99ae4be52ca534cb72b578cee461b5, type: 2}
+  m_Controller: {fileID: 22100000, guid: 67b5466f236750c4b933744f97555569, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

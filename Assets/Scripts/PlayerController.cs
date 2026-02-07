@@ -31,7 +31,7 @@ namespace UrbanNinja
 
             if (_playerHealth != null)
             {
-                _playerHealth.SetMaxHealth(10);  // Player has 10 HP
+                _playerHealth.SetMaxHealth(20);  // Player has 20 HP
                 _playerHealth.OnDeathEvent += OnPlayerDeath;
             }
         }

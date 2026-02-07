@@ -46,8 +46,9 @@ namespace UrbanNinja
                 
                 if (_hitClips != null && _hitClips.Count > 0)
                 {
-                    _audioSource.clip = RandomClip();
-                    _audioSource.Play();
+                    //_audioSource.clip = RandomClip();
+                    //_audioSource.Play();
+                    AudioSource.PlayClipAtPoint(RandomClip(), transform.position); //this seems to work better
                 }
                 //Debug.Log(gameObject.name+" Deals damage to "+(collision.name));
             }
