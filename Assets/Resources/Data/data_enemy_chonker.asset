@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea023b5f3ba25664e877bd8e288f5d0e, type: 3}
   m_Name: data_enemy_chonker
   m_EditorClassIdentifier: 
-  _attackPower: 5
+  _attackPower: 2
   _attackDistance: 0.4
   _movementSpeedX: 0.6
   _movementSpeedY: 0.2
