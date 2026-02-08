@@ -34,18 +34,14 @@ namespace UrbanNinja
         {
             if (EventSystem.current.currentSelectedGameObject != null &&
                 EventSystem.current.currentSelectedGameObject.activeInHierarchy) return;
-            Debug.Log("TRRYING TO  JDKOJF ");
             if (EventSystem.current.firstSelectedGameObject == null)
             {
-                Debug.Log("Setting selected this "+gameObject);
                 EventSystem.current.SetSelectedGameObject(gameObject);
             }
             else
             {
-                Debug.Log("Setting selected default " + EventSystem.current.firstSelectedGameObject);
                 EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
             }
-            Debug.Log("IS NUL STILL: "+(EventSystem.current.currentSelectedGameObject==null)+" "+ EventSystem.current.currentSelectedGameObject);
         }
     }
 }

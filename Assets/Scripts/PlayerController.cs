@@ -22,6 +22,8 @@ namespace UrbanNinja
 
         private Health _playerHealth;
 
+        public bool Alive => !_isDead;
+
         private void Awake()
         {
             GetReferences();
@@ -33,6 +35,7 @@ namespace UrbanNinja
             {
                 _playerHealth.SetMaxHealth(20);  // Player has 20 HP
                 _playerHealth.OnDeathEvent += OnPlayerDeath;
+                _playerHealth.OnHealthChangedEvent += OnHealthChanged;
             }
         }
         
@@ -92,6 +95,15 @@ namespace UrbanNinja
             if (_playerHealth != null)
             {
                 _playerHealth.OnDeathEvent -= OnPlayerDeath;
+                _playerHealth.OnHealthChangedEvent -= OnHealthChanged;
+            }
+        }
+        private void OnHealthChanged(int value, bool isDamage = false)
+        {
+            if (_isDead) return;
+            if (isDamage)
+            {
+                _animationHandler.Request("damage");
             }
         }
         private void FixedUpdate()
@@ -186,7 +198,7 @@ namespace UrbanNinja
         /// </summary>
         private void Move()
         {
-           
+            if (_isDead) return;
             if (!isGrounded && _rigidbody2D.position.y < _jumpLevel)
             {
                 _collider.enabled = true;
@@ -288,10 +300,19 @@ namespace UrbanNinja
             //Debug.Log("FOOT ACTIVE");
             _foot.SetActive(true);
         }
+        private bool _isDead = false;
         private void OnPlayerDeath()
         {
-            GameManager.EndRound();
-            SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
+            if (_isDead) return;
+            Debug.Log("Player death");
+            _isDead = true;
+            _animationHandler.Request("death", onAnimationEnd: () =>
+            {
+                Debug.Log("Player death on animation end");
+                GameManager.EndRound();
+                SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
+            });
+
         }
     }
 
