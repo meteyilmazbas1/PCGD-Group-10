@@ -17,11 +17,8 @@ namespace UrbanNinja
         private IEnumerator IntroSequence()
         {
             yield return Fade(0f);
-            Debug.Log("FADE 1 DONE");
             yield return new WaitForSecondsRealtime(5f);
-            Debug.Log("WAIT DONE");
             yield return Fade(1f);
-            Debug.Log("FADE 2 DONE");
             Time.timeScale = 1f;
             gameObject.SetActive(false);
         }
