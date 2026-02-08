@@ -58,6 +58,7 @@ namespace UrbanNinja
         private void MusicToggleAction(bool arg0)
         {
             print("Music Toggled");
+            SoundManager.Instance.ToggleMusic(arg0);
             //GlobalEvents.SendMusicToggle(arg0);
         }
 
