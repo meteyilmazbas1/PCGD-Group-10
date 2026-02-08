@@ -21,7 +21,7 @@ namespace UrbanNinja
             }
             else
             {
-                Debug.LogError($"HealthPickup: No Collider2D found on {gameObject.name}!");
+                //Debug.LogError($"HealthPickup: No Collider2D found on {gameObject.name}!");
             }
         }
 
@@ -38,7 +38,7 @@ namespace UrbanNinja
         {
             if (collision == null)
             {
-                Debug.LogWarning("HealthPickup: Collision is null!");
+                //Debug.LogWarning("HealthPickup: Collision is null!");
                 return;
             }
 
@@ -78,7 +78,7 @@ namespace UrbanNinja
             
             if (health == null)
             {
-                Debug.LogWarning($"HealthPickup: Player found but Health component not found on {collision.gameObject.name}!");
+                //Debug.LogWarning($"HealthPickup: Player found but Health component not found on {collision.gameObject.name}!");
                 return;
             }
 
@@ -87,7 +87,7 @@ namespace UrbanNinja
             health.Heal(_healAmount);
             int newHealth = health.CurrentHealth;
             
-            Debug.Log($"HealthPickup: Player healed! {oldHealth} -> {newHealth} (healed {_healAmount})");
+            //Debug.Log($"HealthPickup: Player healed! {oldHealth} -> {newHealth} (healed {_healAmount})");
             
             // Show UI message
             ShowPickupMessage();

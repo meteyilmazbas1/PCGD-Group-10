@@ -47,11 +47,13 @@ namespace UrbanNinja
         }
         private void OnEnable()
         {
+            UnStun();
             if(_enemyHealth == null)
             {
                 GetReferences();
             }
             _enemyHealth.OnDeathEvent += OnDeath;
+            _enemyHealth.OnHealthChangedEvent += OnHealthChaged;
             DisableFistAndFoot();
             SetStats();
             //Debug.Log($"Enemy spawn tier: {_tier.TierLevel}");
@@ -73,9 +75,21 @@ namespace UrbanNinja
             _animationHandler = GetComponent<AnimationHandler>();
             _enemyHealth = GetComponent<Health>();
         }
-
+        private bool _stunned = false;
+        private void OnHealthChaged(int value, bool isDamage = false)
+        {
+            _stunned = true;
+            DisableFistAndFoot();
+            _animationHandler.Request("damage", onAnimationEnd: UnStun);
+        }
+        private void UnStun()
+        {
+            DisableFistAndFoot();
+            _stunned = false;
+        }
         void FixedUpdate()
         {
+            if (_stunned) return;
             MoveToPlayer();
             FlipTransform();
             Attack();
@@ -83,6 +97,11 @@ namespace UrbanNinja
         
         private void MoveToPlayer()
         {
+            if (!_playerController.Alive)
+            {
+                _animationHandler.Request("idle");
+                _stunned = true;
+            }
             Vector2 positionDifference = _playerController.GetPositionRelativeToJump() - (Vector2)transform.position;
             _canAttack = true;
             _movementDirection = Vector2.zero;
@@ -176,7 +195,8 @@ namespace UrbanNinja
         private void OnDeath()
         {
             if(Random.Range(0,1f)<0.4f) RandomLootService.RequestLoot(transform.position);
-            GameManager.AddScore(_enemyData.ScoreYield);
+            GameManager.AddScore(_enemyData.ScoreYield * _tier.TierLevel);
+            gameObject.SetActive(false);
         }
         public EnemyTier GetTier()
         {

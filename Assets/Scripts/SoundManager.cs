@@ -69,7 +69,7 @@ namespace UrbanNinja
         private int _activeSongIndex = -1;
         private void JukeBox(int next)
         {
-            Debug.Log($"Prev: {_activeSongIndex} Next: {next}");
+            //Debug.Log($"Prev: {_activeSongIndex} Next: {next}");
             if (!IsMusicOn) return;
             if (_activeSongIndex < 0)
             {

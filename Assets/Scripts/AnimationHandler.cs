@@ -60,6 +60,18 @@ namespace UrbanNinja
                     _animator.SetTrigger("kick");
                     //_animator.ResetTrigger("kick");
                     break;
+                case "damage":
+                    _animator.SetBool("walk", false);
+                    _animator.SetBool("idle", false);
+                    _animator.SetTrigger("damage");
+                    //_animator.ResetTrigger("kick");
+                    break;
+                case "death":
+                    _animator.SetBool("walk", false);
+                    _animator.SetBool("idle", false);
+                    _animator.SetTrigger("die");
+                    //_animator.ResetTrigger("kick");
+                    break;
                 default:
                     _animator.SetBool("walk", false);
                     _animator.SetBool("idle", true);
