@@ -48,11 +48,11 @@ namespace UrbanNinja
         public void TakeDamage(int amount)
         {
             _currentHealth -= amount;
-            PlayerController player = GetComponent<PlayerController>();
+            /*PlayerController player = GetComponent<PlayerController>();
             if (player != null && player.HurtSound != null)
             {
                 SoundManager.Instance.PlaySound(player.HurtSound);
-            }
+            }*/
             //Debug.Log($"{gameObject.name} took {amount} damage. HP now: {_currentHealth}");
             OnHealthChangedEvent?.Invoke(_currentHealth, isDamage: true);
             if (_currentHealth <= 0)

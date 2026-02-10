@@ -1,7 +1,9 @@
+using System.Collections;
 using UnityEngine;
 
 namespace UrbanNinja
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyController : MonoBehaviour
     {
         [SerializeField] private EnemyData _enemyData;
@@ -24,7 +26,9 @@ namespace UrbanNinja
         private int _maxHealth;
         private float _XmovementSpeed;
         private int _attackPower;
-
+        private Rigidbody2D _rb;
+        private SpriteRenderer _spriteRenderer;
+        private Blinker _blinker;
         private void Awake()
         {
             _tier = new EnemyTier();
@@ -32,7 +36,7 @@ namespace UrbanNinja
             _foot.SetOwner(gameObject);
             GetReferences();
             Randomize();
-            DisableFistAndFoot();  // ADDED
+            //DisableFistAndFoot();  // ADDED
             SetStats();
         }
 
@@ -54,8 +58,9 @@ namespace UrbanNinja
             }
             _enemyHealth.OnDeathEvent += OnDeath;
             _enemyHealth.OnHealthChangedEvent += OnHealthChaged;
-            DisableFistAndFoot();
+            //DisableFistAndFoot();
             SetStats();
+            _spriteRenderer.color = Color.white;
             //Debug.Log($"Enemy spawn tier: {_tier.TierLevel}");
         }
         private void OnDisable()
@@ -74,17 +79,25 @@ namespace UrbanNinja
             _playerController = GameManager.GetPlayerController();
             _animationHandler = GetComponent<AnimationHandler>();
             _enemyHealth = GetComponent<Health>();
+            _rb = GetComponent<Rigidbody2D>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _blinker = GetComponent<Blinker>();
+            _blinker.SetSpriteRenderer(_spriteRenderer);
+
+            _rb.gravityScale = 0f;
         }
         private bool _stunned = false;
         private void OnHealthChaged(int value, bool isDamage = false)
         {
             _stunned = true;
-            DisableFistAndFoot();
-            _animationHandler.Request("damage", onAnimationEnd: UnStun);
+            //DisableFistAndFoot();
+            if (_enemyHealth.CurrentHealth <= 0) return;
+            _blinker.BlinkDamage();
+            _animationHandler.Request(AnimationType.Damage, onAnimationEnd: UnStun);
         }
         private void UnStun()
         {
-            DisableFistAndFoot();
+            //DisableFistAndFoot();
             _stunned = false;
         }
         void FixedUpdate()
@@ -99,7 +112,7 @@ namespace UrbanNinja
         {
             if (!_playerController.Alive)
             {
-                _animationHandler.Request("idle");
+                _animationHandler.Request(AnimationType.Idle);
                 _stunned = true;
             }
             Vector2 positionDifference = _playerController.GetPositionRelativeToJump() - (Vector2)transform.position;
@@ -122,11 +135,11 @@ namespace UrbanNinja
             }
             if(_movementDirection != Vector2.zero)
             {
-                _animationHandler.Request("walk");
+                _animationHandler.Request(AnimationType.Walk);
             }
             else
             {
-                _animationHandler.Request("idle");
+                _animationHandler.Request(AnimationType.Idle);
             }
             transform.Translate(_movementDirection.normalized * _XmovementSpeed * _movementRandomizer * Time.deltaTime);
         }
@@ -154,8 +167,8 @@ namespace UrbanNinja
             }
             _attackCooldown = _baseCooldown;
             int select = Random.Range(0,2);
-            string attack = select == 1 ? "punch" : "kick";
-            _animationHandler.Request(attack, onAnimationEnd: DisableFistAndFoot);  // CHANGED
+            AnimationType attack = select == 1 ? AnimationType.Punch : AnimationType.Kick;
+            _animationHandler.Request(attack);  // CHANGED
             //Debug.Log($"Enemy {_enemyData.Name} attacking player");
         }
 
@@ -177,32 +190,64 @@ namespace UrbanNinja
 
         public void ActivateFist()
         {
+            _fist.Activate();
+            /*
             if (_fist != null && !_fist.gameObject.activeSelf)
             {
                 _fist.gameObject.SetActive(true);
                 //Debug.Log($"Enemy {name} FIST ACTIVATED at {Time.time}");
-            }
+            }*/
         }
 
         public void ActivateFoot()
         {
+            _foot.Activate();
+            /*
             if (_foot != null && !_foot.gameObject.activeSelf)
             {
                 _foot.gameObject.SetActive(true);
                 //Debug.Log($"Enemy {name} FOOT ACTIVATED at {Time.time}");
-            }
+            }*/
         }
         private void OnDeath()
         {
             if(Random.Range(0,1f)<0.4f) RandomLootService.RequestLoot(transform.position);
             GameManager.AddScore(_enemyData.ScoreYield * _tier.TierLevel);
-            gameObject.SetActive(false);
+            StartCoroutine(KnockBack());
         }
         public EnemyTier GetTier()
         {
             return new EnemyTier(_tier.TierLevel);
         }
 
+        private IEnumerator KnockBack()
+        {
+            float yPos = _rb.position.y;
+            Vector2 force = new Vector2(-transform.localScale.x * 5f, 10f);
+            bool animationDone = false;
+            _animationHandler.Request(AnimationType.Death, onAnimationEnd: () => animationDone = true );
+            _blinker.BlinkDeath();
+            _rb.AddForce(force, ForceMode2D.Impulse);
+            _rb.gravityScale = 5f;
+            bool notBack = true;
+            while (notBack)
+            {
+                yield return new WaitForEndOfFrame();
+                if (_rb.position.y < yPos)
+                {
+                    notBack = false;
+                }
+            }
+            _rb.gravityScale = 0f;
+            _rb.linearVelocity = Vector2.zero;
+            _rb.position = new Vector2(_rb.position.x, yPos);
+            while (!animationDone)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            yield return new WaitForSecondsRealtime(2f);
+            gameObject.SetActive(false);
+        }
     }
 
 }

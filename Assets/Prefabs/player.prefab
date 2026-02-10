@@ -82,8 +82,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 100
   _jumpImpulse: 12
-  _fist: {fileID: 8390373615918529238}
-  _foot: {fileID: 8050024050315092832}
+  _fist: {fileID: 642147925148560807}
+  _foot: {fileID: 8282953844786271838}
   _jumpSound: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
   _hurtSound: {fileID: 8300000, guid: aa48101fd9bd24b82af88afb182a9bf5, type: 3}
 --- !u!61 &4905476915708576259
