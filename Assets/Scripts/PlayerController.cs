@@ -9,6 +9,8 @@ namespace UrbanNinja
         [SerializeField] private float _jumpImpulse = 0.1f;
         [SerializeField] private GameObject _fist;
         [SerializeField] private GameObject _foot;
+        [SerializeField] private AudioClip _jumpSound;
+        [SerializeField] private AudioClip _hurtSound;
 
         private GameplayInput _inputActions;
         private Rigidbody2D _rigidbody2D;
@@ -189,6 +191,10 @@ namespace UrbanNinja
             _rigidbody2D.linearVelocityY = _jumpImpulse;
             _rigidbody2D.gravityScale = 5f;
 
+            if (_jumpSound != null) {
+                SoundManager.Instance.PlaySound(_jumpSound);
+            }
+                
             //DEBUG DEATH
             //OnPlayerDeath();
         }
@@ -314,6 +320,7 @@ namespace UrbanNinja
             });
 
         }
+        public AudioClip HurtSound => _hurtSound;
     }
 
 }
