@@ -17,19 +17,18 @@ The game focuses on fast-paced combat, simple controls, and classic arcade-style
 
 ---
 
-## 🕹️ Gameplay Features
+## Gameplay Features
 
 - Endless waves of enemies
 - Increasing difficulty over time
 - High-score based progression
 - One well-crafted urban level
-- Slowly regenerating player health
 - Health pickup items
 - Game over on death → score is finalized
 
 ---
 
-## 👊 Player Abilities
+## Player Abilities
 
 The player can:
 - Punch
@@ -39,8 +38,6 @@ The player can:
 - Use weapons (e.g., baseball bat, if time allows)
 
 ---
-
-## 🎨 Visual & Audio Style
 
 ### Graphics
 - Retro pixel art style
@@ -81,5 +78,4 @@ The player can:
 
 - Additional weapons
 - More enemy types
-- Improved animations
 - Difficulty balancing
