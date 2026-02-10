@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -16,6 +18,11 @@ namespace UrbanNinja
         {
             yesButton.onClick.AddListener(YesButtonAction);
             noButton.onClick.AddListener(NoButtonAction);
+        }
+
+        void OnEnable()
+        {
+            EventSystem.current.SetSelectedGameObject(noButton.gameObject);
         }
 
         void YesButtonAction()
