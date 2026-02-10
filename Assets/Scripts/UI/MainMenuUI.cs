@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UrbanNinja
@@ -67,7 +68,9 @@ namespace UrbanNinja
 
         private void FixedUpdate()
         {
-            if (optionsUI.gameObject.activeInHierarchy || quitUI.gameObject.activeInHierarchy || creditUI.gameObject.activeInHierarchy)
+            if (optionsUI.gameObject.activeInHierarchy
+            || quitUI.gameObject.activeInHierarchy
+            || creditUI.gameObject.activeInHierarchy)
             {
                 return;
             }
