@@ -61,7 +61,7 @@ The player can:
 
 ---
 
-## 👥 Team – Group 10
+## Team – Group 10
 
 | Name | Responsibilities |
 |----|----|
