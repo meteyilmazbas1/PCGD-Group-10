@@ -1,15 +1,15 @@
-# 🥷 Urban Ninja
+# Urban Ninja
 
-Urban Ninja is a stylized retro-themed 2D beat ’em up game inspired by classic NES titles such as *River City Ransom* and *Double Dragon*.  
+Urban Ninja is a stylized retro-themed 2D beat ’em up game inspired by classic NES titles such as River City Ransom and Double Dragon.  
 The game challenges players to survive endless waves of enemies in an urban environment and compete for the highest score.
 
 This project is developed as part of the Project Course on Game Development.
 
 ---
 
-## 🎮 Game Concept
+## Game Concept
 
-The goal of *Urban Ninja* is simple but challenging:
+The goal of Urban Ninja is simple but challenging:
 
 > Survive as long as possible against increasingly difficult enemy waves and achieve the highest score.
 
@@ -55,10 +55,10 @@ The player can:
 
 ---
 
-## 🧠 Inspirations
+## Inspirations
 
-- *River City Ransom*
-- *Double Dragon*
+- River City Ransom
+- Double Dragon
 - Classic NES-era beat ’em up games
 - 80s–90s urban ninja aesthetics
 
@@ -77,10 +77,9 @@ The player can:
 ---
 
 
-## 🚀 Future Improvements (If Time Allows)
+## Future Improvements
 
 - Additional weapons
 - More enemy types
 - Improved animations
 - Difficulty balancing
-- Sound and visual polish
