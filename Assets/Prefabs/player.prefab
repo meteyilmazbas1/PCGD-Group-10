@@ -85,7 +85,7 @@ MonoBehaviour:
   _fist: {fileID: 642147925148560807}
   _foot: {fileID: 8282953844786271838}
   _jumpSound: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
-  _hurtSound: {fileID: 8300000, guid: aa48101fd9bd24b82af88afb182a9bf5, type: 3}
+  _hurtSound: {fileID: 8300000, guid: fb7c863df2baed84a98f5c604a40aab0, type: 3}
 --- !u!61 &4905476915708576259
 BoxCollider2D:
   m_ObjectHideFlags: 0

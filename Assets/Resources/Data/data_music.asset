@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c60d7ccbbec7ade44b78a9c6765ae20f, type: 3}
   m_Name: data_music
   m_EditorClassIdentifier: 
-  _menuMusic: {fileID: 8300000, guid: 3c5ae3a71daaed24fbc25ac3f25f236d, type: 3}
+  _menuMusic: {fileID: 8300000, guid: 0e3b57fe9497c4a4cb25a0414d430a2c, type: 3}
   _inGameMusic: {fileID: 8300000, guid: fc5af015011ea3745b7f78ea1dd1049f, type: 3}
