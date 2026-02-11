@@ -867,14 +867,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Author: Lenny Pixels
-
-    Source: Free Music Archive
-
-    Licence: CC
-    BY
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e1f104647e56b0b48981cbb49a3063e6, type: 2}
   m_sharedMaterial: {fileID: 3374253522677348180, guid: e1f104647e56b0b48981cbb49a3063e6, type: 2}
@@ -1981,7 +1974,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'In game music: The Back Street Is My Stage
+  m_text: '
 
 '
   m_isRightToLeft: 0
@@ -2602,9 +2595,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Menu music: Rhythm Charger
-
-'
+  m_text: Music by GWriterStudio
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e1f104647e56b0b48981cbb49a3063e6, type: 2}
   m_sharedMaterial: {fileID: 3374253522677348180, guid: e1f104647e56b0b48981cbb49a3063e6, type: 2}
