@@ -386,7 +386,7 @@ namespace UrbanNinja.Input
                 {
                     ""name"": """",
                     ""id"": ""f73ec62b-c539-4fd1-83a8-d9a33e5a403c"",
-                    ""path"": ""<Keyboard>/#(Ö)"",
+                    ""path"": ""<Keyboard>/numpadPlus"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -408,7 +408,7 @@ namespace UrbanNinja.Input
                 {
                     ""name"": """",
                     ""id"": ""017234ff-2cec-4faa-95c4-1331d49a4384"",
-                    ""path"": ""<Keyboard>/#(Ä)"",
+                    ""path"": ""<Keyboard>/numpadMinus"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

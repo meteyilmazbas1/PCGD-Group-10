@@ -121,6 +121,8 @@ MonoBehaviour:
   - {fileID: 2075127474601022308}
   - {fileID: 4054977630181585218}
   - {fileID: 5930150603789995238}
+  _scrollLetterUp: {fileID: 0}
+  _scrollLetterDown: {fileID: 0}
 --- !u!1 &800966152445519957
 GameObject:
   m_ObjectHideFlags: 0
