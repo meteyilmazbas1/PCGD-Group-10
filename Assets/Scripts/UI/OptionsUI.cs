@@ -1,6 +1,7 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UrbanNinja
@@ -50,6 +51,8 @@ namespace UrbanNinja
 
         void CheckValues()
         {
+            EventSystem.current.SetSelectedGameObject(backButton.gameObject);
+
             if (SoundManager.Instance == null) { return; }
             musicToggle.isOn = SoundManager.Instance.IsMusicOn;
             soundToggle.isOn = SoundManager.Instance.IsSFXOn;

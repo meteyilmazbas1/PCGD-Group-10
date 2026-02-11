@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -30,17 +30,29 @@ namespace UrbanNinja
         {
             _frame.gameObject.SetActive(false);
         }
-        private void FixedUpdate()
+        private void LateUpdate()
         {
-            if (EventSystem.current.currentSelectedGameObject != null &&
-                EventSystem.current.currentSelectedGameObject.activeInHierarchy) return;
-            if (EventSystem.current.firstSelectedGameObject == null)
+            var current = EventSystem.current;
+            var currentSelected = current.currentSelectedGameObject;
+            var firstSelected = current.firstSelectedGameObject;
+
+           // Console.Clear();
+            //Debug.ClearDeveloperConsole();
+
+            //print("currentSelected: " + currentSelected);
+            //print("firstSelected: " + firstSelected);
+    
+            _frame.gameObject.SetActive(currentSelected == gameObject);
+
+            if (currentSelected != null &&
+                currentSelected.activeInHierarchy) return;
+            if (firstSelected == null)
             {
-                EventSystem.current.SetSelectedGameObject(gameObject);
+                current.SetSelectedGameObject(gameObject);
             }
             else
             {
-                EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
+                current.SetSelectedGameObject(firstSelected);
             }
         }
     }

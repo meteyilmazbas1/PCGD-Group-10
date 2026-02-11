@@ -256,6 +256,11 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &1214308651 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7115524266063937507, guid: 53a36f2fc6a0d8c42b29fe5e5467c4dc, type: 3}
+  m_PrefabInstance: {fileID: 6281044333137044274}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1324716720
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1214308651}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1324716723
