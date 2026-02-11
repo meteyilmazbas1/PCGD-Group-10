@@ -296,6 +296,24 @@ namespace UrbanNinja.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""947b207c-071c-4d76-86da-2c3b2cc4b420"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c80bc1c-90de-49d4-808e-457bac2255a3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -353,6 +371,50 @@ namespace UrbanNinja.Input
                     ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""342aa24c-6d14-468e-aa29-db042959f4cb"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f73ec62b-c539-4fd1-83a8-d9a33e5a403c"",
+                    ""path"": ""<Keyboard>/numpadPlus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eeeb5d0d-58eb-47f5-9241-3daee9f19da5"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""017234ff-2cec-4faa-95c4-1331d49a4384"",
+                    ""path"": ""<Keyboard>/numpadMinus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -370,6 +432,8 @@ namespace UrbanNinja.Input
             m_UIInputActions_Navigate = m_UIInputActions.FindAction("Navigate", throwIfNotFound: true);
             m_UIInputActions_Submit = m_UIInputActions.FindAction("Submit", throwIfNotFound: true);
             m_UIInputActions_Cancel = m_UIInputActions.FindAction("Cancel", throwIfNotFound: true);
+            m_UIInputActions_ScrollUp = m_UIInputActions.FindAction("ScrollUp", throwIfNotFound: true);
+            m_UIInputActions_ScrollDown = m_UIInputActions.FindAction("ScrollDown", throwIfNotFound: true);
         }
 
         ~@GameplayInput()
@@ -583,6 +647,8 @@ namespace UrbanNinja.Input
         private readonly InputAction m_UIInputActions_Navigate;
         private readonly InputAction m_UIInputActions_Submit;
         private readonly InputAction m_UIInputActions_Cancel;
+        private readonly InputAction m_UIInputActions_ScrollUp;
+        private readonly InputAction m_UIInputActions_ScrollDown;
         /// <summary>
         /// Provides access to input actions defined in input action map "UI Input Actions".
         /// </summary>
@@ -606,6 +672,14 @@ namespace UrbanNinja.Input
             /// Provides access to the underlying input action "UIInputActions/Cancel".
             /// </summary>
             public InputAction @Cancel => m_Wrapper.m_UIInputActions_Cancel;
+            /// <summary>
+            /// Provides access to the underlying input action "UIInputActions/ScrollUp".
+            /// </summary>
+            public InputAction @ScrollUp => m_Wrapper.m_UIInputActions_ScrollUp;
+            /// <summary>
+            /// Provides access to the underlying input action "UIInputActions/ScrollDown".
+            /// </summary>
+            public InputAction @ScrollDown => m_Wrapper.m_UIInputActions_ScrollDown;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -641,6 +715,12 @@ namespace UrbanNinja.Input
                 @Cancel.started += instance.OnCancel;
                 @Cancel.performed += instance.OnCancel;
                 @Cancel.canceled += instance.OnCancel;
+                @ScrollUp.started += instance.OnScrollUp;
+                @ScrollUp.performed += instance.OnScrollUp;
+                @ScrollUp.canceled += instance.OnScrollUp;
+                @ScrollDown.started += instance.OnScrollDown;
+                @ScrollDown.performed += instance.OnScrollDown;
+                @ScrollDown.canceled += instance.OnScrollDown;
             }
 
             /// <summary>
@@ -661,6 +741,12 @@ namespace UrbanNinja.Input
                 @Cancel.started -= instance.OnCancel;
                 @Cancel.performed -= instance.OnCancel;
                 @Cancel.canceled -= instance.OnCancel;
+                @ScrollUp.started -= instance.OnScrollUp;
+                @ScrollUp.performed -= instance.OnScrollUp;
+                @ScrollUp.canceled -= instance.OnScrollUp;
+                @ScrollDown.started -= instance.OnScrollDown;
+                @ScrollDown.performed -= instance.OnScrollDown;
+                @ScrollDown.canceled -= instance.OnScrollDown;
             }
 
             /// <summary>
@@ -758,6 +844,20 @@ namespace UrbanNinja.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnCancel(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "ScrollUp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnScrollUp(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "ScrollDown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnScrollDown(InputAction.CallbackContext context);
         }
     }
 }

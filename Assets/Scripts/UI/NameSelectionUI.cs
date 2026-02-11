@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace UrbanNinja
@@ -12,6 +13,9 @@ namespace UrbanNinja
         [SerializeField] Button menuButton;
         [Header("Initials Slots")]
         [SerializeField] Button[] slots = new Button[3];
+        [Header("Input actions")]
+        [SerializeField] private InputActionReference _scrollLetterUp;
+        [SerializeField] private InputActionReference _scrollLetterDown;
 
         int[] letterIndices = new int[3];
         int selectedSlot = -1;
@@ -22,6 +26,8 @@ namespace UrbanNinja
         {
             playButton.onClick.AddListener(PlayButtonAction);
             menuButton.onClick.AddListener(MenuButtonAction);
+            _scrollLetterUp.action.performed += ctx => OnScrollUp();
+            _scrollLetterDown.action.performed += ctx => OnScrollDown();
         }
 
         void Start()
@@ -32,13 +38,13 @@ namespace UrbanNinja
         void Update()
         {
             HandleSlotSwitch();
-            HandleLetterChange();
-
+            //HandleLetterChange();
+            /*
             if (UnityEngine.Input.GetKeyDown(KeyCode.Return))
             {
                 print("Current Initials: " + GetInitials());
                 EventSystem.current.SetSelectedGameObject(playButton.gameObject);
-            }
+            }*/
         }
 
         void HandleSlotSwitch()
@@ -61,26 +67,38 @@ namespace UrbanNinja
                 selectedSlot = -1;
             }
         }
-
+        /*
         void HandleLetterChange()
         {
-            if (selectedSlot == -1) { return; }
+            
 
             if (UnityEngine.Input.GetKeyDown(KeyCode.DownArrow))
             {
-                letterIndices[selectedSlot] =
-                    (letterIndices[selectedSlot] + 1) % LETTER_COUNT;
-
-                UpdateSlot(selectedSlot);
+                OnScrollDown();
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.UpArrow))
             {
-                letterIndices[selectedSlot]--;
-                if (letterIndices[selectedSlot] < 0)
-                    letterIndices[selectedSlot] = LETTER_COUNT - 1;
-
-                UpdateSlot(selectedSlot);
+                OnScrollUp();
             }
+        }*/
+
+        private void OnScrollUp()
+        {
+            if (selectedSlot == -1) { return; }
+            letterIndices[selectedSlot]--;
+            if (letterIndices[selectedSlot] < 0)
+                letterIndices[selectedSlot] = LETTER_COUNT - 1;
+
+            UpdateSlot(selectedSlot);
+        }
+
+        private void OnScrollDown()
+        {
+            if (selectedSlot == -1) { return; }
+            letterIndices[selectedSlot] =
+                (letterIndices[selectedSlot] + 1) % LETTER_COUNT;
+
+            UpdateSlot(selectedSlot);
         }
 
         void UpdateSlot(int index)
