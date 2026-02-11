@@ -19,8 +19,12 @@ namespace UrbanNinja
             yield return Fade(0f);
             yield return new WaitForSecondsRealtime(5f);
             yield return Fade(1f);
-            Time.timeScale = 1f;
+            
             gameObject.SetActive(false);
+        }
+        private void OnDisable()
+        {
+            Time.timeScale = 1f;
         }
         private IEnumerator Fade(float targetAlpha)
         {
