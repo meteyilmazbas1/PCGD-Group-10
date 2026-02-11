@@ -3,14 +3,19 @@ using UnityEngine;
 namespace UrbanNinja
 {
     [RequireComponent(typeof(Collider2D))]
-    public class HealthPickup : MonoBehaviour
+    public class Pickup : MonoBehaviour
     {
-        [SerializeField] private int _healAmount = 3;
+        public enum PickupType
+        {
+            Health,
+            Score
+        }
+        [SerializeField] private int _amount = 3;
         [SerializeField] private bool _useLayerCheck = true;
         [SerializeField] private int _playerLayer = 7; // Player layer index (Edit > Project Settings > Tags and Layers)
         [SerializeField] private AudioClip _pickupSound; // Optional: Sound to play when picked up
         [SerializeField] private GameObject _pickupEffect; // Optional: Particle effect or visual effect to spawn when picked up
-
+        [SerializeField] private PickupType _pickupType;
         private void Awake()
         {
             // Ensure collider is set up correctly
@@ -36,70 +41,64 @@ namespace UrbanNinja
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision == null)
-            {
-                //Debug.LogWarning("HealthPickup: Collision is null!");
-                return;
-            }
-
             // Layer check (optional but recommended for security)
             if (_useLayerCheck)
             {
                 if (collision.gameObject.layer != _playerLayer)
                 {
                     // Also check parent in case collider is on child object
-                    if (collision.transform.parent == null || collision.transform.parent.gameObject.layer != _playerLayer)
+                    if (collision.transform.parent == null ||
+                        collision.transform.parent.gameObject.layer != _playerLayer)
                     {
                         return; // Not on Player layer, ignore
                     }
                 }
             }
 
-            // Try to get PlayerController first
-            var playerController = collision.GetComponent<PlayerController>();
-            if (playerController == null)
-            {
-                // Also check parent in case collider is on child object
-                playerController = collision.GetComponentInParent<PlayerController>();
-            }
-            
-            if (playerController == null)
-            {
-                return; // Not a player, ignore
-            }
 
-            // Try to get Health component
-            var health = collision.GetComponent<Health>();
-            if (health == null)
+            bool flowControl = HandlePickup(collision);
+            if (!flowControl)
             {
-                // Also check parent in case collider is on child object
-                health = collision.GetComponentInParent<Health>();
-            }
-            
-            if (health == null)
-            {
-                //Debug.LogWarning($"HealthPickup: Player found but Health component not found on {collision.gameObject.name}!");
                 return;
             }
 
-            // Heal the player
-            int oldHealth = health.CurrentHealth;
-            health.Heal(_healAmount);
-            int newHealth = health.CurrentHealth;
-            
-            //Debug.Log($"HealthPickup: Player healed! {oldHealth} -> {newHealth} (healed {_healAmount})");
-            
             // Show UI message
             ShowPickupMessage();
-            
+
             // Play sound effect if available
             PlayPickupSound();
-            
+
             // Spawn visual effect if available
             SpawnPickupEffect();
-            
+
             // Disable the pickup
             gameObject.SetActive(false);
+        }
+
+        private bool HandlePickup(Collider2D collision)
+        {
+            if(_pickupType == PickupType.Health)
+            {
+                // Try to get Health component
+                var health = collision.GetComponent<Health>();
+                if (health == null)
+                {
+                    health = collision.GetComponentInParent<Health>();
+                }
+
+                if (health == null)
+                {
+                    return false;
+                }
+
+                health.Heal(_amount);
+                return true;
+            }
+            else
+            {
+                GameManager.AddScore(_amount);
+                return true;
+            }
         }
 
         private void PlayPickupSound()
@@ -132,7 +131,15 @@ namespace UrbanNinja
         {
             if (PickupMessageUI.Instance != null)
             {
-                PickupMessageUI.Instance.ShowHealMessage(_healAmount);
+                switch (_pickupType)
+                {
+                    case PickupType.Health:
+                        PickupMessageUI.Instance.ShowHealMessage(_amount);
+                        break;
+                    case PickupType.Score:
+                        PickupMessageUI.Instance.ShowScoreMessage(_amount);
+                        break;
+                }
             }
         }
     }
