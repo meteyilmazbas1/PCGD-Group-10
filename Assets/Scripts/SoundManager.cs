@@ -93,8 +93,18 @@ namespace UrbanNinja
             
         }
 
-        public void ToggleMusic(bool isOn) => IsMusicOn = isOn;
-        private void ToggleSFX(bool isOn) => IsSFXOn = isOn;
+        public void ToggleMusic(bool isOn)
+        {
+            IsMusicOn = isOn;
+            if (!IsMusicOn)
+            {
+                musicSource.Stop();
+            }
+        }
+        public void ToggleSFX(bool isOn)
+        {
+            IsSFXOn = isOn;
+        }
 
 
         void OnDestroy()

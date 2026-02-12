@@ -68,6 +68,7 @@ namespace UrbanNinja
         private void SoundToggleAction(bool arg0)
         {
             print("SoundToggled   " + arg0);
+            SoundManager.Instance.ToggleSFX(arg0);
             //GlobalEvents.SendSFXToggle(arg0);
         }
 

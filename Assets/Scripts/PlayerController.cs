@@ -105,6 +105,10 @@ namespace UrbanNinja
             if (_isDead) return;
             if (isDamage)
             {
+                if (HurtSound != null)
+                {
+                    SoundManager.Instance.PlaySound(HurtSound);
+                }
                 _animationHandler.Request(AnimationType.Damage);
             }
         }
