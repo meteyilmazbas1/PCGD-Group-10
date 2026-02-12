@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UrbanNinja.Input;
 
@@ -105,6 +106,10 @@ namespace UrbanNinja
             if (_isDead) return;
             if (isDamage)
             {
+                if (HurtSound != null)
+                {
+                    SoundManager.Instance.PlaySound(HurtSound);
+                }
                 _animationHandler.Request(AnimationType.Damage);
             }
         }
@@ -263,7 +268,7 @@ namespace UrbanNinja
         /// <returns>True if player can jump.</returns>
         private bool CanJump()
         {
-            return isGrounded && !_movementBlocked;
+            return isGrounded && !_movementBlocked && !_isDead;
         }
         /// <summary>
         /// Movement is blocked during attacks.
@@ -313,15 +318,18 @@ namespace UrbanNinja
             _rigidbody2D.linearVelocity = Vector2.zero;
             //Debug.Log("Player death");
             _isDead = true;
-            _animationHandler.Request(AnimationType.Death, onAnimationEnd: () =>
-            {
-                Debug.Log("Player death on animation end");
-                GameManager.EndRound();
-                SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
-            });
+            _animationHandler.Request(AnimationType.Death);
+            StartCoroutine(WaitAfterDeath());
 
         }
         public AudioClip HurtSound => _hurtSound;
+        private IEnumerator WaitAfterDeath()
+        {
+            yield return new WaitForSecondsRealtime(2f);
+            Debug.Log("Player death on animation end");
+            GameManager.EndRound();
+            SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
+        }
     }
 
 }
