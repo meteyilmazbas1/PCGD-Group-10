@@ -100,6 +100,12 @@ namespace UrbanNinja
             {
                 musicSource.Stop();
             }
+            else
+            {
+                musicSource.clip = _music[0];
+                _activeSongIndex = 0;
+                musicSource.Play();
+            } 
         }
         public void ToggleSFX(bool isOn)
         {
