@@ -181,9 +181,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _hitClips:
-  - {fileID: 8300000, guid: 14189ff077e1f7b4b9bc3f2001f33fab, type: 3}
-  - {fileID: 8300000, guid: 386703593ceff7e4fbf87ff02787f11c, type: 3}
-  - {fileID: 8300000, guid: 37deec2d96599154ba02df1b94e21641, type: 3}
+  - {fileID: 8300000, guid: 2ca32b751170d154da8e8a1b521f04f0, type: 3}
+  - {fileID: 8300000, guid: 9d4ce8e61ccbb7d4188a3f7f999785cf, type: 3}
+  - {fileID: 8300000, guid: 55312e4d43cf2554899a28433406c008, type: 3}
 --- !u!1 &6557240619852007055
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +307,7 @@ Animator:
   m_GameObject: {fileID: 6557240619852007055}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 78cbbc36381dbfa449e8e74c649b29ba, type: 2}
+  m_Controller: {fileID: 22100000, guid: f2950ecc95c18214583edb39f9717661, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -579,6 +579,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _hitClips:
-  - {fileID: 8300000, guid: 14189ff077e1f7b4b9bc3f2001f33fab, type: 3}
-  - {fileID: 8300000, guid: 386703593ceff7e4fbf87ff02787f11c, type: 3}
-  - {fileID: 8300000, guid: 37deec2d96599154ba02df1b94e21641, type: 3}
+  - {fileID: 8300000, guid: 991a00e228f5993478cb335089e8f722, type: 3}
+  - {fileID: 8300000, guid: 130038e653716c8468fe2b724a08771c, type: 3}
+  - {fileID: 8300000, guid: d13252122f4ac2e4b951ed26087419c5, type: 3}

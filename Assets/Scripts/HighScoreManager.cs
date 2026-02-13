@@ -49,29 +49,29 @@ namespace UrbanNinja
             if (File.Exists(GetPath()))
             {
                 //TODO
-                Debug.Log("Highscore file found!");
+                //Debug.Log("Highscore file found!");
                 string json = File.ReadAllText(GetPath());
                 _highScores = JsonUtility.FromJson<HighScoreList>(json);
             }
             else
             {
                 //TODO
-                Debug.Log("Highscore not file found!");
+                //Debug.Log("Highscore not file found!");
                 _highScores = new HighScoreList();
             }
         }
         private string GetPath()
         {
             string path = Path.Join(Application.persistentDataPath, HIGHSCORE_DATA_FILENAME);
-            Debug.Log("PATH: "+path);
+            //Debug.Log("PATH: "+path);
             return path;
         }
         private void SaveToFile()
         {
             string json = JsonUtility.ToJson(_highScores);
-            Debug.Log("JSON: "+json);
+            //Debug.Log("JSON: "+json);
             File.WriteAllText(GetPath(), json);
-            Debug.Log("Save Complete!");
+            //Debug.Log("Save Complete!");
         }
         private HighScoreEntry CreateNewEntry(string name, int score)
         {

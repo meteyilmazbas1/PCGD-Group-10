@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UrbanNinja
@@ -18,6 +19,7 @@ namespace UrbanNinja
         [SerializeField] OptionsUI optionsUI;
         [SerializeField] CreditsUI creditUI;
         [SerializeField] QuitUI quitUI;
+        [SerializeField] private GameObject _menuPanel; //Added this so it can also be disabled
 
 
         void Awake()
@@ -45,23 +47,38 @@ namespace UrbanNinja
 
         void OptionButtonAction()
         {
+            _menuPanel.SetActive(false);
             optionsUI.gameObject.SetActive(true);
             SoundManager.Instance.PlayButtonClick();
         }
 
         void CreditButtonAction()
         {
+            _menuPanel.SetActive(false);
             creditUI.gameObject.SetActive(true);
             SoundManager.Instance.PlayButtonClick();
         }
 
         void QuitButtonAction()
         {
+            _menuPanel.SetActive(false);
             quitUI.gameObject.SetActive(true);
             SoundManager.Instance.PlayButtonClick();
         }
 
-
+        private void FixedUpdate()
+        {
+            if (optionsUI.gameObject.activeInHierarchy
+            || quitUI.gameObject.activeInHierarchy
+            || creditUI.gameObject.activeInHierarchy)
+            {
+                return;
+            }
+            if (!_menuPanel.gameObject.activeInHierarchy)
+            {
+                _menuPanel.gameObject.SetActive(true);
+            }
+        }
     }
 
 }

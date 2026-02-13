@@ -22,7 +22,7 @@ namespace UrbanNinja
         {
             if (_enemyPrefabs == null || _enemyPrefabs.Count == 0)
             {
-                Debug.LogError("EnemySpawner: _enemyPrefabs list is empty! Please assign enemy prefabs in Inspector.");
+                //Debug.LogError("EnemySpawner: _enemyPrefabs list is empty! Please assign enemy prefabs in Inspector.");
                 return;
             }
 
@@ -38,7 +38,7 @@ namespace UrbanNinja
 
             if (!hasValidPrefab)
             {
-                Debug.LogError("EnemySpawner: All prefabs in _enemyPrefabs list are null! Cannot initialize pool.");
+                //Debug.LogError("EnemySpawner: All prefabs in _enemyPrefabs list are null! Cannot initialize pool.");
                 return;
             }
 
@@ -62,11 +62,11 @@ namespace UrbanNinja
 
             if (iterations >= maxIterations)
             {
-                Debug.LogError($"EnemySpawner: Reached max iterations ({maxIterations}) while initializing pool. Only created {_enemyPool.Count} enemies.");
+                //Debug.LogError($"EnemySpawner: Reached max iterations ({maxIterations}) while initializing pool. Only created {_enemyPool.Count} enemies.");
             }
             else
             {
-                Debug.Log($"EnemySpawner: Initialized enemy pool with {_enemyPool.Count} enemies.");
+                //Debug.Log($"EnemySpawner: Initialized enemy pool with {_enemyPool.Count} enemies.");
             }
         }
         
@@ -74,14 +74,14 @@ namespace UrbanNinja
         {
             if (_enemyPool == null || _enemyPool.Count == 0)
             {
-                Debug.LogWarning("EnemySpawner: Enemy pool is empty! Cannot spawn enemy.");
+                //Debug.LogWarning("EnemySpawner: Enemy pool is empty! Cannot spawn enemy.");
                 return;
             }
 
             EnemyController enemy = _enemyPool.Find(x => !x.gameObject.activeInHierarchy);
             if (enemy == null)
             {
-                Debug.LogWarning("EnemySpawner: No inactive enemies found in pool!");
+                //Debug.LogWarning("EnemySpawner: No inactive enemies found in pool!");
                 return;
             }
 
@@ -106,13 +106,13 @@ namespace UrbanNinja
         private IEnumerator SpawnEnemies()
         {
             yield return new WaitForSeconds(1f); // Initial delay for player to spawn
-            Debug.Log("EnemySpawner: SpawnEnemies coroutine started.");
+            //Debug.Log("EnemySpawner: SpawnEnemies coroutine started.");
             while (true)
             {
                 float timeToWait = GetTimeBetweenSpawns();
-                Debug.Log($"EnemySpawner: Waiting {timeToWait} seconds before next spawn...");
+                //Debug.Log($"EnemySpawner: Waiting {timeToWait} seconds before next spawn...");
                 yield return new WaitForSeconds(timeToWait);
-                Debug.Log("EnemySpawner: Attempting to spawn enemy at position...");
+                //Debug.Log("EnemySpawner: Attempting to spawn enemy at position...");
                 SpawnEnemy(OffsetPosition());
             }
         }
@@ -122,7 +122,7 @@ namespace UrbanNinja
             PlayerController player = GameManager.GetPlayerController();
             if (player == null)
             {
-                Debug.LogWarning("EnemySpawner: Player not found! Using default spawn position.");
+                //Debug.LogWarning("EnemySpawner: Player not found! Using default spawn position.");
                 return new Vector2(10f, 0f);
             }
 

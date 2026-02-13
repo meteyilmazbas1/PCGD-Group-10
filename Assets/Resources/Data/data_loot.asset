@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lootDrop_prefabs:
   - _prefab: {fileID: 4876820723973012073, guid: d0efaa98913961045a1dc4e05628e3ea, type: 3}
-    _probablityWeight: 100
+    _probablityWeight: 60
+  - _prefab: {fileID: 4238636244540992116, guid: 29676df9fc0487c47a1f3d782b4674c0, type: 3}
+    _probablityWeight: 40

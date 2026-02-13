@@ -244,6 +244,17 @@ namespace UrbanNinja.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""ae78561b-bc6a-4fc6-96c2-1a879ebe6a8a"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7a199d30-1411-4a6d-9011-9e67cdafb86b"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -265,6 +276,158 @@ namespace UrbanNinja.Input
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI Input Actions"",
+            ""id"": ""23e91dd4-19d3-484e-9485-b0b1fb31f927"",
+            ""actions"": [
+                {
+                    ""name"": ""Navigate"",
+                    ""type"": ""Value"",
+                    ""id"": ""b2f1ac07-25a6-4fc5-b6ae-40505b196a06"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""b86030a2-b284-4c4c-8ad3-8ec8da12e785"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""635e485c-97df-4d79-b69b-3c9f23c0ff8f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""947b207c-071c-4d76-86da-2c3b2cc4b420"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c80bc1c-90de-49d4-808e-457bac2255a3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""922e724d-7fa9-42a1-b1cc-8353521580ee"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72813fbb-aecd-4105-af7f-dbd102141cff"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6834ede6-b840-406d-9b0a-254b0842aa73"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4dbe7607-f24f-4a82-b735-22d805d1ddfd"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6219337d-51c8-4ef4-9302-4a7d0aff7bbd"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""342aa24c-6d14-468e-aa29-db042959f4cb"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f73ec62b-c539-4fd1-83a8-d9a33e5a403c"",
+                    ""path"": ""<Keyboard>/numpadPlus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eeeb5d0d-58eb-47f5-9241-3daee9f19da5"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""017234ff-2cec-4faa-95c4-1331d49a4384"",
+                    ""path"": ""<Keyboard>/numpadMinus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -275,11 +438,19 @@ namespace UrbanNinja.Input
             m_PlayerInput_jump = m_PlayerInput.FindAction("jump", throwIfNotFound: true);
             m_PlayerInput_punch = m_PlayerInput.FindAction("punch", throwIfNotFound: true);
             m_PlayerInput_kick = m_PlayerInput.FindAction("kick", throwIfNotFound: true);
+            // UI Input Actions
+            m_UIInputActions = asset.FindActionMap("UI Input Actions", throwIfNotFound: true);
+            m_UIInputActions_Navigate = m_UIInputActions.FindAction("Navigate", throwIfNotFound: true);
+            m_UIInputActions_Submit = m_UIInputActions.FindAction("Submit", throwIfNotFound: true);
+            m_UIInputActions_Cancel = m_UIInputActions.FindAction("Cancel", throwIfNotFound: true);
+            m_UIInputActions_ScrollUp = m_UIInputActions.FindAction("ScrollUp", throwIfNotFound: true);
+            m_UIInputActions_ScrollDown = m_UIInputActions.FindAction("ScrollDown", throwIfNotFound: true);
         }
 
         ~@GameplayInput()
         {
             UnityEngine.Debug.Assert(!m_PlayerInput.enabled, "This will cause a leak and performance issues, GameplayInput.PlayerInput.Disable() has not been called.");
+            UnityEngine.Debug.Assert(!m_UIInputActions.enabled, "This will cause a leak and performance issues, GameplayInput.UIInputActions.Disable() has not been called.");
         }
 
         /// <summary>
@@ -480,6 +651,146 @@ namespace UrbanNinja.Input
         /// Provides a new <see cref="PlayerInputActions" /> instance referencing this action map.
         /// </summary>
         public PlayerInputActions @PlayerInput => new PlayerInputActions(this);
+
+        // UI Input Actions
+        private readonly InputActionMap m_UIInputActions;
+        private List<IUIInputActionsActions> m_UIInputActionsActionsCallbackInterfaces = new List<IUIInputActionsActions>();
+        private readonly InputAction m_UIInputActions_Navigate;
+        private readonly InputAction m_UIInputActions_Submit;
+        private readonly InputAction m_UIInputActions_Cancel;
+        private readonly InputAction m_UIInputActions_ScrollUp;
+        private readonly InputAction m_UIInputActions_ScrollDown;
+        /// <summary>
+        /// Provides access to input actions defined in input action map "UI Input Actions".
+        /// </summary>
+        public struct UIInputActionsActions
+        {
+            private @GameplayInput m_Wrapper;
+
+            /// <summary>
+            /// Construct a new instance of the input action map wrapper class.
+            /// </summary>
+            public UIInputActionsActions(@GameplayInput wrapper) { m_Wrapper = wrapper; }
+            /// <summary>
+            /// Provides access to the underlying input action "UIInputActions/Navigate".
+            /// </summary>
+            public InputAction @Navigate => m_Wrapper.m_UIInputActions_Navigate;
+            /// <summary>
+            /// Provides access to the underlying input action "UIInputActions/Submit".
+            /// </summary>
+            public InputAction @Submit => m_Wrapper.m_UIInputActions_Submit;
+            /// <summary>
+            /// Provides access to the underlying input action "UIInputActions/Cancel".
+            /// </summary>
+            public InputAction @Cancel => m_Wrapper.m_UIInputActions_Cancel;
+            /// <summary>
+            /// Provides access to the underlying input action "UIInputActions/ScrollUp".
+            /// </summary>
+            public InputAction @ScrollUp => m_Wrapper.m_UIInputActions_ScrollUp;
+            /// <summary>
+            /// Provides access to the underlying input action "UIInputActions/ScrollDown".
+            /// </summary>
+            public InputAction @ScrollDown => m_Wrapper.m_UIInputActions_ScrollDown;
+            /// <summary>
+            /// Provides access to the underlying input action map instance.
+            /// </summary>
+            public InputActionMap Get() { return m_Wrapper.m_UIInputActions; }
+            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+            public void Enable() { Get().Enable(); }
+            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+            public void Disable() { Get().Disable(); }
+            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+            public bool enabled => Get().enabled;
+            /// <summary>
+            /// Implicitly converts an <see ref="UIInputActionsActions" /> to an <see ref="InputActionMap" /> instance.
+            /// </summary>
+            public static implicit operator InputActionMap(UIInputActionsActions set) { return set.Get(); }
+            /// <summary>
+            /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+            /// </summary>
+            /// <param name="instance">Callback instance.</param>
+            /// <remarks>
+            /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+            /// </remarks>
+            /// <seealso cref="UIInputActionsActions" />
+            public void AddCallbacks(IUIInputActionsActions instance)
+            {
+                if (instance == null || m_Wrapper.m_UIInputActionsActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_UIInputActionsActionsCallbackInterfaces.Add(instance);
+                @Navigate.started += instance.OnNavigate;
+                @Navigate.performed += instance.OnNavigate;
+                @Navigate.canceled += instance.OnNavigate;
+                @Submit.started += instance.OnSubmit;
+                @Submit.performed += instance.OnSubmit;
+                @Submit.canceled += instance.OnSubmit;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+                @ScrollUp.started += instance.OnScrollUp;
+                @ScrollUp.performed += instance.OnScrollUp;
+                @ScrollUp.canceled += instance.OnScrollUp;
+                @ScrollDown.started += instance.OnScrollDown;
+                @ScrollDown.performed += instance.OnScrollDown;
+                @ScrollDown.canceled += instance.OnScrollDown;
+            }
+
+            /// <summary>
+            /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+            /// </summary>
+            /// <remarks>
+            /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+            /// </remarks>
+            /// <seealso cref="UIInputActionsActions" />
+            private void UnregisterCallbacks(IUIInputActionsActions instance)
+            {
+                @Navigate.started -= instance.OnNavigate;
+                @Navigate.performed -= instance.OnNavigate;
+                @Navigate.canceled -= instance.OnNavigate;
+                @Submit.started -= instance.OnSubmit;
+                @Submit.performed -= instance.OnSubmit;
+                @Submit.canceled -= instance.OnSubmit;
+                @Cancel.started -= instance.OnCancel;
+                @Cancel.performed -= instance.OnCancel;
+                @Cancel.canceled -= instance.OnCancel;
+                @ScrollUp.started -= instance.OnScrollUp;
+                @ScrollUp.performed -= instance.OnScrollUp;
+                @ScrollUp.canceled -= instance.OnScrollUp;
+                @ScrollDown.started -= instance.OnScrollDown;
+                @ScrollDown.performed -= instance.OnScrollDown;
+                @ScrollDown.canceled -= instance.OnScrollDown;
+            }
+
+            /// <summary>
+            /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="UIInputActionsActions.UnregisterCallbacks(IUIInputActionsActions)" />.
+            /// </summary>
+            /// <seealso cref="UIInputActionsActions.UnregisterCallbacks(IUIInputActionsActions)" />
+            public void RemoveCallbacks(IUIInputActionsActions instance)
+            {
+                if (m_Wrapper.m_UIInputActionsActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            /// <summary>
+            /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+            /// </summary>
+            /// <remarks>
+            /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+            /// </remarks>
+            /// <seealso cref="UIInputActionsActions.AddCallbacks(IUIInputActionsActions)" />
+            /// <seealso cref="UIInputActionsActions.RemoveCallbacks(IUIInputActionsActions)" />
+            /// <seealso cref="UIInputActionsActions.UnregisterCallbacks(IUIInputActionsActions)" />
+            public void SetCallbacks(IUIInputActionsActions instance)
+            {
+                foreach (var item in m_Wrapper.m_UIInputActionsActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_UIInputActionsActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        /// <summary>
+        /// Provides a new <see cref="UIInputActionsActions" /> instance referencing this action map.
+        /// </summary>
+        public UIInputActionsActions @UIInputActions => new UIInputActionsActions(this);
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PlayerInput" which allows adding and removing callbacks.
         /// </summary>
@@ -515,6 +826,49 @@ namespace UrbanNinja.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnKick(InputAction.CallbackContext context);
+        }
+        /// <summary>
+        /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI Input Actions" which allows adding and removing callbacks.
+        /// </summary>
+        /// <seealso cref="UIInputActionsActions.AddCallbacks(IUIInputActionsActions)" />
+        /// <seealso cref="UIInputActionsActions.RemoveCallbacks(IUIInputActionsActions)" />
+        public interface IUIInputActionsActions
+        {
+            /// <summary>
+            /// Method invoked when associated input action "Navigate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnNavigate(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Submit" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnSubmit(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Cancel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnCancel(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "ScrollUp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnScrollUp(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "ScrollDown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnScrollDown(InputAction.CallbackContext context);
         }
     }
 }

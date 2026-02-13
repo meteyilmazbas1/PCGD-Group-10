@@ -12,11 +12,12 @@ namespace UrbanNinja
         private AudioSource _audioSource;
         private GameObject _owner;
         private bool _isPlayerOwned;
-        
+        private Collider2D _collider;
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
             _audioSource.loop = false;
+            _collider = GetComponent<Collider2D>();
         }
         
         public void SetOwner(GameObject owner)
@@ -29,33 +30,66 @@ namespace UrbanNinja
         {
             _damage = damage;
         }
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.gameObject == _owner) return;
-            Health health = collision.GetComponent<Health>();
-            if (health != null)
-            {
-                //Debug.Log($"{gameObject.name} HIT {collision.name} at {Time.time}");
-                health.TakeDamage(_damage);
-                
-                // Register hit for combo system (only for player attacks)
-                if (_isPlayerOwned && ComboManager.Instance != null)
-                {
-                    ComboManager.Instance.RegisterHit();
-                }
-                
-                if (_hitClips != null && _hitClips.Count > 0)
-                {
-                    _audioSource.clip = RandomClip();
-                    _audioSource.Play();
-                }
-                //Debug.Log(gameObject.name+" Deals damage to "+(collision.name));
-            }
-        }
+ 
         private AudioClip RandomClip()
         {
             int random = Random.Range(0, _hitClips.Count);
             return _hitClips[random];
+        }
+        public void Activate()
+        {
+            List<Collider2D> results = new List<Collider2D>();
+            if(_collider == null ) _collider = GetComponent<Collider2D>();
+            _collider.Overlap(results);
+            if (_isPlayerOwned)
+            {
+                foreach(Collider2D collider in results)
+                {
+                    Health health = collider.GetComponent<Health>();
+                    if (health != null)
+                    {
+                        //Debug.Log($"{gameObject.name} HIT {collision.name} at {Time.time}");
+                        health.TakeDamage(_damage);
+
+                        // Register hit for combo system (only for player attacks)
+                        if (ComboManager.Instance != null)
+                        {
+                            ComboManager.Instance.RegisterHit();
+                        }
+
+                        if (_hitClips != null && _hitClips.Count > 0)
+                        {
+                            //_audioSource.clip = RandomClip();
+                            //_audioSource.Play();
+                            AudioSource.PlayClipAtPoint(RandomClip(), transform.position); //this seems to work better
+                        }
+                        //Debug.Log(gameObject.name+" Deals damage to "+(collision.name));
+                    }
+                }
+            }
+            else
+            {
+                if (results.Count > 0)
+                {
+                    List<Collider2D> player = results.FindAll(x => x.gameObject.layer == 7);
+                    Health h = null;
+                    foreach(Collider2D collider in player)
+                    {
+                        h = collider.GetComponent<Health>();
+                    }
+                    if(h != null)
+                    {
+                        h.TakeDamage(_damage);
+                        if (_hitClips != null && _hitClips.Count > 0)
+                        {
+                            //_audioSource.clip = RandomClip();
+                            //_audioSource.Play();
+                            AudioSource.PlayClipAtPoint(RandomClip(), transform.position); //this seems to work better
+                        }
+                    }
+                }
+            }
+
         }
     }
 

@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace UrbanNinja
 {
@@ -15,6 +17,8 @@ namespace UrbanNinja
         [Header("Audio Clips")]
         [SerializeField] private AudioClip buttonClickClip;
 
+        private MusicData _musicData;
+        private Dictionary<int, AudioClip> _music;
         public bool IsMusicOn
         {
             get => PlayerPrefsBool.GetBool(MusicPrefKey);
@@ -39,22 +43,74 @@ namespace UrbanNinja
                 Destroy(gameObject);
                 return;
             }
-
+            _musicData = Resources.Load<MusicData>("Data/data_music");
+            _music = new Dictionary<int, AudioClip>();
+            _music.Add(0, _musicData.MenuMusic);
+            _music.Add(1, _musicData.MenuMusic);
+            _music.Add(2, _musicData.InGameMusic);
+            _music.Add(3, _musicData.MenuMusic);
             if (!PlayerPrefs.HasKey(MusicPrefKey))
                 IsMusicOn = true;
             if (!PlayerPrefs.HasKey(SFXPrefKey))
                 IsSFXOn = true;
+            JukeBox(0);
         }
 
         void Start()
         {
             //GlobalEvents.onMusicToggle += ToggleMusic;
             //GlobalEvents.onSFXToggle += ToggleSFX;
+            SceneManager.activeSceneChanged += OnActiveSceneChanged;
+        }
+        private void OnActiveSceneChanged(Scene scene1, Scene scene2)
+        {
+            JukeBox(scene2.buildIndex);
+        }
+        private int _activeSongIndex = -1;
+        private void JukeBox(int next)
+        {
+            //Debug.Log($"Prev: {_activeSongIndex} Next: {next}");
+            if (!IsMusicOn) return;
+            if (_activeSongIndex < 0)
+            {
+                musicSource.clip = _music[0];
+                _activeSongIndex = 0;
+                musicSource.Play();
+                return;
+            }
+            if (_activeSongIndex == 2)
+            {
+                musicSource.clip = _music[next];
+                _activeSongIndex = next;
+                musicSource.Play();
+            }
+            else if(next == 2)
+            {
+                musicSource.clip = _music[next];
+                _activeSongIndex = next;
+                musicSource.Play();
+            }
+            
         }
 
-
-        private void ToggleMusic(bool isOn) => IsMusicOn = isOn;
-        private void ToggleSFX(bool isOn) => IsSFXOn = isOn;
+        public void ToggleMusic(bool isOn)
+        {
+            IsMusicOn = isOn;
+            if (!IsMusicOn)
+            {
+                musicSource.Stop();
+            }
+            else
+            {
+                musicSource.clip = _music[0];
+                _activeSongIndex = 0;
+                musicSource.Play();
+            } 
+        }
+        public void ToggleSFX(bool isOn)
+        {
+            IsSFXOn = isOn;
+        }
 
 
         void OnDestroy()

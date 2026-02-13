@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UrbanNinja.Input;
 
@@ -7,8 +8,10 @@ namespace UrbanNinja
     {
         [SerializeField] private float _moveSpeed = 0.1f;
         [SerializeField] private float _jumpImpulse = 0.1f;
-        [SerializeField] private GameObject _fist;
-        [SerializeField] private GameObject _foot;
+        [SerializeField] private DamageDealer _fist;
+        [SerializeField] private DamageDealer _foot;
+        [SerializeField] private AudioClip _jumpSound;
+        [SerializeField] private AudioClip _hurtSound;
 
         private GameplayInput _inputActions;
         private Rigidbody2D _rigidbody2D;
@@ -22,6 +25,8 @@ namespace UrbanNinja
 
         private Health _playerHealth;
 
+        public bool Alive => !_isDead;
+
         private void Awake()
         {
             GetReferences();
@@ -31,8 +36,9 @@ namespace UrbanNinja
 
             if (_playerHealth != null)
             {
-                _playerHealth.SetMaxHealth(10);  // Player has 10 HP
+                _playerHealth.SetMaxHealth(20);  // Player has 20 HP
                 _playerHealth.OnDeathEvent += OnPlayerDeath;
+                _playerHealth.OnHealthChangedEvent += OnHealthChanged;
             }
         }
         
@@ -92,6 +98,19 @@ namespace UrbanNinja
             if (_playerHealth != null)
             {
                 _playerHealth.OnDeathEvent -= OnPlayerDeath;
+                _playerHealth.OnHealthChangedEvent -= OnHealthChanged;
+            }
+        }
+        private void OnHealthChanged(int value, bool isDamage = false)
+        {
+            if (_isDead) return;
+            if (isDamage)
+            {
+                if (HurtSound != null)
+                {
+                    SoundManager.Instance.PlaySound(HurtSound);
+                }
+                _animationHandler.Request(AnimationType.Damage);
             }
         }
         private void FixedUpdate()
@@ -170,13 +189,17 @@ namespace UrbanNinja
         private void Jump()
         {
             if (!CanJump()) return;
-            _animationHandler.Request("jump");
+            _animationHandler.Request(AnimationType.Jump);
             isGrounded = false;
             _collider.enabled = false;
             _jumpLevel = _rigidbody2D.position.y;
             _rigidbody2D.linearVelocityY = _jumpImpulse;
             _rigidbody2D.gravityScale = 5f;
 
+            if (_jumpSound != null) {
+                SoundManager.Instance.PlaySound(_jumpSound);
+            }
+                
             //DEBUG DEATH
             //OnPlayerDeath();
         }
@@ -186,7 +209,7 @@ namespace UrbanNinja
         /// </summary>
         private void Move()
         {
-           
+            if (_isDead) return;
             if (!isGrounded && _rigidbody2D.position.y < _jumpLevel)
             {
                 _collider.enabled = true;
@@ -204,11 +227,11 @@ namespace UrbanNinja
                 _rigidbody2D.linearVelocity = _moveVector * _moveSpeed * Time.deltaTime;
                 if (isGrounded && _rigidbody2D.linearVelocity.magnitude > 0)
                 {
-                    _animationHandler.Request("walk");
+                    _animationHandler.Request(AnimationType.Walk);
                 }
                 else
                 {
-                    _animationHandler.Request("idle");
+                    _animationHandler.Request(AnimationType.Idle);
                 }
             }
             else
@@ -226,7 +249,7 @@ namespace UrbanNinja
             if (_movementBlocked || !isGrounded) return;
             //Debug.Log("PUNCH!");
             _movementBlocked = true;
-            _animationHandler.Request("punch", onAnimationEnd: UnBlockMovement);
+            _animationHandler.Request(AnimationType.Punch, onAnimationEnd: UnBlockMovement);
         }
         /// <summary>
         /// Callback for Kick input.
@@ -236,7 +259,7 @@ namespace UrbanNinja
             if (_movementBlocked || !isGrounded) return;
             //Debug.Log("KICK!");
             _movementBlocked = true;
-            _animationHandler.Request("kick", onAnimationEnd: UnBlockMovement);
+            _animationHandler.Request(AnimationType.Kick, onAnimationEnd: UnBlockMovement);
         }
         /// <summary>
         /// Check if the player can jump
@@ -245,7 +268,7 @@ namespace UrbanNinja
         /// <returns>True if player can jump.</returns>
         private bool CanJump()
         {
-            return isGrounded && !_movementBlocked;
+            return isGrounded && !_movementBlocked && !_isDead;
         }
         /// <summary>
         /// Movement is blocked during attacks.
@@ -264,8 +287,8 @@ namespace UrbanNinja
         /// </summary>
         private void DisableFistAndFoot()
         {
-            _fist.SetActive(false);
-            _foot.SetActive(false);
+            //_fist.Activate(false);
+            //_foot.SetActive(false);
         }
 
         /// <summary>
@@ -276,7 +299,7 @@ namespace UrbanNinja
         public void ActivateFist()
         {
             //Debug.Log("Fist ACTIVE");
-            _fist.SetActive(true);
+            _fist.Activate();
         }
         /// <summary>
         /// This is method to be called from an
@@ -286,10 +309,24 @@ namespace UrbanNinja
         public void ActivateFoot()
         {
             //Debug.Log("FOOT ACTIVE");
-            _foot.SetActive(true);
+            _foot.Activate();
         }
+        private bool _isDead = false;
         private void OnPlayerDeath()
         {
+            if (_isDead) return;
+            _rigidbody2D.linearVelocity = Vector2.zero;
+            //Debug.Log("Player death");
+            _isDead = true;
+            _animationHandler.Request(AnimationType.Death);
+            StartCoroutine(WaitAfterDeath());
+
+        }
+        public AudioClip HurtSound => _hurtSound;
+        private IEnumerator WaitAfterDeath()
+        {
+            yield return new WaitForSecondsRealtime(2f);
+            Debug.Log("Player death on animation end");
             GameManager.EndRound();
             SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
         }

@@ -82,8 +82,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 100
   _jumpImpulse: 12
-  _fist: {fileID: 8390373615918529238}
-  _foot: {fileID: 8050024050315092832}
+  _fist: {fileID: 642147925148560807}
+  _foot: {fileID: 8282953844786271838}
+  _jumpSound: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
+  _hurtSound: {fileID: 8300000, guid: fb7c863df2baed84a98f5c604a40aab0, type: 3}
 --- !u!61 &4905476915708576259
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -114,7 +116,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -152,7 +154,7 @@ Animator:
   m_GameObject: {fileID: 7652890333626757429}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 6d99ae4be52ca534cb72b578cee461b5, type: 2}
+  m_Controller: {fileID: 22100000, guid: 67b5466f236750c4b933744f97555569, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -337,9 +339,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _hitClips:
-  - {fileID: 8300000, guid: 14189ff077e1f7b4b9bc3f2001f33fab, type: 3}
-  - {fileID: 8300000, guid: 386703593ceff7e4fbf87ff02787f11c, type: 3}
-  - {fileID: 8300000, guid: 37deec2d96599154ba02df1b94e21641, type: 3}
+  - {fileID: 8300000, guid: 991a00e228f5993478cb335089e8f722, type: 3}
+  - {fileID: 8300000, guid: d13252122f4ac2e4b951ed26087419c5, type: 3}
+  - {fileID: 8300000, guid: 130038e653716c8468fe2b724a08771c, type: 3}
 --- !u!82 &3541883133682102093
 AudioSource:
   m_ObjectHideFlags: 0
@@ -531,9 +533,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _hitClips:
-  - {fileID: 8300000, guid: 14189ff077e1f7b4b9bc3f2001f33fab, type: 3}
-  - {fileID: 8300000, guid: 386703593ceff7e4fbf87ff02787f11c, type: 3}
-  - {fileID: 8300000, guid: 37deec2d96599154ba02df1b94e21641, type: 3}
+  - {fileID: 8300000, guid: 2ca32b751170d154da8e8a1b521f04f0, type: 3}
+  - {fileID: 8300000, guid: 55312e4d43cf2554899a28433406c008, type: 3}
+  - {fileID: 8300000, guid: 9d4ce8e61ccbb7d4188a3f7f999785cf, type: 3}
 --- !u!82 &6202823265343969773
 AudioSource:
   m_ObjectHideFlags: 0

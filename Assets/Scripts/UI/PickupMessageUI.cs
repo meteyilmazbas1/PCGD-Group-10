@@ -14,6 +14,7 @@ namespace UrbanNinja
         [SerializeField] private float _fadeOutDuration = 0.5f;
         [SerializeField] private float _moveSpeed = 50f; // Pixels per second upward
         [SerializeField] private Color _healColor = Color.green;
+        [SerializeField] private Color _scoreColor = new Color(0.8f, .6f, .5f);
         [SerializeField] private Color _defaultColor = Color.white;
 
         private static PickupMessageUI _instance;
@@ -108,6 +109,14 @@ namespace UrbanNinja
         public void ShowHealMessage(int healAmount)
         {
             ShowMessage($"+{healAmount} HP", _healColor);
+        }
+        /// <summary>
+        /// Display a score pickup message with default formatting.
+        /// </summary>
+        /// <param name="amount">Amount of score.</param>
+        public void ShowScoreMessage(int amount)
+        {
+            ShowMessage($"+{amount} score!", _scoreColor);
         }
 
         private IEnumerator AnimateMessage()

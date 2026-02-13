@@ -35,7 +35,7 @@ namespace UrbanNinja
                 _segments.Add(Instantiate(_segmentPrefab, _segmentParent.transform));
             }
         }
-        private void OnHealthUpdate(int health)
+        private void OnHealthUpdate(int health, bool isDamage = false)
         {
             for (int i = 0; i < _segments.Count; i++)
             {

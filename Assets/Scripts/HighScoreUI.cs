@@ -16,10 +16,13 @@ namespace UrbanNinja
             StringBuilder sbNames = new StringBuilder();
             StringBuilder sbScores = new StringBuilder();
             List<HighScoreManager.HighScoreEntry> highScoreEntries = GameManager.GetHighscore();
+            int counter = 1;
             foreach (HighScoreManager.HighScoreEntry entry in highScoreEntries)
             {
-                sbNames.Append(entry.Name+"\n\n");
-                sbScores.Append(entry.Score.ToString() + "\n\n");
+                sbNames.Append(counter.ToString()+". "+entry.Name+"\n");
+                sbScores.Append(entry.Score.ToString() + "\n");
+                counter++;
+                if (counter > 10) break;
             }
             m_highScoreNamesText.text = sbNames.ToString();
             m_highScorePointsText.text = sbScores.ToString();
