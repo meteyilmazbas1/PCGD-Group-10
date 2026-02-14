@@ -24,7 +24,21 @@ namespace UrbanNinja
         private void Start()
         {
             _segmentParent = GetComponent<HorizontalLayoutGroup>();
-            _playerHealth = GameManager.GetPlayerController().GetPlayerHealth();
+            
+            var player = GameManager.GetPlayerController();
+            if (player == null)
+            {
+                Debug.LogWarning("SegmentedHealthBar: Player not found yet.");
+                return;
+            }
+            
+            _playerHealth = player.GetPlayerHealth();
+            if (_playerHealth == null)
+            {
+                Debug.LogWarning("SegmentedHealthBar: Player Health component not found.");
+                return;
+            }
+            
             Setup(_playerHealth.MaxHealth);
             _playerHealth.OnHealthChangedEvent += OnHealthUpdate;
         }
