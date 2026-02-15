@@ -16,31 +16,24 @@ namespace UrbanNinja
         [SerializeField] private AudioClip _pickupSound; // Optional: Sound to play when picked up
         [SerializeField] private GameObject _pickupEffect; // Optional: Particle effect or visual effect to spawn when picked up
         [SerializeField] private PickupType _pickupType;
+
+        private Collider2D _collider;
         private void Awake()
         {
-            // Ensure collider is set up correctly
-            var col = GetComponent<Collider2D>();
-            if (col != null)
+            _collider = GetComponent<Collider2D>();
+            if (_collider != null)
             {
-                col.isTrigger = true;
-            }
-            else
-            {
-                //Debug.LogError($"HealthPickup: No Collider2D found on {gameObject.name}!");
+                _collider.isTrigger = true;
             }
         }
-
-        private void Reset()
+        private void OnEnable()
         {
-            var col = GetComponent<Collider2D>();
-            if (col != null)
-            {
-                col.isTrigger = true;
-            }
+            _collider.enabled = true;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            
             // Layer check (optional but recommended for security)
             if (_useLayerCheck)
             {
@@ -54,14 +47,14 @@ namespace UrbanNinja
                     }
                 }
             }
-
+ 
 
             bool flowControl = HandlePickup(collision);
             if (!flowControl)
             {
                 return;
             }
-
+            _collider.enabled = false;
             // Show UI message
             ShowPickupMessage();
 
@@ -134,10 +127,10 @@ namespace UrbanNinja
                 switch (_pickupType)
                 {
                     case PickupType.Health:
-                        PickupMessageUI.Instance.ShowHealMessage(_amount);
+                        PickupMessageUI.Instance.ShowHealMessage(_amount, transform);
                         break;
                     case PickupType.Score:
-                        PickupMessageUI.Instance.ShowScoreMessage(_amount);
+                        PickupMessageUI.Instance.ShowScoreMessage(_amount, transform);
                         break;
                 }
             }
