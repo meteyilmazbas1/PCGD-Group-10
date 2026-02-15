@@ -66,6 +66,7 @@ namespace UrbanNinja
         /// <param name="amount">Amount of health to restore.</param>
         public void Heal(int amount)
         {
+            if (_currentHealth <= 0) return;
             _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
             OnHealthChangedEvent?.Invoke(_currentHealth);
         }

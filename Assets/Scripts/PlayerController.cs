@@ -235,6 +235,11 @@ namespace UrbanNinja
             if (!isGrounded)
             {
                 _rigidbody2D.linearVelocity = new Vector2(_moveVector.x * _moveSpeed * Time.deltaTime, _rigidbody2D.linearVelocity.y);
+                if (!LevelBounds.Instance.IsInsideLevelBounds(_rigidbody2D.position +
+                    _rigidbody2D.linearVelocity * Time.fixedDeltaTime))
+                {
+                    _rigidbody2D.linearVelocityX = 0f;
+                }
             }
             else if(!_movementBlocked)
             {
