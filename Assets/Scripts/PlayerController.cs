@@ -120,6 +120,12 @@ namespace UrbanNinja
                 {
                     ComboManager.Instance.ResetCombo();
                 }
+                
+                // Screen shake when player takes damage
+                if (ScreenShake.Instance != null)
+                {
+                    ScreenShake.Instance.ShakeMedium();
+                }
             }
         }
         private void FixedUpdate()
