@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 564355567676242853}
   - component: {fileID: 782722989619909600}
-  - component: {fileID: 6436898900209695726}
+  - component: {fileID: 2989529145774123851}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 1435619540651801179, guid: cb7dfe97f6eb786448ddd291edb56b8f, type: 3}
---- !u!114 &6436898900209695726
+--- !u!114 &2989529145774123851
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

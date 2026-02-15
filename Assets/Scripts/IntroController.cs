@@ -29,7 +29,7 @@ namespace UrbanNinja
         private IEnumerator Fade(float targetAlpha)
         {
             float alpha = targetAlpha > 0 ? 0f : 1f;
-            while (alpha != targetAlpha)
+            while (Mathf.Abs(alpha - targetAlpha) > 0.01f)
             {
                 yield return new WaitForSecondsRealtime(0.1f);
                 if (targetAlpha < 1)

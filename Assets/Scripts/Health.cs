@@ -53,7 +53,6 @@ namespace UrbanNinja
             {
                 SoundManager.Instance.PlaySound(player.HurtSound);
             }*/
-            //Debug.Log($"{gameObject.name} took {amount} damage. HP now: {_currentHealth}");
             OnHealthChangedEvent?.Invoke(_currentHealth, isDamage: true);
             if (_currentHealth <= 0)
             {

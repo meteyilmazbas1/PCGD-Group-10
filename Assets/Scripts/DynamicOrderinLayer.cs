@@ -19,7 +19,12 @@ namespace UrbanNinja
         /// accordingly.
         /// </summary>
         private void SortRelativeToYPosition()
-        {   
+        {
+            if (c_layeredObjects == null || c_layeredObjects.Count == 0) return;
+            
+            // Remove any null entries from destroyed objects
+            c_layeredObjects.RemoveAll(item => item == null || (item is MonoBehaviour mb && mb == null));
+            
             if (c_layeredObjects.Count > 1)
             {
                 c_layeredObjects.Sort(Compare);
@@ -36,6 +41,14 @@ namespace UrbanNinja
             ResolveStaticOwner();
             c_layeredObjects.Add(this);
             _sprites = GetComponentsInChildren<SpriteRenderer>().ToList();
+        }
+        
+        private void OnDestroy()
+        {
+            if (c_layeredObjects != null)
+            {
+                c_layeredObjects.Remove(this);
+            }
         }
         /// <summary>
         /// Sets the first in line to call Awake as
