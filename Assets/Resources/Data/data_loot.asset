@@ -16,4 +16,6 @@ MonoBehaviour:
   - _prefab: {fileID: 4876820723973012073, guid: d0efaa98913961045a1dc4e05628e3ea, type: 3}
     _probablityWeight: 60
   - _prefab: {fileID: 4238636244540992116, guid: 29676df9fc0487c47a1f3d782b4674c0, type: 3}
-    _probablityWeight: 40
+    _probablityWeight: 30
+  - _prefab: {fileID: 2879622751598261067, guid: c417aa907ddfff04dbaf5de0f16887c6, type: 3}
+    _probablityWeight: 10
