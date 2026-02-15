@@ -107,6 +107,14 @@ namespace UrbanNinja
         void FixedUpdate()
         {
             if (_stunned) return;
+            
+            // Re-acquire player reference if lost
+            if (_playerController == null)
+            {
+                _playerController = GameManager.GetPlayerController();
+                if (_playerController == null) return;
+            }
+            
             MoveToPlayer();
             FlipTransform();
             Attack();
@@ -114,10 +122,9 @@ namespace UrbanNinja
         
         private void MoveToPlayer()
         {
-            if (_playerController == null || !_playerController.Alive)
+            if (!_playerController.Alive)
             {
                 if (_animationHandler != null) _animationHandler.Request(AnimationType.Idle);
-                _stunned = true;
                 return;
             }
             Vector2 positionDifference = _playerController.GetPositionRelativeToJump() - (Vector2)transform.position;
