@@ -211,7 +211,7 @@ namespace UrbanNinja
         }
         private void OnDeath()
         {
-            if(Random.Range(0,1f)<0.99f) RandomLootService.RequestLoot(transform.position);
+            if(Random.Range(0,1f)<0.4f) RandomLootService.RequestLoot(transform.position);
             GameManager.AddScore(_enemyData.ScoreYield * _tier.TierLevel);
             StartCoroutine(KnockBack());
         }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace UrbanNinja
@@ -8,7 +9,8 @@ namespace UrbanNinja
         public enum PickupType
         {
             Health,
-            Score
+            Score,
+            Weapon
         }
         [SerializeField] private int _amount = 3;
         [SerializeField] private bool _useLayerCheck = true;
@@ -16,8 +18,11 @@ namespace UrbanNinja
         [SerializeField] private AudioClip _pickupSound; // Optional: Sound to play when picked up
         [SerializeField] private GameObject _pickupEffect; // Optional: Particle effect or visual effect to spawn when picked up
         [SerializeField] private PickupType _pickupType;
+        [SerializeField] private Weapon _weapon; //If this is a weapon pickup!
+        [SerializeField] private AudioClip _dropSound; //If this is a weapon pickup!
 
         private Collider2D _collider;
+        private bool _isReDrop;
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();
@@ -29,11 +34,48 @@ namespace UrbanNinja
         private void OnEnable()
         {
             _collider.enabled = true;
+            if (_isReDrop)
+            {
+                DropEffect();
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            
+            if(_pickupType == PickupType.Weapon)
+            {
+                Debug.Log("Picking up weapon");
+                PlayerController  p=  collision.GetComponent<PlayerController>();
+                if (p == null)
+                {
+                    p = collision.GetComponentInParent<PlayerController>();
+                    if (p != null)
+                    {
+                        if (p.HasWeapon()) return;
+                        _collider.enabled = false;
+                        Weapon weapon = Instantiate(_weapon, transform.position, Quaternion.identity);
+                        weapon.SetOwner(p.gameObject);
+                        weapon.SetPickUpInstance(this);
+                        p.AddWeapon(weapon);
+                        _isReDrop = true;
+                        gameObject.SetActive(false);
+                    }
+                    return;
+                }
+                else
+                {
+                    if (p.HasWeapon()) return;
+                    _collider.enabled = false;
+                    Weapon weapon = Instantiate(_weapon, transform.position, Quaternion.identity);
+                    weapon.SetOwner(p.gameObject);
+                    weapon.SetPickUpInstance(this);
+                    p.AddWeapon(weapon);
+                    _isReDrop = true;
+                    gameObject.SetActive(false);
+                }
+                return;
+            }
+            Debug.Log("THIS IS BAD");
             // Layer check (optional but recommended for security)
             if (_useLayerCheck)
             {
@@ -134,6 +176,33 @@ namespace UrbanNinja
                         break;
                 }
             }
+        }
+        public void DropEffect()
+        {
+            StartCoroutine(DropNBounce());
+        }
+        private IEnumerator DropNBounce()
+        {
+            Vector2 ground = transform.position - Vector3.up;
+            int bounces = 4;
+            Vector2 dir = Vector2.down;
+            Vector2 velocity = Vector2.zero;
+            
+            while (bounces > 0)
+            {
+                yield return new WaitForFixedUpdate();
+                velocity = velocity +  Vector2.up * (-200f * Time.fixedDeltaTime * Time.fixedDeltaTime);
+                transform.position += (Vector3)(velocity * Time.fixedDeltaTime);
+                if (transform.position.y <= ground.y)
+                {
+                    bounces--;
+                    velocity = -0.7f * velocity;
+                    transform.position = ground;
+                    SoundManager.Instance.PlaySound(_dropSound);
+                }
+            }
+            transform.position = ground;
+
         }
     }
 }

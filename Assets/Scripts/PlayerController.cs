@@ -12,6 +12,7 @@ namespace UrbanNinja
         [SerializeField] private DamageDealer _foot;
         [SerializeField] private AudioClip _jumpSound;
         [SerializeField] private AudioClip _hurtSound;
+        [SerializeField] private Weapon _weapon;
 
         private GameplayInput _inputActions;
         private Rigidbody2D _rigidbody2D;
@@ -305,6 +306,11 @@ namespace UrbanNinja
         {
             //Debug.Log("Fist ACTIVE");
             _fist.Activate();
+            if (_weapon != null)
+            {
+                _weapon.Attack(new Vector2(transform.localScale.x, 0));
+                _weapon = null;
+            }
         }
         /// <summary>
         /// This is method to be called from an
@@ -334,6 +340,17 @@ namespace UrbanNinja
             Debug.Log("Player death on animation end");
             GameManager.EndRound();
             SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
+        }
+        public void AddWeapon(Weapon weapon)
+        {
+            _weapon = weapon;
+            weapon.transform.position = _fist.transform.position;
+            weapon.transform.localScale = transform.localScale;
+            weapon.transform.SetParent(_fist.transform);
+        }
+        public bool HasWeapon()
+        {
+            return _weapon != null;
         }
     }
 
