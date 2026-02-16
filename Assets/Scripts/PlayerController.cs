@@ -107,11 +107,26 @@ namespace UrbanNinja
             if (_isDead) return;
             if (isDamage)
             {
-                if (HurtSound != null)
+                if (HurtSound != null && SoundManager.Instance != null)
                 {
                     SoundManager.Instance.PlaySound(HurtSound);
                 }
-                _animationHandler.Request(AnimationType.Damage);
+                if (_animationHandler != null)
+                {
+                    _animationHandler.Request(AnimationType.Damage);
+                }
+                
+                // Reset combo when player takes damage
+                if (ComboManager.Instance != null)
+                {
+                    ComboManager.Instance.ResetCombo();
+                }
+                
+                // Screen shake when player takes damage
+                if (ScreenShake.Instance != null)
+                {
+                    ScreenShake.Instance.ShakeMedium();
+                }
             }
         }
         private void FixedUpdate()

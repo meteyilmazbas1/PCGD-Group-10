@@ -66,7 +66,11 @@ namespace UrbanNinja
         private void OnDisable()
         {
             _tier.IncreaseTier();
-            _enemyHealth.OnDeathEvent -= OnDeath;
+            if (_enemyHealth != null)
+            {
+                _enemyHealth.OnDeathEvent -= OnDeath;
+                _enemyHealth.OnHealthChangedEvent -= OnHealthChaged;
+            }
         }
         private void Randomize()
         {
@@ -103,6 +107,14 @@ namespace UrbanNinja
         void FixedUpdate()
         {
             if (_stunned) return;
+            
+            // Re-acquire player reference if lost
+            if (_playerController == null)
+            {
+                _playerController = GameManager.GetPlayerController();
+                if (_playerController == null) return;
+            }
+            
             MoveToPlayer();
             FlipTransform();
             Attack();
@@ -112,8 +124,8 @@ namespace UrbanNinja
         {
             if (!_playerController.Alive)
             {
-                _animationHandler.Request(AnimationType.Idle);
-                _stunned = true;
+                if (_animationHandler != null) _animationHandler.Request(AnimationType.Idle);
+                return;
             }
             Vector2 positionDifference = _playerController.GetPositionRelativeToJump() - (Vector2)transform.position;
             _canAttack = true;
@@ -146,6 +158,7 @@ namespace UrbanNinja
         
         private void FlipTransform()
         {
+            if (_playerController == null) return;
             if (_movementDirection == Vector2.zero)
             {
                 float playerDirection = _playerController.GetPositionRelativeToJump().x - transform.position.x;

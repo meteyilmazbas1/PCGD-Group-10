@@ -55,6 +55,17 @@ namespace UrbanNinja
                         if (ComboManager.Instance != null)
                         {
                             ComboManager.Instance.RegisterHit();
+                            
+                            // Screen shake based on combo level
+                            if (ScreenShake.Instance != null)
+                            {
+                                if (ComboManager.Instance.CurrentCombo >= 15)
+                                    ScreenShake.Instance.ShakeHeavy();
+                                else if (ComboManager.Instance.CurrentCombo >= 5)
+                                    ScreenShake.Instance.ShakeMedium();
+                                else
+                                    ScreenShake.Instance.ShakeLight();
+                            }
                         }
 
                         if (_hitClips != null && _hitClips.Count > 0)
