@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace UrbanNinja
@@ -8,7 +9,8 @@ namespace UrbanNinja
         public enum PickupType
         {
             Health,
-            Score
+            Score,
+            Weapon
         }
         [SerializeField] private int _amount = 3;
         [SerializeField] private bool _useLayerCheck = true;
@@ -16,8 +18,12 @@ namespace UrbanNinja
         [SerializeField] private AudioClip _pickupSound; // Optional: Sound to play when picked up
         [SerializeField] private GameObject _pickupEffect; // Optional: Particle effect or visual effect to spawn when picked up
         [SerializeField] private PickupType _pickupType;
+        [SerializeField] private Weapon _weapon; //If this is a weapon pickup!
+        [SerializeField] private AudioClip _dropSound; //If this is a weapon pickup!
 
         private Collider2D _collider;
+        private bool _isReDrop;
+        public PickupType Type => _pickupType;
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();
@@ -29,70 +35,44 @@ namespace UrbanNinja
         private void OnEnable()
         {
             _collider.enabled = true;
+            if (_isReDrop)
+            {
+                DropEffect();
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            
-            // Layer check (optional but recommended for security)
-            if (_useLayerCheck)
-            {
-                if (collision.gameObject.layer != _playerLayer)
-                {
-                    // Also check parent in case collider is on child object
-                    if (collision.transform.parent == null ||
-                        collision.transform.parent.gameObject.layer != _playerLayer)
-                    {
-                        return; // Not on Player layer, ignore
-                    }
-                }
-            }
- 
+            IPickUpTaker pickUpTaker = collision.gameObject.GetComponent<IPickUpTaker>();
+            if (pickUpTaker == null) return;
+            if (!pickUpTaker.CanTake(this)) return;
 
-            bool flowControl = HandlePickup(collision);
-            if (!flowControl)
+            _collider.enabled = false;
+            if(_pickupType == PickupType.Weapon)
             {
+                Weapon weapon = Instantiate(_weapon, transform.position, Quaternion.identity);
+                weapon.SetOwner(collision.gameObject);
+                weapon.SetPickUpInstance(this);
+                pickUpTaker.TakeWeapon(weapon);
+                _isReDrop = true;
+                PlayPickupSound();
+                gameObject.SetActive(false);
                 return;
             }
-            _collider.enabled = false;
-            // Show UI message
+            else if (_pickupType == PickupType.Health)
+            {
+                pickUpTaker.TakeHealth(_amount);
+            }
+            else if(_pickupType == PickupType.Score)
+            {
+                pickUpTaker.TakeScore(_amount);
+            }
             ShowPickupMessage();
-
-            // Play sound effect if available
             PlayPickupSound();
-
-            // Spawn visual effect if available
             SpawnPickupEffect();
-
-            // Disable the pickup
             gameObject.SetActive(false);
         }
 
-        private bool HandlePickup(Collider2D collision)
-        {
-            if(_pickupType == PickupType.Health)
-            {
-                // Try to get Health component
-                var health = collision.GetComponent<Health>();
-                if (health == null)
-                {
-                    health = collision.GetComponentInParent<Health>();
-                }
-
-                if (health == null)
-                {
-                    return false;
-                }
-
-                health.Heal(_amount);
-                return true;
-            }
-            else
-            {
-                GameManager.AddScore(_amount);
-                return true;
-            }
-        }
 
         private void PlayPickupSound()
         {
@@ -132,6 +112,64 @@ namespace UrbanNinja
                     case PickupType.Score:
                         PickupMessageUI.Instance.ShowScoreMessage(_amount, transform);
                         break;
+                }
+            }
+        }
+        public void DropEffect()
+        {
+            StartCoroutine(DropNBounce());
+        }
+        /// <summary>
+        /// This routine makes the pickup bounce
+        /// a few times.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator DropNBounce()
+        {
+            Vector2 ground = transform.position - Vector3.up *.5f;
+            int bounces = 4;
+            Vector2 dir = Vector2.down;
+            Vector2 velocity = new Vector2(0, 3f);
+            yield return RandomBounceOff(ground.y);
+
+            while (bounces > 0)
+            {
+                yield return new WaitForFixedUpdate();
+                velocity = velocity +  Vector2.up * (-200f * Time.fixedDeltaTime * Time.fixedDeltaTime);
+                transform.position += (Vector3)(velocity * Time.fixedDeltaTime);
+                if (transform.position.y <= ground.y)
+                {
+                    bounces--;
+                    velocity = -0.5f * velocity;
+                    transform.position = new Vector2(transform.position.x, ground.y);
+                    SoundManager.Instance.PlaySound(_dropSound);
+                }
+            }
+            transform.position = new Vector2(transform.position.x, ground.y);
+            _collider.enabled = true;
+        }
+        /// <summary>
+        /// This routine will "throw" the pickup in a 
+        /// random direction.
+        /// </summary>
+        /// <param name="groundY"></param>
+        /// <returns></returns>
+        private IEnumerator RandomBounceOff(float groundY)
+        {
+            _collider.enabled = false;
+            float xVelocity = Random.Range(-1f, 1f) < 0 ? -1f: 1f;
+            float yVelocity = 3f;
+            Vector2 velocity = new Vector2(xVelocity, yVelocity);
+            while(transform.position.y > groundY)
+            {
+                yield return new WaitForFixedUpdate();
+                velocity = velocity + Vector2.down * (200f * Time.fixedDeltaTime * Time.fixedDeltaTime);
+                transform.position += (Vector3)(velocity * Time.fixedDeltaTime);
+                if (transform.position.y <= groundY)
+                {
+                    transform.position = new Vector2(transform.position.x, groundY);
+                    SoundManager.Instance.PlaySound(_dropSound);
+                    break;
                 }
             }
         }

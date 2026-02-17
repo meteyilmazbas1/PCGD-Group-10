@@ -81,11 +81,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 100
-  _jumpImpulse: 12
+  _jumpImpulse: 15
   _fist: {fileID: 642147925148560807}
   _foot: {fileID: 8282953844786271838}
   _jumpSound: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
   _hurtSound: {fileID: 8300000, guid: fb7c863df2baed84a98f5c604a40aab0, type: 3}
+  _weapon: {fileID: 0}
 --- !u!61 &4905476915708576259
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -466,13 +467,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8390373615918529238}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3139, y: 0.1793, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.07297704, w: 0.99733365}
+  m_LocalPosition: {x: 0.298, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4344489077367844541}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -8.37}
 --- !u!61 &1979864362921298198
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UrbanNinja.Input;
 
 namespace UrbanNinja
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IPickUpTaker
     {
         [SerializeField] private float _moveSpeed = 0.1f;
         [SerializeField] private float _jumpImpulse = 0.1f;
@@ -12,6 +12,7 @@ namespace UrbanNinja
         [SerializeField] private DamageDealer _foot;
         [SerializeField] private AudioClip _jumpSound;
         [SerializeField] private AudioClip _hurtSound;
+        [SerializeField] private Weapon _weapon;
 
         private GameplayInput _inputActions;
         private Rigidbody2D _rigidbody2D;
@@ -24,6 +25,7 @@ namespace UrbanNinja
         private AnimationHandler _animationHandler;
 
         private Health _playerHealth;
+        private SpriteRenderer _spriteRenderer;
 
         public bool Alive => !_isDead;
 
@@ -106,6 +108,11 @@ namespace UrbanNinja
             if (_isDead) return;
             if (isDamage)
             {
+                if(_weapon != null)
+                {
+                    _weapon.Drop();
+                    _weapon = null;
+                }
                 if (HurtSound != null && SoundManager.Instance != null)
                 {
                     SoundManager.Instance.PlaySound(HurtSound);
@@ -131,6 +138,10 @@ namespace UrbanNinja
         private void FixedUpdate()
         {
             Move();
+            if (_weapon != null)
+            {
+                _weapon.SetSortOrder(_spriteRenderer.sortingOrder-1);
+            }
         }
         /// <summary>
         /// Get position relative to jump level.
@@ -161,6 +172,7 @@ namespace UrbanNinja
             _collider = GetComponent<Collider2D>();
             _animationHandler = GetComponent<AnimationHandler>();
             _playerHealth = GetComponent<Health>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         /// <summary>
@@ -266,7 +278,7 @@ namespace UrbanNinja
         /// </summary>
         private void Punch()
         {
-            if (_movementBlocked || !isGrounded) return;
+            if (_movementBlocked || !isGrounded || _isDead) return;
             //Debug.Log("PUNCH!");
             _movementBlocked = true;
             _animationHandler.Request(AnimationType.Punch, onAnimationEnd: UnBlockMovement);
@@ -276,7 +288,7 @@ namespace UrbanNinja
         /// </summary>
         private void Kick()
         {
-            if (_movementBlocked || !isGrounded) return;
+            if (_movementBlocked || !isGrounded || _isDead) return;
             //Debug.Log("KICK!");
             _movementBlocked = true;
             _animationHandler.Request(AnimationType.Kick, onAnimationEnd: UnBlockMovement);
@@ -320,6 +332,11 @@ namespace UrbanNinja
         {
             //Debug.Log("Fist ACTIVE");
             _fist.Activate();
+            if (_weapon != null)
+            {
+                _weapon.Attack(new Vector2(transform.localScale.x, 0));
+                _weapon = null;
+            }
         }
         /// <summary>
         /// This is method to be called from an
@@ -349,6 +366,42 @@ namespace UrbanNinja
             Debug.Log("Player death on animation end");
             GameManager.EndRound();
             SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
+        }
+        public void AddWeapon(Weapon weapon)
+        {
+            _weapon = weapon;
+            weapon.transform.position = _fist.transform.position;
+            weapon.transform.localScale = transform.localScale;
+            weapon.transform.SetParent(_fist.transform);
+        }
+        public bool HasWeapon()
+        {
+            return _weapon != null;
+        }
+
+        public void TakeWeapon(Weapon weapon)
+        {
+            AddWeapon(weapon);
+        }
+        public void TakeHealth(int amount)
+        {
+            _playerHealth.Heal(amount);
+        }
+        public void TakeScore(int amount)
+        {
+            GameManager.AddScore(amount);
+        }
+
+        public bool CanTake(Pickup pickup)
+        {
+            if(pickup.Type == Pickup.PickupType.Weapon)
+            {
+                return !HasWeapon();
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 
