@@ -23,6 +23,7 @@ namespace UrbanNinja
 
         private Collider2D _collider;
         private bool _isReDrop;
+        public PickupType Type => _pickupType;
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();
@@ -42,99 +43,36 @@ namespace UrbanNinja
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            IPickUpTaker pickUpTaker = collision.gameObject.GetComponent<IPickUpTaker>();
+            if (pickUpTaker == null) return;
+            if (!pickUpTaker.CanTake(this)) return;
+
+            _collider.enabled = false;
             if(_pickupType == PickupType.Weapon)
             {
-                Debug.Log("Picking up weapon");
-                PlayerController  p=  collision.GetComponent<PlayerController>();
-                if (p == null)
-                {
-                    p = collision.GetComponentInParent<PlayerController>();
-                    if (p != null)
-                    {
-                        if (p.HasWeapon()) return;
-                        _collider.enabled = false;
-                        Weapon weapon = Instantiate(_weapon, transform.position, Quaternion.identity);
-                        weapon.SetOwner(p.gameObject);
-                        weapon.SetPickUpInstance(this);
-                        p.AddWeapon(weapon);
-                        _isReDrop = true;
-                        gameObject.SetActive(false);
-                    }
-                    return;
-                }
-                else
-                {
-                    if (p.HasWeapon()) return;
-                    _collider.enabled = false;
-                    Weapon weapon = Instantiate(_weapon, transform.position, Quaternion.identity);
-                    weapon.SetOwner(p.gameObject);
-                    weapon.SetPickUpInstance(this);
-                    p.AddWeapon(weapon);
-                    _isReDrop = true;
-                    gameObject.SetActive(false);
-                }
+                Weapon weapon = Instantiate(_weapon, transform.position, Quaternion.identity);
+                weapon.SetOwner(collision.gameObject);
+                weapon.SetPickUpInstance(this);
+                pickUpTaker.TakeWeapon(weapon);
+                _isReDrop = true;
+                PlayPickupSound();
+                gameObject.SetActive(false);
                 return;
             }
-            Debug.Log("THIS IS BAD");
-            // Layer check (optional but recommended for security)
-            if (_useLayerCheck)
+            else if (_pickupType == PickupType.Health)
             {
-                if (collision.gameObject.layer != _playerLayer)
-                {
-                    // Also check parent in case collider is on child object
-                    if (collision.transform.parent == null ||
-                        collision.transform.parent.gameObject.layer != _playerLayer)
-                    {
-                        return; // Not on Player layer, ignore
-                    }
-                }
+                pickUpTaker.TakeHealth(_amount);
             }
- 
-
-            bool flowControl = HandlePickup(collision);
-            if (!flowControl)
+            else if(_pickupType == PickupType.Score)
             {
-                return;
+                pickUpTaker.TakeScore(_amount);
             }
-            _collider.enabled = false;
-            // Show UI message
             ShowPickupMessage();
-
-            // Play sound effect if available
             PlayPickupSound();
-
-            // Spawn visual effect if available
             SpawnPickupEffect();
-
-            // Disable the pickup
             gameObject.SetActive(false);
         }
 
-        private bool HandlePickup(Collider2D collision)
-        {
-            if(_pickupType == PickupType.Health)
-            {
-                // Try to get Health component
-                var health = collision.GetComponent<Health>();
-                if (health == null)
-                {
-                    health = collision.GetComponentInParent<Health>();
-                }
-
-                if (health == null)
-                {
-                    return false;
-                }
-
-                health.Heal(_amount);
-                return true;
-            }
-            else
-            {
-                GameManager.AddScore(_amount);
-                return true;
-            }
-        }
 
         private void PlayPickupSound()
         {
@@ -181,13 +119,19 @@ namespace UrbanNinja
         {
             StartCoroutine(DropNBounce());
         }
+        /// <summary>
+        /// This routine makes the pickup bounce
+        /// a few times.
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator DropNBounce()
         {
-            Vector2 ground = transform.position - Vector3.up;
+            Vector2 ground = transform.position - Vector3.up *.5f;
             int bounces = 4;
             Vector2 dir = Vector2.down;
-            Vector2 velocity = Vector2.zero;
-            
+            Vector2 velocity = new Vector2(0, 3f);
+            yield return RandomBounceOff(ground.y);
+
             while (bounces > 0)
             {
                 yield return new WaitForFixedUpdate();
@@ -196,13 +140,38 @@ namespace UrbanNinja
                 if (transform.position.y <= ground.y)
                 {
                     bounces--;
-                    velocity = -0.7f * velocity;
-                    transform.position = ground;
+                    velocity = -0.5f * velocity;
+                    transform.position = new Vector2(transform.position.x, ground.y);
                     SoundManager.Instance.PlaySound(_dropSound);
                 }
             }
-            transform.position = ground;
-
+            transform.position = new Vector2(transform.position.x, ground.y);
+            _collider.enabled = true;
+        }
+        /// <summary>
+        /// This routine will "throw" the pickup in a 
+        /// random direction.
+        /// </summary>
+        /// <param name="groundY"></param>
+        /// <returns></returns>
+        private IEnumerator RandomBounceOff(float groundY)
+        {
+            _collider.enabled = false;
+            float xVelocity = Random.Range(-1f, 1f) < 0 ? -1f: 1f;
+            float yVelocity = 3f;
+            Vector2 velocity = new Vector2(xVelocity, yVelocity);
+            while(transform.position.y > groundY)
+            {
+                yield return new WaitForFixedUpdate();
+                velocity = velocity + Vector2.down * (200f * Time.fixedDeltaTime * Time.fixedDeltaTime);
+                transform.position += (Vector3)(velocity * Time.fixedDeltaTime);
+                if (transform.position.y <= groundY)
+                {
+                    transform.position = new Vector2(transform.position.x, groundY);
+                    SoundManager.Instance.PlaySound(_dropSound);
+                    break;
+                }
+            }
         }
     }
 }

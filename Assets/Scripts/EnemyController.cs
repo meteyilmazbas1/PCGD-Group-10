@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UrbanNinja
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class EnemyController : MonoBehaviour
+    public class EnemyController : MonoBehaviour, IPickUpTaker
     {
         [SerializeField] private EnemyData _enemyData;
         [SerializeField] private DamageDealer _fist;   // ADDED
@@ -29,6 +29,8 @@ namespace UrbanNinja
         private Rigidbody2D _rb;
         private SpriteRenderer _spriteRenderer;
         private Blinker _blinker;
+        private Weapon _weapon;
+        private Collider2D _collider;
         private void Awake()
         {
             _tier = new EnemyTier();
@@ -56,6 +58,7 @@ namespace UrbanNinja
             {
                 GetReferences();
             }
+            _collider.enabled = true;
             _enemyHealth.OnDeathEvent += OnDeath;
             _enemyHealth.OnHealthChangedEvent += OnHealthChaged;
             //DisableFistAndFoot();
@@ -89,12 +92,18 @@ namespace UrbanNinja
             _blinker.SetSpriteRenderer(_spriteRenderer);
 
             _rb.gravityScale = 0f;
+            _collider = GetComponent<Collider2D>();
         }
         private bool _stunned = false;
         private void OnHealthChaged(int value, bool isDamage = false)
         {
             _stunned = true;
             //DisableFistAndFoot();
+            if(_weapon != null)
+            {
+                _weapon.Drop();
+                _weapon = null;
+            }
             if (_enemyHealth.CurrentHealth <= 0) return;
             _blinker.BlinkDamage();
             _animationHandler.Request(AnimationType.Damage, onAnimationEnd: UnStun);
@@ -118,6 +127,10 @@ namespace UrbanNinja
             MoveToPlayer();
             FlipTransform();
             Attack();
+            if (_weapon != null)
+            {
+                _weapon.SetSortOrder(_spriteRenderer.sortingOrder - 1);
+            }
         }
         
         private void MoveToPlayer()
@@ -154,6 +167,10 @@ namespace UrbanNinja
                 _animationHandler.Request(AnimationType.Idle);
             }
             transform.Translate(_movementDirection.normalized * _XmovementSpeed * _movementRandomizer * Time.deltaTime);
+            if(_weapon != null)
+            {
+                _canAttack = true;
+            }
         }
         
         private void FlipTransform()
@@ -204,6 +221,11 @@ namespace UrbanNinja
         public void ActivateFist()
         {
             _fist.Activate();
+            if (_weapon != null)
+            {
+                _weapon.Attack(new Vector2(transform.localScale.x, 0));
+                _weapon = null;
+            }
             /*
             if (_fist != null && !_fist.gameObject.activeSelf)
             {
@@ -224,6 +246,7 @@ namespace UrbanNinja
         }
         private void OnDeath()
         {
+            _collider.enabled = false;
             if(Random.Range(0,1f)<0.4f) RandomLootService.RequestLoot(transform.position);
             GameManager.AddScore(_enemyData.ScoreYield * _tier.TierLevel);
             StartCoroutine(KnockBack());
@@ -260,6 +283,44 @@ namespace UrbanNinja
             }
             yield return new WaitForSecondsRealtime(2f);
             gameObject.SetActive(false);
+        }
+
+        public void Take()
+        {
+            throw new System.NotImplementedException();
+        }
+        public void AddWeapon(Weapon weapon)
+        {
+            _weapon = weapon;
+            weapon.transform.position = _fist.transform.position;
+            weapon.transform.localScale = transform.localScale;
+            weapon.transform.SetParent(_fist.transform);
+        }
+
+        public bool CanTake(Pickup pickup)
+        {
+            if (pickup.Type == Pickup.PickupType.Weapon && _weapon == null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void TakeWeapon(Weapon weapon)
+        {
+            AddWeapon(weapon);
+        }
+
+        public void TakeHealth(int amount)
+        {
+            //NOT applicaple on enemies
+            throw new System.NotImplementedException();
+        }
+
+        public void TakeScore(int amount)
+        {
+            //NOT applicaple on enemies
+            throw new System.NotImplementedException();
         }
     }
 

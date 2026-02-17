@@ -8,18 +8,26 @@ namespace UrbanNinja
         [SerializeField] protected WeaponData _data;
         protected Pickup _pickUpInstance;
         protected GameObject _owner;
+        private SpriteRenderer _spriteRenderer;
+        private void Awake()
+        {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
         public void SetOwner(GameObject owner)
         {
-            Debug.LogWarning("WEAPON OWNER IS "+owner.name);
             _owner = owner;
         }
         public void SetPickUpInstance(Pickup pickup)
         {
             _pickUpInstance = pickup;
         }
+        public void SetSortOrder(int order)
+        {
+            _spriteRenderer.sortingOrder = order;
+        }
         protected abstract void DealDamage(Health damageTargetHealth);
         protected abstract void Animate();
         public abstract void Attack(Vector2 attackDirection);
-        protected abstract void Drop();
+        public abstract void Drop();
     }
 }

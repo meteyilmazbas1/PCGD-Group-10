@@ -25,32 +25,16 @@ namespace UrbanNinja
         {
             damageTargetHealth.TakeDamage(_data.Damage);
         }
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
 
-            if (collision.gameObject == _owner) return;
-            if (!_isThrowing) return;
-            _isThrowing = false;
-            StopCoroutine(_spinRoutine);
-            DealDamage(FindHealthComponentInTarget(collision.gameObject));
-            Debug.Log("COLLISION HIT " + collision.gameObject.name);
-            Destroy(gameObject);
-
-        }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log($"COLLISION: owner= {_owner} collision= {collision.gameObject}");
             if (collision.gameObject == _owner) return;
-            if (collision.gameObject.GetComponent<DamageDealer>() != null) return;
+            if (collision.gameObject.GetComponent<IPickUpTaker>() == null) return;
             if (!_isThrowing) return;
             _isThrowing = false;
             StopCoroutine(_spinRoutine);
             DealDamage(FindHealthComponentInTarget(collision.gameObject));
-            Debug.Log("TRIGGER HIT " + collision.gameObject.name);
-            _pickUpInstance.gameObject.transform.position = transform.position;
-            _pickUpInstance.gameObject.SetActive(true);
-            
-            Destroy(gameObject);
+            Drop();
         }
         private Health FindHealthComponentInTarget(GameObject target)
         {
@@ -62,9 +46,12 @@ namespace UrbanNinja
             return health;
         }
 
-        protected override void Drop()
+        public override void Drop()
         {
-            throw new System.NotImplementedException();
+            transform.parent = null;
+            _pickUpInstance.gameObject.transform.position = transform.position;
+            _pickUpInstance.gameObject.SetActive(true);
+            Destroy(gameObject);
         }
         private IEnumerator FlySpin()
         {
