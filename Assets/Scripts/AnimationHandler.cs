@@ -50,7 +50,6 @@ namespace UrbanNinja
         {
             switch (type)
             {
- 
                 case AnimationType.Walk:
                     _animator.SetBool("walk", true);
                     _animator.SetBool("idle", false);
@@ -63,6 +62,7 @@ namespace UrbanNinja
                     _animator.SetBool("walk", false);
                     _animator.SetBool("idle", false);
                     _animator.SetTrigger("jump");
+                    _animator.SetTrigger("roll");
                     //_animator.ResetTrigger("jump");
                     break;
                 case AnimationType.Punch:
