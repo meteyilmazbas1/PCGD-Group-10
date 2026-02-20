@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UrbanNinja
@@ -31,12 +32,15 @@ namespace UrbanNinja
         private Blinker _blinker;
         private Weapon _weapon;
         private Collider2D _collider;
+        private bool _isAlive = true;
+        private Coroutine _wanderRoutine;
         private void Awake()
         {
             _tier = new EnemyTier();
             _fist.SetOwner(gameObject);
             _foot.SetOwner(gameObject);
             GetReferences();
+            _animationHandler.SetAnimationData(_enemyData.AnimationData);
             Randomize();
             //DisableFistAndFoot();  // ADDED
             SetStats();
@@ -53,11 +57,13 @@ namespace UrbanNinja
         }
         private void OnEnable()
         {
+            _weapon = null;
             UnStun();
             if(_enemyHealth == null)
             {
                 GetReferences();
             }
+            _isAlive = true;
             _collider.enabled = true;
             _enemyHealth.OnDeathEvent += OnDeath;
             _enemyHealth.OnHealthChangedEvent += OnHealthChaged;
@@ -115,24 +121,72 @@ namespace UrbanNinja
         }
         void FixedUpdate()
         {
+            if (!_isAlive) return;
             if (_stunned) return;
-            
+
+
             // Re-acquire player reference if lost
             if (_playerController == null)
             {
                 _playerController = GameManager.GetPlayerController();
                 if (_playerController == null) return;
             }
-            
-            MoveToPlayer();
+
+            if (_playerController.Alive)
+            {
+                MoveToPlayer();
+            }
+            else if (_wanderRoutine == null)
+            {
+                _wanderRoutine = StartCoroutine(Wander());
+            }
+
             FlipTransform();
+            ReduceCooldown();
             Attack();
+            RangedAttack();
             if (_weapon != null)
             {
                 _weapon.SetSortOrder(_spriteRenderer.sortingOrder - 1);
             }
         }
-        
+
+        private void ReduceCooldown()
+        {
+            _attackCooldown -= Time.fixedDeltaTime;
+        }
+
+        /// <summary>
+        /// This routine makes the enemy wander around aimlessly.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator Wander()
+        {
+            Vector2 target = new Vector2(transform.position.x + Random.Range(-20,20),Random.Range(-.45f, 1.4f));
+            _canAttack = false;
+            while (!_playerController.Alive)
+            {
+                Vector2 positionDifference = target - (Vector2)transform.position;
+                _movementDirection = Vector2.zero;
+                if (Mathf.Abs(positionDifference.x) > .1f)
+                {
+                    _movementDirection = (target - (Vector2)transform.position).normalized; ;
+                }
+                if (_movementDirection != Vector2.zero)
+                {
+                    _animationHandler.Request(AnimationType.Walk);
+                }
+                else
+                {
+                    _animationHandler.Request(AnimationType.Idle);
+                    yield return new WaitForSecondsRealtime(2f);
+                    target =  new Vector2(transform.position.x+ Random.Range(-20, 20), Random.Range(-0.45f, 1.4f));
+
+                }
+                transform.Translate(_movementDirection.normalized * _XmovementSpeed * _movementRandomizer * Time.fixedDeltaTime);
+                yield return new WaitForFixedUpdate();
+            }
+        }
         private void MoveToPlayer()
         {
             if (!_playerController.Alive)
@@ -166,11 +220,8 @@ namespace UrbanNinja
             {
                 _animationHandler.Request(AnimationType.Idle);
             }
-            transform.Translate(_movementDirection.normalized * _XmovementSpeed * _movementRandomizer * Time.deltaTime);
-            if(_weapon != null)
-            {
-                _canAttack = true;
-            }
+            transform.Translate(_movementDirection.normalized * _XmovementSpeed * _movementRandomizer
+                * Time.fixedDeltaTime);
         }
         
         private void FlipTransform()
@@ -186,18 +237,30 @@ namespace UrbanNinja
                 transform.localScale = _movementDirection.x > 0 ? _right : _left;
             }
         }
-        
+        private void RangedAttack()
+        {
+            if (!_playerController.Alive) return;
+            if(_weapon == null) return;
+            if (_attackCooldown > 0) return;
+            if((transform.position - _playerController.transform.position).magnitude <
+                _enemyData.RangedAttackDistance)
+            {
+                _fist.PlaySwoosh();
+                _animationHandler.Request(AnimationType.Punch);
+                _attackCooldown = _baseCooldown;
+            } 
+        }
         private void Attack()
         {
             if (!_canAttack) return;
             if (_attackCooldown > 0)
             {
-                _attackCooldown -= Time.deltaTime;
                 return;
             }
             _attackCooldown = _baseCooldown;
             int select = Random.Range(0,2);
             AnimationType attack = select == 1 ? AnimationType.Punch : AnimationType.Kick;
+            _fist.PlaySwoosh();
             _animationHandler.Request(attack);  // CHANGED
             //Debug.Log($"Enemy {_enemyData.Name} attacking player");
         }
@@ -246,6 +309,8 @@ namespace UrbanNinja
         }
         private void OnDeath()
         {
+            if (!_isAlive) return;
+            _isAlive = false;
             _collider.enabled = false;
             if(Random.Range(0,1f)<0.4f) RandomLootService.RequestLoot(transform.position);
             GameManager.AddScore(_enemyData.ScoreYield * _tier.TierLevel);

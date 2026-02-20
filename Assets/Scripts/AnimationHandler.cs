@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace UrbanNinja
@@ -18,23 +19,31 @@ namespace UrbanNinja
         private Animator _animator;
         public delegate void OnAnimationTrigger();
         private OnAnimationTrigger _onAnimationEnd;
+        private AnimationData _animationData;
         private void Awake()
         {
             _animator = GetComponent<Animator>();
         }
-
+        public void SetAnimationData(AnimationData data)
+        {
+            _animationData = data;
+        }
         public void Request(AnimationType type, OnAnimationTrigger onAnimationEnd = null)
         {
-            ResolveAnimation(type);
             if(onAnimationEnd != null)
             {
-                //if (_onAnimationEnd != null) _onAnimationEnd.Invoke();
                 _onAnimationEnd = onAnimationEnd;
             }
+            ResolveAnimation(type);
         }
         private void OnDisable()
         {
             _onAnimationEnd = null;
+        }
+        private void OnEnable()
+        {
+            if (_animator == null) return;
+            _animator.SetBool("isDead", false);
         }
         /// <summary>
         /// Method to be called from an animation event
@@ -45,7 +54,14 @@ namespace UrbanNinja
             _onAnimationEnd?.Invoke();
             _onAnimationEnd = null;
         }
-
+        public void CancelAll()
+        {
+            _animator.SetBool("walk", false);
+            _animator.SetBool("idle", false);
+            _animator.ResetTrigger("jump");
+            _animator.ResetTrigger("roll");
+            _animator.ResetTrigger("kick");
+        }
         private void ResolveAnimation(AnimationType type)
         {
             switch (type)
@@ -63,31 +79,32 @@ namespace UrbanNinja
                     _animator.SetBool("idle", false);
                     _animator.SetTrigger("jump");
                     _animator.SetTrigger("roll");
-                    //_animator.ResetTrigger("jump");
                     break;
                 case AnimationType.Punch:
                     _animator.SetBool("walk", false);
                     _animator.SetBool("idle", false);
-                    _animator.SetTrigger("punch");
-                    //_animator.ResetTrigger("punch");
+                    int randomPunchIndex = Random.Range(0, _animationData.Punches.Count());
+                    _animator.SetTrigger(_animationData.Punches.ElementAt(randomPunchIndex));
                     break;
                 case AnimationType.Kick:
                     _animator.SetBool("walk", false);
                     _animator.SetBool("idle", false);
-                    _animator.SetTrigger("kick");
-                    //_animator.ResetTrigger("kick");
+                    int randomkickIndex = Random.Range(0, _animationData.Kicks.Count());
+                    string kick = _animationData.Kicks.ElementAt(randomkickIndex);
+                    Debug.Log("KICK: "+ kick);
+                    _animator.SetTrigger(kick);
                     break;
                 case AnimationType.Damage:
                     _animator.SetBool("walk", false);
                     _animator.SetBool("idle", false);
                     _animator.SetTrigger("damage");
-                    //_animator.ResetTrigger("kick");
                     break;
                 case AnimationType.Death:
-                    _animator.SetBool("walk", false);
-                    _animator.SetBool("idle", false);
+                    //_animator.SetBool("walk", false);
+                    //_animator.SetBool("idle", false);
+                    CancelAll();
+                    _animator.SetBool("isDead", true);
                     _animator.SetTrigger("die");
-                    //_animator.ResetTrigger("kick");
                     break;
                 default:
                     _animator.SetBool("walk", false);

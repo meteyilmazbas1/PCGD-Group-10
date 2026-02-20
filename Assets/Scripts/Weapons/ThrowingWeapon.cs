@@ -9,6 +9,7 @@ namespace UrbanNinja
         private bool _isThrowing;
         private Coroutine _spinRoutine;
         private Vector2 _attackDirection;
+        private bool _dropped = false;
         public override void Attack(Vector2 attackDirection)
         {
             transform.parent = null;
@@ -28,10 +29,13 @@ namespace UrbanNinja
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (_dropped) return;
             if (collision.gameObject == _owner) return;
             if (collision.gameObject.GetComponent<IPickUpTaker>() == null) return;
             if (!_isThrowing) return;
+
             _isThrowing = false;
+            PlayHitSound();
             StopCoroutine(_spinRoutine);
             DealDamage(FindHealthComponentInTarget(collision.gameObject));
             Drop();
@@ -48,9 +52,12 @@ namespace UrbanNinja
 
         public override void Drop()
         {
+            _dropped = true;
             transform.parent = null;
-            _pickUpInstance.gameObject.transform.position = transform.position;
+            _owner = null;
             _pickUpInstance.gameObject.SetActive(true);
+            _pickUpInstance.gameObject.transform.position = transform.position;
+            _pickUpInstance.DropEffect();
             Destroy(gameObject);
         }
         private IEnumerator FlySpin()

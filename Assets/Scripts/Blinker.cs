@@ -60,5 +60,7 @@ public class Blinker : MonoBehaviour
             
             _spriteRenderer.color = i%2==0? color1: color2;
         }
+        color2.a = 0f;
+        _spriteRenderer.color = color2;
     }
 }

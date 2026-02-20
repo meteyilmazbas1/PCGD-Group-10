@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 812fab8470975b44b88cfadf91ec23e6, type: 3}
-  m_Name: weapon_throwing_knife
+  m_Name: weeapon_baton
   m_EditorClassIdentifier: 
-  _damage: 5
+  _damage: 2
+  _hitSound: {fileID: 8300000, guid: f8f778d9ec1bd894486d46ffd8de2af8, type: 3}

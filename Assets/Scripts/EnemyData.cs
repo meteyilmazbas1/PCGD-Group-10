@@ -14,11 +14,13 @@ namespace UrbanNinja
     {
         [SerializeField] private float _attackPower;
         [SerializeField] private float _attackDistance;
+        [SerializeField] private float _rangedAttackDistance;
         [SerializeField] private float _movementSpeedX;
         [SerializeField] private float _movementSpeedY;
         [SerializeField] private string _name;
         [SerializeField] private int _hitPoints;
         [SerializeField] private int _scoreYield;
+        [SerializeField] private AnimationData _animationData;
 
         public float AttackPower => _attackPower;
         public float AttackDistance => _attackDistance;
@@ -27,5 +29,7 @@ namespace UrbanNinja
         public string Name => _name;
         public int HitPoints => _hitPoints;
         public int ScoreYield => _scoreYield;
+        public AnimationData AnimationData => _animationData;
+        public float RangedAttackDistance => _rangedAttackDistance;
     }
 }

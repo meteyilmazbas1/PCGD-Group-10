@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackPower: 2
   _attackDistance: 0.4
+  _rangedAttackDistance: 5
   _movementSpeedX: 0.6
   _movementSpeedY: 0.2
   _name: Chonker
   _hitPoints: 3
   _scoreYield: 350
+  _animationData: {fileID: 11400000, guid: 4daffc1cd6b93db478facf1affb72340, type: 2}
