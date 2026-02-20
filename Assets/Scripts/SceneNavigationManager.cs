@@ -10,27 +10,20 @@ namespace UrbanNinja
 
         private InputAction escapeAction;
 
-        // [Header("UI Panels Prefabs")]
-        //[SerializeField] GameObject pauseUIPrefab;
-        //[SerializeField] PauseUI pauseUI;
+        [Header("UI Panels Prefabs")]
+        [SerializeField] GameObject pauseUIPrefab;
+        [SerializeField] PauseUI pauseUI;
 
         void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(this);
-            }
+            if (Instance == null) { Instance = this; }
+            else { Destroy(this); }
             DontDestroyOnLoad(this);
         }
 
 
         private void OnEnable()
         {
-
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             if (escapeAction == null)
@@ -45,6 +38,7 @@ namespace UrbanNinja
             //{
             //   escapeAction.Disable();
             // };
+
         }
 
         private void OnDisable()
@@ -62,7 +56,25 @@ namespace UrbanNinja
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             //Re-enable escape action on scene load
-            escapeAction.Enable();
+            
+            if (scene.buildIndex == (int)Scenes.GameScene)
+            {
+                IntroController introController = FindFirstObjectByType<IntroController>();
+                if (introController != null)
+                {
+                    introController.OnIntroStarted += (sender, args) =>
+                    {
+                        escapeAction.Disable();
+                    };
+                    introController.OnIntroFinished += (sender, args) =>
+                    {
+                        escapeAction.Enable();
+                    };
+                }
+            }else
+            {
+                escapeAction.Enable();
+            }
         }
 
         private void OnEscapePressed()
@@ -73,24 +85,23 @@ namespace UrbanNinja
             }
             else if (SceneManager.GetActiveScene().buildIndex == (int)Scenes.GameScene)
             {
-
                 if (Time.timeScale == 1)
                 {
                     //CursorManager.s_instance.ToggleCursor(true);
-                    print("Spawn Pause Menu");
+                    //print("Spawn Pause Menu");
                     Time.timeScale = 0;
-                    //if (pauseUI == null)
-                    //{
-                    //pauseUI = Instantiate(pauseUIPrefab, null).GetComponent<PauseUI>();
-                    //}
-                    //pauseUI.gameObject.SetActive(true);
+                    if (pauseUI == null)
+                    {
+                    pauseUI = Instantiate(pauseUIPrefab, null).GetComponent<PauseUI>();
+                    }
+                    pauseUI.gameObject.SetActive(true);
                 }
                 else
                 {
                     //CursorManager.s_instance.ToggleCursor(false);
-                    print("Close Pause Menu");
+                    //print("Close Pause Menu");
                     Time.timeScale = 1;
-                    //pauseUI.Close();
+                    pauseUI.Close();
                 }
             }
         }

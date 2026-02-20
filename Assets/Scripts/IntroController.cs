@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,25 +7,36 @@ namespace UrbanNinja
 {
     public class IntroController : MonoBehaviour
     {
+        public event EventHandler OnIntroStarted;
+        public event EventHandler OnIntroFinished;
+
         [SerializeField] Image m_overlayerImage;
         [SerializeField] Image m_introImage;
         [SerializeField] float m_fadeRate;
-        void Start()
+        IEnumerator Start()
         {
+            OnIntroStarted?.Invoke(this, EventArgs.Empty);
             Time.timeScale = 0f;
-            StartCoroutine(IntroSequence());
+
+            yield return Fade(0f);
+            yield return new WaitForSecondsRealtime(5f);
+            yield return Fade(1f);
+
+            gameObject.SetActive(false);
+            //StartCoroutine(IntroSequence());
         }
-        private IEnumerator IntroSequence()
+        /*private IEnumerator IntroSequence()
         {
             yield return Fade(0f);
             yield return new WaitForSecondsRealtime(5f);
             yield return Fade(1f);
             
             gameObject.SetActive(false);
-        }
+        }*/
         private void OnDisable()
         {
             Time.timeScale = 1f;
+            OnIntroFinished?.Invoke(this, EventArgs.Empty);
         }
         private IEnumerator Fade(float targetAlpha)
         {
