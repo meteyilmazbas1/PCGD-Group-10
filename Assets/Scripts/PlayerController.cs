@@ -372,7 +372,6 @@ namespace UrbanNinja
         private IEnumerator WaitAfterDeath()
         {
             yield return new WaitForSecondsRealtime(2f);
-            Debug.Log("Player death on animation end");
             GameManager.EndRound();
             SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
         }

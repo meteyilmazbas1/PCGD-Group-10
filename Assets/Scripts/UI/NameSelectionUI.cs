@@ -26,8 +26,18 @@ namespace UrbanNinja
         {
             playButton.onClick.AddListener(PlayButtonAction);
             menuButton.onClick.AddListener(MenuButtonAction);
+        }
+
+        void OnEnable()
+        {
             _scrollLetterUp.action.performed += ctx => OnScrollUp();
             _scrollLetterDown.action.performed += ctx => OnScrollDown();
+        }
+
+        void OnDisable()
+        {
+            _scrollLetterUp.action.performed -= ctx => OnScrollUp();
+            _scrollLetterDown.action.performed -= ctx => OnScrollDown();
         }
 
         void Start()
@@ -38,13 +48,6 @@ namespace UrbanNinja
         void Update()
         {
             HandleSlotSwitch();
-            //HandleLetterChange();
-            /*
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Return))
-            {
-                print("Current Initials: " + GetInitials());
-                EventSystem.current.SetSelectedGameObject(playButton.gameObject);
-            }*/
         }
 
         void HandleSlotSwitch()
@@ -67,20 +70,6 @@ namespace UrbanNinja
                 selectedSlot = -1;
             }
         }
-        /*
-        void HandleLetterChange()
-        {
-            
-
-            if (UnityEngine.Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                OnScrollDown();
-            }
-            else if (UnityEngine.Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                OnScrollUp();
-            }
-        }*/
 
         private void OnScrollUp()
         {
@@ -90,6 +79,7 @@ namespace UrbanNinja
                 letterIndices[selectedSlot] = LETTER_COUNT - 1;
 
             UpdateSlot(selectedSlot);
+            SoundManager.Instance.PlaySubmit();
         }
 
         private void OnScrollDown()
@@ -99,6 +89,7 @@ namespace UrbanNinja
                 (letterIndices[selectedSlot] + 1) % LETTER_COUNT;
 
             UpdateSlot(selectedSlot);
+            SoundManager.Instance.PlaySubmit();
         }
 
         void UpdateSlot(int index)

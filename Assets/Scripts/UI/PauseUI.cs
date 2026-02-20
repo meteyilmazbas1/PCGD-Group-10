@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UrbanNinja
@@ -13,10 +14,7 @@ namespace UrbanNinja
         [Header("OptionUI")]
         [SerializeField] GameObject optionsUIPrefab;
         [SerializeField] OptionsUI optionsUI;
-        private void OnEnable()
-        {
-            //GlobalEvents.SendPauseGame(true);
-        }
+
         void Awake()
         {
             continueButton.onClick.AddListener(ContinueButtonAction);
@@ -25,6 +23,12 @@ namespace UrbanNinja
 
             optionsUI = Instantiate(optionsUIPrefab, null).GetComponent<OptionsUI>();
             optionsUI.gameObject.SetActive(false);
+        }
+
+        private void OnEnable()
+        {
+            //GlobalEvents.SendPauseGame(true);
+            EventSystem.current.SetSelectedGameObject(continueButton.gameObject);
         }
 
         void ContinueButtonAction()

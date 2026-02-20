@@ -343,18 +343,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 936019349538409108, guid: bc7a1ff037195f643828ef8e7cfa997b, type: 3}
-      propertyPath: m_fontSize
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 936019349538409108, guid: bc7a1ff037195f643828ef8e7cfa997b, type: 3}
-      propertyPath: m_fontStyle
-      value: 33
-      objectReference: {fileID: 0}
-    - target: {fileID: 936019349538409108, guid: bc7a1ff037195f643828ef8e7cfa997b, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 5006178267461400998, guid: bc7a1ff037195f643828ef8e7cfa997b, type: 3}
       propertyPath: m_Name
       value: ScoreBoardUI
@@ -438,18 +426,6 @@ PrefabInstance:
     - target: {fileID: 7589999761255157692, guid: bc7a1ff037195f643828ef8e7cfa997b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8846497697403676285, guid: bc7a1ff037195f643828ef8e7cfa997b, type: 3}
-      propertyPath: m_fontSize
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 8846497697403676285, guid: bc7a1ff037195f643828ef8e7cfa997b, type: 3}
-      propertyPath: m_fontStyle
-      value: 33
-      objectReference: {fileID: 0}
-    - target: {fileID: 8846497697403676285, guid: bc7a1ff037195f643828ef8e7cfa997b, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
