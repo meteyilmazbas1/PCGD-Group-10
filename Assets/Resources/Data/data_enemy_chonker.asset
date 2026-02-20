@@ -21,3 +21,8 @@ MonoBehaviour:
   _hitPoints: 3
   _scoreYield: 350
   _animationData: {fileID: 11400000, guid: 4daffc1cd6b93db478facf1affb72340, type: 2}
+  _possibleWeapons:
+  - {fileID: 4141108053794428644, guid: 34898dace2d4480409d01f1e580134fc, type: 3}
+  - {fileID: 5452867352083750001, guid: f55ba59803d84524ea762fb6c9ae4bf6, type: 3}
+  _lootDropChance: 0.4
+  _spawnWithWeaponChance: 0.1

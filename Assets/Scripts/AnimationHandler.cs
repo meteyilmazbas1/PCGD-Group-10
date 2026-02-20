@@ -91,7 +91,6 @@ namespace UrbanNinja
                     _animator.SetBool("idle", false);
                     int randomkickIndex = Random.Range(0, _animationData.Kicks.Count());
                     string kick = _animationData.Kicks.ElementAt(randomkickIndex);
-                    Debug.Log("KICK: "+ kick);
                     _animator.SetTrigger(kick);
                     break;
                 case AnimationType.Damage:
@@ -100,8 +99,6 @@ namespace UrbanNinja
                     _animator.SetTrigger("damage");
                     break;
                 case AnimationType.Death:
-                    //_animator.SetBool("walk", false);
-                    //_animator.SetBool("idle", false);
                     CancelAll();
                     _animator.SetBool("isDead", true);
                     _animator.SetTrigger("die");

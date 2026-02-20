@@ -7,6 +7,7 @@ namespace UrbanNinja
     public abstract class Weapon : MonoBehaviour
     {
         [SerializeField] protected WeaponData _data;
+        [SerializeField] protected Pickup _pickupPrefab;
         protected Pickup _pickUpInstance;
         protected GameObject _owner;
         private SpriteRenderer _spriteRenderer;

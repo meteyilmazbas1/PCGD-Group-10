@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: _data
       value: 
       objectReference: {fileID: 11400000, guid: bbefb4303a43bb940a40b589e2eb2503, type: 2}
+    - target: {fileID: 5452867352083750001, guid: f55ba59803d84524ea762fb6c9ae4bf6, type: 3}
+      propertyPath: _pickupPrefab
+      value: 
+      objectReference: {fileID: 7355018985304034460, guid: 5eb62e84e2b1f504593fff63d6a46d0b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -58,6 +58,8 @@ namespace UrbanNinja
         private void OnEnable()
         {
             _weapon = null;
+
+
             UnStun();
             if(_enemyHealth == null)
             {
@@ -79,6 +81,10 @@ namespace UrbanNinja
             {
                 _enemyHealth.OnDeathEvent -= OnDeath;
                 _enemyHealth.OnHealthChangedEvent -= OnHealthChaged;
+            }
+            if(_weapon != null)
+            {
+                Destroy(_weapon);
             }
         }
         private void Randomize()
@@ -312,7 +318,7 @@ namespace UrbanNinja
             if (!_isAlive) return;
             _isAlive = false;
             _collider.enabled = false;
-            if(Random.Range(0,1f)<0.4f) RandomLootService.RequestLoot(transform.position);
+            if(Random.Range(0,1f) < _enemyData.LootDropChange) RandomLootService.RequestLoot(transform.position);
             GameManager.AddScore(_enemyData.ScoreYield * _tier.TierLevel);
             StartCoroutine(KnockBack());
         }
@@ -359,6 +365,7 @@ namespace UrbanNinja
             _weapon = weapon;
             weapon.transform.position = _fist.transform.position;
             weapon.transform.localScale = transform.localScale;
+            weapon.SetOwner(gameObject);
             weapon.transform.SetParent(_fist.transform);
         }
 
@@ -386,6 +393,16 @@ namespace UrbanNinja
         {
             //NOT applicaple on enemies
             throw new System.NotImplementedException();
+        }
+        public void RandomizeWeaponWield()
+        {
+            if (Random.Range(0f, 1f) < _enemyData.SpawnWithWeaponChange)
+            {
+                List<Weapon> weapons = _enemyData.Weapons;
+                int randomWeapon = Random.Range(0, weapons.Count);
+                Weapon weapon = Instantiate(weapons[randomWeapon]);
+                AddWeapon(weapon);
+            }
         }
     }
 

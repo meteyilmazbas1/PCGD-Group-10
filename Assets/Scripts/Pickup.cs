@@ -20,6 +20,7 @@ namespace UrbanNinja
         [SerializeField] private PickupType _pickupType;
         [SerializeField] private Weapon _weapon; //If this is a weapon pickup!
         [SerializeField] private AudioClip _dropSound; //If this is a weapon pickup!
+        private Blinker _blinker;//If this is a weapon pickup!
 
         private Collider2D _collider;
         private bool _isReDrop;
@@ -32,11 +33,27 @@ namespace UrbanNinja
             {
                 _collider.isTrigger = true;
             }
+            _blinker = GetComponent<Blinker>();
         }
+        private void OnBlinkEnd()
+        {
+            Destroy(gameObject);
+        }
+        private SpriteRenderer _spriteRenderer;
         private void OnEnable()
         {
             _collider.enabled = true;
             _taken = false;
+            if(_blinker != null)
+            {
+                if(_spriteRenderer == null)
+                {
+                    _spriteRenderer = GetComponent<SpriteRenderer>();
+                }
+                _blinker.SetBlinkEndCallback(OnBlinkEnd);
+                _blinker.SetSpriteRenderer(_spriteRenderer);
+                _blinker.DelayedBlinkerDeath();
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

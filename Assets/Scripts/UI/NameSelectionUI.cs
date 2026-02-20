@@ -128,7 +128,7 @@ namespace UrbanNinja
 
         void PlayButtonAction()
         {
-            print("Initials Submitted: " + GetInitials());
+            //print("Initials Submitted: " + GetInitials());
             GameManager.StartNewGame(GetInitials());
             SoundManager.Instance.PlayButtonClick();
             SceneNavigationManager.Instance.LoadScene(Scenes.GameScene);

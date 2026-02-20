@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UrbanNinja
@@ -21,6 +23,9 @@ namespace UrbanNinja
         [SerializeField] private int _hitPoints;
         [SerializeField] private int _scoreYield;
         [SerializeField] private AnimationData _animationData;
+        [SerializeField] private List<Weapon> _possibleWeapons;
+        [SerializeField] private float _lootDropChance;
+        [SerializeField] private float _spawnWithWeaponChance;
 
         public float AttackPower => _attackPower;
         public float AttackDistance => _attackDistance;
@@ -31,5 +36,8 @@ namespace UrbanNinja
         public int ScoreYield => _scoreYield;
         public AnimationData AnimationData => _animationData;
         public float RangedAttackDistance => _rangedAttackDistance;
+        public List<Weapon> Weapons => _possibleWeapons;
+        public float LootDropChange => _lootDropChance;
+        public float SpawnWithWeaponChange => _spawnWithWeaponChance;
     }
 }

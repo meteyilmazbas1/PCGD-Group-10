@@ -55,6 +55,10 @@ namespace UrbanNinja
             _dropped = true;
             transform.parent = null;
             _owner = null;
+            if(_pickUpInstance == null)
+            {
+                SetPickUpInstance(Instantiate(_pickupPrefab));
+            }
             _pickUpInstance.gameObject.SetActive(true);
             _pickUpInstance.gameObject.transform.position = transform.position;
             _pickUpInstance.DropEffect();
