@@ -538,7 +538,6 @@ MonoBehaviour:
   _hitClips:
   - {fileID: 8300000, guid: 2ca32b751170d154da8e8a1b521f04f0, type: 3}
   - {fileID: 8300000, guid: 55312e4d43cf2554899a28433406c008, type: 3}
-  - {fileID: 8300000, guid: 9d4ce8e61ccbb7d4188a3f7f999785cf, type: 3}
   _missHit: {fileID: 8300000, guid: 9d71d75bd61dd4f47b0dc98d92e3a4c5, type: 3}
 --- !u!82 &6202823265343969773
 AudioSource:

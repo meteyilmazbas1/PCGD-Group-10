@@ -64,7 +64,8 @@ namespace UrbanNinja
                     health.TakeDamage(_damage);
 
                 }
-                _SFXQueue.Enqueue(PlayRandomDamageSound);
+                SoundManager.Instance.RequestPooledSFX(RandomClip());
+                //_SFXQueue.Enqueue(PlayRandomDamageSound);
                 // Register hit for combo system (only for player attacks)
                 if (ComboManager.Instance != null)
                 {
@@ -87,7 +88,8 @@ namespace UrbanNinja
                 Health health = healthList.Find(x => x.gameObject.layer == 7);
                 if (health == null) return;
                 health.TakeDamage(_damage);
-                _SFXQueue.Enqueue(PlayRandomDamageSound);
+                //_SFXQueue.Enqueue(PlayRandomDamageSound);
+                SoundManager.Instance.RequestPooledSFX(RandomClip());
             }
         }
 
@@ -99,7 +101,8 @@ namespace UrbanNinja
 
         public void PlaySwoosh()
         {
-            _SFXQueue.Enqueue(Swoosh);
+            //_SFXQueue.Enqueue(Swoosh);
+            SoundManager.Instance.RequestPooledSFX(_missHit);
         }
         private void Swoosh()
         {
@@ -121,16 +124,19 @@ namespace UrbanNinja
         private Coroutine _sfxQueueRoutine;
         private void OnEnable()
         {
+            /*
             if (_sfxQueueRoutine != null)
             {
                 StopCoroutine(_sfxQueueRoutine);
             }
             _sfxQueueRoutine=StartCoroutine(SoundEffectQueueRoutine());
+            */
         }
         private void OnDisable()
         {
+            /*
             StopCoroutine(_sfxQueueRoutine);
-            _sfxQueueRoutine = null;
+            _sfxQueueRoutine = null;*/
         }
         public void SetWeapon(Weapon weapon)
         {

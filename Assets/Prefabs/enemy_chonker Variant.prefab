@@ -40,6 +40,14 @@ PrefabInstance:
       propertyPath: _missHit
       value: 
       objectReference: {fileID: 8300000, guid: 9d71d75bd61dd4f47b0dc98d92e3a4c5, type: 3}
+    - target: {fileID: 3799778501580514914, guid: 990c12e97235db24c8693e25e7f43c96, type: 3}
+      propertyPath: _hitClips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799778501580514914, guid: 990c12e97235db24c8693e25e7f43c96, type: 3}
+      propertyPath: '_hitClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 55312e4d43cf2554899a28433406c008, type: 3}
     - target: {fileID: 4271190701940311032, guid: 990c12e97235db24c8693e25e7f43c96, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.334
@@ -185,3 +193,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1294fac3bff66f40875d4fb4e81528a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _delayedDeathTime: 0
