@@ -74,11 +74,13 @@ namespace UrbanNinja
 
         private void MusicToggleAction(bool arg0)
         {
+            //print("Music Toggled");
             SoundManager.Instance.ToggleMusic(arg0);
         }
 
         private void SoundToggleAction(bool arg0)
         {
+            //print("SoundToggled   " + arg0);
             SoundManager.Instance.ToggleSFX(arg0);
         }
 

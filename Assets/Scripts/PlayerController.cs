@@ -13,6 +13,7 @@ namespace UrbanNinja
         [SerializeField] private AudioClip _jumpSound;
         [SerializeField] private AudioClip _hurtSound;
         [SerializeField] private Weapon _weapon;
+        [SerializeField] private AnimationData _animationData;
 
         private GameplayInput _inputActions;
         private Rigidbody2D _rigidbody2D;
@@ -32,6 +33,7 @@ namespace UrbanNinja
         private void Awake()
         {
             GetReferences();
+            _animationHandler.SetAnimationData(_animationData);
             InitInput();
             InitDamageDealers();
             DisableFistAndFoot();
@@ -111,6 +113,7 @@ namespace UrbanNinja
                 if(_weapon != null)
                 {
                     _weapon.Drop();
+                    _fist.ClearWeapon();
                     _weapon = null;
                 }
                 if (HurtSound != null && SoundManager.Instance != null)
@@ -217,6 +220,7 @@ namespace UrbanNinja
         {
             if (!CanJump()) return;
             _animationHandler.Request(AnimationType.Jump);
+            _fist.ShowWeapon(false);
             isGrounded = false;
             _collider.enabled = false;
             _jumpLevel = _rigidbody2D.position.y;
@@ -243,6 +247,7 @@ namespace UrbanNinja
                 isGrounded = true;
                 _rigidbody2D.gravityScale = 0f;
                 _rigidbody2D.position = new Vector2(_rigidbody2D.position.x, _jumpLevel);
+                _fist.ShowWeapon(true);
             }
             if (!isGrounded)
             {
@@ -279,6 +284,7 @@ namespace UrbanNinja
         private void Punch()
         {
             if (_movementBlocked || !isGrounded || _isDead) return;
+            _fist.PlaySwoosh();
             //Debug.Log("PUNCH!");
             _movementBlocked = true;
             _animationHandler.Request(AnimationType.Punch, onAnimationEnd: UnBlockMovement);
@@ -289,6 +295,8 @@ namespace UrbanNinja
         private void Kick()
         {
             if (_movementBlocked || !isGrounded || _isDead) return;
+            _foot.PlaySwoosh();
+            _fist.ShowWeapon(false);
             //Debug.Log("KICK!");
             _movementBlocked = true;
             _animationHandler.Request(AnimationType.Kick, onAnimationEnd: UnBlockMovement);
@@ -311,6 +319,7 @@ namespace UrbanNinja
         private void UnBlockMovement()
         {
             DisableFistAndFoot();
+            _fist.ShowWeapon(true);
             _movementBlocked = false;
         }
         /// <summary>
@@ -363,7 +372,6 @@ namespace UrbanNinja
         private IEnumerator WaitAfterDeath()
         {
             yield return new WaitForSecondsRealtime(2f);
-            Debug.Log("Player death on animation end");
             GameManager.EndRound();
             SceneNavigationManager.Instance.LoadScene(Scenes.Highscore);
         }
@@ -382,6 +390,7 @@ namespace UrbanNinja
         public void TakeWeapon(Weapon weapon)
         {
             AddWeapon(weapon);
+            _fist.SetWeapon(weapon);
         }
         public void TakeHealth(int amount)
         {

@@ -36,6 +36,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.157
       objectReference: {fileID: 0}
+    - target: {fileID: 3799778501580514914, guid: 990c12e97235db24c8693e25e7f43c96, type: 3}
+      propertyPath: _missHit
+      value: 
+      objectReference: {fileID: 8300000, guid: 9d71d75bd61dd4f47b0dc98d92e3a4c5, type: 3}
     - target: {fileID: 4271190701940311032, guid: 990c12e97235db24c8693e25e7f43c96, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.334
@@ -72,6 +76,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: enemy_chonker Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6641311625290621336, guid: 990c12e97235db24c8693e25e7f43c96, type: 3}
+      propertyPath: _missHit
+      value: 
+      objectReference: {fileID: 8300000, guid: 9d71d75bd61dd4f47b0dc98d92e3a4c5, type: 3}
     - target: {fileID: 7248702582900462263, guid: 990c12e97235db24c8693e25e7f43c96, type: 3}
       propertyPath: _enemyData
       value: 

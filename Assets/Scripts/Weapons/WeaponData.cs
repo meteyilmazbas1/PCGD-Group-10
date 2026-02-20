@@ -8,8 +8,10 @@ namespace UrbanNinja
     public class WeaponData : ScriptableObject
     {
         [SerializeField] private int _damage;
+        [SerializeField] private AudioClip _hitSound;
 
         public int Damage => _damage;
+        public AudioClip HitSound => _hitSound;
     }
 
     [CreateAssetMenu(menuName = "Weapons data")]

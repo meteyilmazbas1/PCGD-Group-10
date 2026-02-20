@@ -87,6 +87,7 @@ MonoBehaviour:
   _jumpSound: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
   _hurtSound: {fileID: 8300000, guid: fb7c863df2baed84a98f5c604a40aab0, type: 3}
   _weapon: {fileID: 0}
+  _animationData: {fileID: 11400000, guid: c04c42e88b917ac41abbefbca010486e, type: 2}
 --- !u!61 &4905476915708576259
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -343,6 +344,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 991a00e228f5993478cb335089e8f722, type: 3}
   - {fileID: 8300000, guid: d13252122f4ac2e4b951ed26087419c5, type: 3}
   - {fileID: 8300000, guid: 130038e653716c8468fe2b724a08771c, type: 3}
+  _missHit: {fileID: 8300000, guid: 9d71d75bd61dd4f47b0dc98d92e3a4c5, type: 3}
 --- !u!82 &3541883133682102093
 AudioSource:
   m_ObjectHideFlags: 0
@@ -537,6 +539,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2ca32b751170d154da8e8a1b521f04f0, type: 3}
   - {fileID: 8300000, guid: 55312e4d43cf2554899a28433406c008, type: 3}
   - {fileID: 8300000, guid: 9d4ce8e61ccbb7d4188a3f7f999785cf, type: 3}
+  _missHit: {fileID: 8300000, guid: 9d71d75bd61dd4f47b0dc98d92e3a4c5, type: 3}
 --- !u!82 &6202823265343969773
 AudioSource:
   m_ObjectHideFlags: 0

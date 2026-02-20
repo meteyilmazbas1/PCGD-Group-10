@@ -96,6 +96,7 @@ namespace UrbanNinja
             }
             enemy.gameObject.SetActive(true);
             enemy.transform.position = position;
+            enemy.RandomizeWeaponWield();
         }
         private void Start()
         {
