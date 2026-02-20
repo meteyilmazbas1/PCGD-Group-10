@@ -1,12 +1,9 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-
 namespace UrbanNinja
 {
-    public class UIHelper : MonoBehaviour
+    public class UIHelper : MonoBehaviour, IPointerEnterHandler
     {
         [SerializeField] private AudioClip _selectSound;
         [SerializeField] private AudioClip _submitSound;
@@ -17,35 +14,32 @@ namespace UrbanNinja
         /// </summary>
         public void PlaySelect()
         {
-            AudioSource.PlayClipAtPoint(_selectSound, Camera.main.transform.position);
+            SoundManager.Instance.PlaySelect();
         }
+
         /// <summary>
         /// Bindings from EventTrigger on the game object.
         /// </summary>
         public void PlaySubmit()
         {
-            AudioSource.PlayClipAtPoint(_submitSound, Camera.main.transform.position);
+            SoundManager.Instance.PlaySubmit();
         }
+
         private void OnEnable()
         {
             _frame.gameObject.SetActive(false);
         }
+
         private void LateUpdate()
         {
             var current = EventSystem.current;
             var currentSelected = current.currentSelectedGameObject;
             var firstSelected = current.firstSelectedGameObject;
 
-           // Console.Clear();
-            //Debug.ClearDeveloperConsole();
-
-            //print("currentSelected: " + currentSelected);
-            //print("firstSelected: " + firstSelected);
-    
             _frame.gameObject.SetActive(currentSelected == gameObject);
 
-            if (currentSelected != null &&
-                currentSelected.activeInHierarchy) return;
+            if (currentSelected != null && currentSelected.activeInHierarchy) return;
+
             if (firstSelected == null)
             {
                 current.SetSelectedGameObject(gameObject);
@@ -53,6 +47,16 @@ namespace UrbanNinja
             else
             {
                 current.SetSelectedGameObject(firstSelected);
+            }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            var current = EventSystem.current;
+            var currentSelected = current.currentSelectedGameObject;
+            if (currentSelected != gameObject)
+            {
+                current.SetSelectedGameObject(gameObject);
             }
         }
     }
