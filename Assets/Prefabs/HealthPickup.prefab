@@ -148,11 +148,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e85ebf72f2fbcd4aa6783e5042b5182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healAmount: 3
+  _amount: 3
   _useLayerCheck: 1
   _playerLayer: 7
   _pickupSound: {fileID: 8300000, guid: 7f60701606536b94b9dae6078d3f00a8, type: 3}
   _pickupEffect: {fileID: 0}
+  _pickupType: 0
+  _weapon: {fileID: 0}
+  _dropSound: {fileID: 0}
 --- !u!1001 &4998554648987701706
 PrefabInstance:
   m_ObjectHideFlags: 0

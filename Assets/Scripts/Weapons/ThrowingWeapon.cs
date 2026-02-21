@@ -52,6 +52,7 @@ namespace UrbanNinja
 
         public override void Drop()
         {
+            Debug.Log("DROP "+gameObject.name);
             _dropped = true;
             transform.parent = null;
             _owner = null;

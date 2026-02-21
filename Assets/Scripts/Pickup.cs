@@ -42,7 +42,6 @@ namespace UrbanNinja
         private SpriteRenderer _spriteRenderer;
         private void OnEnable()
         {
-            _collider.enabled = true;
             _taken = false;
             if(_blinker != null)
             {
