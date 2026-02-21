@@ -24,11 +24,46 @@ namespace UrbanNinja
         [Header("Audio Clips")]
         [SerializeField] private AudioClip buttonClickClip;
 
-             [SerializeField] private AudioClip _selectSound;
+        [SerializeField] private AudioClip _selectSound;
         [SerializeField] private AudioClip _submitSound;
 
         private MusicData _musicData;
         private Dictionary<int, AudioClip> _music;
+
+
+        //SFX pool
+        #region SFX pooling
+        [SerializeField] PooledSFX _pooledSFXPrefab;
+        private List<PooledSFX> _pooledSFXs;
+        private GameObject _poolParent;
+        private void InitialiseSFXPool()
+        {
+            _poolParent = new GameObject("SFX pool");
+            DontDestroyOnLoad(_poolParent);
+            _pooledSFXs = new List<PooledSFX>();
+            for (int i= 0; i<20; i++)
+            {
+                PooledSFX sfx = CreateSFXInstance();
+                sfx.gameObject.SetActive(false);
+            }
+        }
+        private PooledSFX CreateSFXInstance()
+        {
+            PooledSFX sfx = Instantiate(_pooledSFXPrefab, _poolParent.transform);
+            _pooledSFXs.Add(sfx);
+            return sfx;
+        }
+        public void RequestPooledSFX(AudioClip clip)
+        {
+            PooledSFX sfx = _pooledSFXs.Find(sfx => !sfx.isActiveAndEnabled);
+            if (sfx == null)
+            {
+                sfx = CreateSFXInstance();
+            }
+            sfx.gameObject.SetActive(true);
+            sfx.Init(clip);
+        }
+        #endregion
 
         public bool IsMusicOn
         {
@@ -54,6 +89,7 @@ namespace UrbanNinja
                 Destroy(gameObject);
                 return;
             }
+            InitialiseSFXPool();
             _musicData = Resources.Load<MusicData>("Data/data_music");
             _music = new Dictionary<int, AudioClip>();
             _music.Add(0, _musicData.MenuMusic);

@@ -180,6 +180,7 @@ MonoBehaviour:
   buttonClickClip: {fileID: 8300000, guid: 0144c937bd82111428da4f0a99e9e271, type: 3}
   _selectSound: {fileID: 8300000, guid: fcf0a7403fc1e9543884b26fdf9b2cee, type: 3}
   _submitSound: {fileID: 8300000, guid: 0144c937bd82111428da4f0a99e9e271, type: 3}
+  _pooledSFXPrefab: {fileID: 2589686422878471158, guid: 0207ac91a63b322499e68382a6426690, type: 3}
 --- !u!1 &5019541386770780967
 GameObject:
   m_ObjectHideFlags: 0
