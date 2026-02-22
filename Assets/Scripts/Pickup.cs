@@ -23,7 +23,7 @@ namespace UrbanNinja
         private Blinker _blinker;//If this is a weapon pickup!
 
         private Collider2D _collider;
-        private bool _isReDrop;
+        //private bool _isReDrop;
         private bool _taken;
         public PickupType Type => _pickupType;
         private void Awake()
@@ -43,6 +43,7 @@ namespace UrbanNinja
         private void OnEnable()
         {
             _taken = false;
+            if (_pickupType == PickupType.Weapon) _collider.enabled = false;
             if(_blinker != null)
             {
                 if(_spriteRenderer == null)
@@ -57,19 +58,31 @@ namespace UrbanNinja
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            HandlePickingUp(collision);
+        }
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            HandlePickingUp(collision);
+        }
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            HandlePickingUp(collision);
+        }
+        private void HandlePickingUp(Collider2D collision)
+        {
             IPickUpTaker pickUpTaker = collision.gameObject.GetComponent<IPickUpTaker>();
             if (pickUpTaker == null) return;
             if (!pickUpTaker.CanTake(this)) return;
             if (_taken) return;
             _taken = true;
             _collider.enabled = false;
-            if(_pickupType == PickupType.Weapon)
+            if (_pickupType == PickupType.Weapon)
             {
                 Weapon weapon = Instantiate(_weapon, transform.position, Quaternion.identity);
                 weapon.SetOwner(collision.gameObject);
                 weapon.SetPickUpInstance(this);
                 pickUpTaker.TakeWeapon(weapon);
-                _isReDrop = true;
+                //_isReDrop = true;
                 PlayPickupSound();
                 gameObject.SetActive(false);
                 return;
@@ -78,7 +91,7 @@ namespace UrbanNinja
             {
                 pickUpTaker.TakeHealth(_amount);
             }
-            else if(_pickupType == PickupType.Score)
+            else if (_pickupType == PickupType.Score)
             {
                 pickUpTaker.TakeScore(_amount);
             }
@@ -87,7 +100,6 @@ namespace UrbanNinja
             SpawnPickupEffect();
             gameObject.SetActive(false);
         }
-
 
         private void PlayPickupSound()
         {
@@ -132,7 +144,7 @@ namespace UrbanNinja
         }
         public void DropEffect()
         {
-            if (!_isReDrop) return;
+            //if (!_isReDrop) return;
             StartCoroutine(DropNBounce());
         }
         /// <summary>
@@ -146,6 +158,7 @@ namespace UrbanNinja
             int bounces = 4;
             Vector2 dir = Vector2.down;
             Vector2 velocity = new Vector2(0, 3f);
+            print("DRop and bounce");
             yield return RandomBounceOff(ground.y);
 
             while (bounces > 0)
@@ -162,6 +175,7 @@ namespace UrbanNinja
                 }
             }
             transform.position = new Vector2(transform.position.x, ground.y);
+            print("Enabling collider");
             _collider.enabled = true;
         }
         /// <summary>
@@ -172,6 +186,7 @@ namespace UrbanNinja
         /// <returns></returns>
         private IEnumerator RandomBounceOff(float groundY)
         {
+            print("Random bounce off");
             _collider.enabled = false;
             float xVelocity = Random.Range(-1f, 1f) < 0 ? -1f: 1f;
             float yVelocity = 3f;

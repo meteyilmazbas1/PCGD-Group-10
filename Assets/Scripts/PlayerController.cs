@@ -122,7 +122,7 @@ namespace UrbanNinja
                 }
                 if (_animationHandler != null)
                 {
-                    _animationHandler.Request(AnimationType.Damage);
+                    _animationHandler.Request(AnimationType.Damage, onAnimationEnd: UnBlockMovement);
                 }
                 
                 // Reset combo when player takes damage
@@ -219,7 +219,7 @@ namespace UrbanNinja
         private void Jump()
         {
             if (!CanJump()) return;
-            _animationHandler.Request(AnimationType.Jump);
+            _animationHandler.Request(AnimationType.Jump, onAnimationEnd: UnBlockMovement);
             _fist.ShowWeapon(false);
             isGrounded = false;
             _collider.enabled = false;
