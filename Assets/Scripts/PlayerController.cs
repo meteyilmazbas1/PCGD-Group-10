@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UrbanNinja.Input;
 
@@ -122,7 +123,7 @@ namespace UrbanNinja
                 }
                 if (_animationHandler != null)
                 {
-                    _animationHandler.Request(AnimationType.Damage, onAnimationEnd: UnBlockMovement);
+                    _animationHandler.Request(AnimationType.Damage);
                 }
                 
                 // Reset combo when player takes damage

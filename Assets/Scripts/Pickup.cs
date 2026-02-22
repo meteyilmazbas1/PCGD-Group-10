@@ -158,7 +158,6 @@ namespace UrbanNinja
             int bounces = 4;
             Vector2 dir = Vector2.down;
             Vector2 velocity = new Vector2(0, 3f);
-            print("DRop and bounce");
             yield return RandomBounceOff(ground.y);
 
             while (bounces > 0)
@@ -175,7 +174,6 @@ namespace UrbanNinja
                 }
             }
             transform.position = new Vector2(transform.position.x, ground.y);
-            print("Enabling collider");
             _collider.enabled = true;
         }
         /// <summary>
@@ -186,7 +184,6 @@ namespace UrbanNinja
         /// <returns></returns>
         private IEnumerator RandomBounceOff(float groundY)
         {
-            print("Random bounce off");
             _collider.enabled = false;
             float xVelocity = Random.Range(-1f, 1f) < 0 ? -1f: 1f;
             float yVelocity = 3f;
