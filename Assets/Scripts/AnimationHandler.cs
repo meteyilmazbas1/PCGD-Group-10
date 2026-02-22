@@ -30,10 +30,18 @@ namespace UrbanNinja
         }
         public void Request(AnimationType type, OnAnimationTrigger onAnimationEnd = null)
         {
+            //_onAnimationEnd?.Invoke();
+ 
             if(onAnimationEnd != null)
             {
                 _onAnimationEnd = onAnimationEnd;
             }
+            
+            /*
+            if(onAnimationEnd != null)
+            {
+                _onAnimationEnd = onAnimationEnd;
+            }*/
             ResolveAnimation(type);
         }
         private void OnDisable()

@@ -325,6 +325,15 @@ namespace UrbanNinja.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Point"",
+                    ""type"": ""Value"",
+                    ""id"": ""bb9b2d9f-d654-4ca9-8523-0e62dd1796a8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -426,6 +435,17 @@ namespace UrbanNinja.Input
                     ""action"": ""ScrollDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da726455-eef5-4238-890f-53c2d4379f11"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -445,6 +465,7 @@ namespace UrbanNinja.Input
             m_UIInputActions_Cancel = m_UIInputActions.FindAction("Cancel", throwIfNotFound: true);
             m_UIInputActions_ScrollUp = m_UIInputActions.FindAction("ScrollUp", throwIfNotFound: true);
             m_UIInputActions_ScrollDown = m_UIInputActions.FindAction("ScrollDown", throwIfNotFound: true);
+            m_UIInputActions_Point = m_UIInputActions.FindAction("Point", throwIfNotFound: true);
         }
 
         ~@GameplayInput()
@@ -660,6 +681,7 @@ namespace UrbanNinja.Input
         private readonly InputAction m_UIInputActions_Cancel;
         private readonly InputAction m_UIInputActions_ScrollUp;
         private readonly InputAction m_UIInputActions_ScrollDown;
+        private readonly InputAction m_UIInputActions_Point;
         /// <summary>
         /// Provides access to input actions defined in input action map "UI Input Actions".
         /// </summary>
@@ -691,6 +713,10 @@ namespace UrbanNinja.Input
             /// Provides access to the underlying input action "UIInputActions/ScrollDown".
             /// </summary>
             public InputAction @ScrollDown => m_Wrapper.m_UIInputActions_ScrollDown;
+            /// <summary>
+            /// Provides access to the underlying input action "UIInputActions/Point".
+            /// </summary>
+            public InputAction @Point => m_Wrapper.m_UIInputActions_Point;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -732,6 +758,9 @@ namespace UrbanNinja.Input
                 @ScrollDown.started += instance.OnScrollDown;
                 @ScrollDown.performed += instance.OnScrollDown;
                 @ScrollDown.canceled += instance.OnScrollDown;
+                @Point.started += instance.OnPoint;
+                @Point.performed += instance.OnPoint;
+                @Point.canceled += instance.OnPoint;
             }
 
             /// <summary>
@@ -758,6 +787,9 @@ namespace UrbanNinja.Input
                 @ScrollDown.started -= instance.OnScrollDown;
                 @ScrollDown.performed -= instance.OnScrollDown;
                 @ScrollDown.canceled -= instance.OnScrollDown;
+                @Point.started -= instance.OnPoint;
+                @Point.performed -= instance.OnPoint;
+                @Point.canceled -= instance.OnPoint;
             }
 
             /// <summary>
@@ -869,6 +901,13 @@ namespace UrbanNinja.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnScrollDown(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Point" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnPoint(InputAction.CallbackContext context);
         }
     }
 }

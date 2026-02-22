@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UrbanNinja.Input;
 
@@ -219,7 +220,7 @@ namespace UrbanNinja
         private void Jump()
         {
             if (!CanJump()) return;
-            _animationHandler.Request(AnimationType.Jump);
+            _animationHandler.Request(AnimationType.Jump, onAnimationEnd: UnBlockMovement);
             _fist.ShowWeapon(false);
             isGrounded = false;
             _collider.enabled = false;

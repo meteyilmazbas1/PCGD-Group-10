@@ -19,7 +19,7 @@ MonoBehaviour:
   _movementSpeedY: 0.1
   _name: Cool chonker
   _hitPoints: 5
-  _scoreYield: 0
+  _scoreYield: 700
   _animationData: {fileID: 11400000, guid: 4daffc1cd6b93db478facf1affb72340, type: 2}
   _possibleWeapons:
   - {fileID: 4141108053794428644, guid: 34898dace2d4480409d01f1e580134fc, type: 3}
