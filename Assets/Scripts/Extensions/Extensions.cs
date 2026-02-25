@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public static class Extensions
 {
-    public static int WordCount(this string str) =>
-        str.Length;
     public static void Shuffle<T>(this List<T> list) 
     {
         Random random = new Random();
