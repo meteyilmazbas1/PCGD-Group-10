@@ -7951,14 +7951,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1581260918160810203, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
-      propertyPath: _maxSpawDelay
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1581260918160810203, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
-      propertyPath: _pooledEnemiesCount
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 4166967451513483448, guid: 3927c40f98a71ab469b06215117ac375, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner

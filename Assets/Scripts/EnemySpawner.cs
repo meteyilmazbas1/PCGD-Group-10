@@ -78,7 +78,7 @@ namespace UrbanNinja
                 //Debug.LogWarning("EnemySpawner: Enemy pool is empty! Cannot spawn enemy.");
                 return;
             }
-
+            _enemyPool.Shuffle();
             EnemyController enemy = _enemyPool.Find(x => !x.gameObject.activeInHierarchy);
             if (enemy == null)
             {
