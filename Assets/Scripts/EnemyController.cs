@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace UrbanNinja
@@ -170,7 +171,7 @@ namespace UrbanNinja
         {
             Vector2 target = new Vector2(transform.position.x + Random.Range(-20,20),Random.Range(-.45f, 1.4f));
             _canAttack = false;
-            while (!_playerController.Alive)
+            while (!_playerController.Alive && _isAlive)
             {
                 Vector2 positionDifference = target - (Vector2)transform.position;
                 _movementDirection = Vector2.zero;
