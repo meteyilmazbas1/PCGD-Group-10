@@ -45,6 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrefabs:
+  - {fileID: 1171686249595854494, guid: b088cd0eef204864fab12830acf7497e, type: 3}
+  - {fileID: 1171686249595854494, guid: b088cd0eef204864fab12830acf7497e, type: 3}
+  - {fileID: 5004512161742840991, guid: c0f110c1335d7944cb0b3b3de3b960d4, type: 3}
+  - {fileID: 5004512161742840991, guid: c0f110c1335d7944cb0b3b3de3b960d4, type: 3}
+  - {fileID: 5004512161742840991, guid: c0f110c1335d7944cb0b3b3de3b960d4, type: 3}
+  - {fileID: 5004512161742840991, guid: c357b9c39ddfc8443bd09bfdea86ff64, type: 3}
+  - {fileID: 5004512161742840991, guid: c357b9c39ddfc8443bd09bfdea86ff64, type: 3}
+  - {fileID: 5004512161742840991, guid: c357b9c39ddfc8443bd09bfdea86ff64, type: 3}
   - {fileID: 5004512161742840991, guid: c357b9c39ddfc8443bd09bfdea86ff64, type: 3}
   _pooledEnemiesCount: 50
   _maxSpawDelay: 3

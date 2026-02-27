@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 812fab8470975b44b88cfadf91ec23e6, type: 3}
+  m_Name: weapon_ninja_star
+  m_EditorClassIdentifier: 
+  _damage: 8
+  _hitSound: {fileID: 8300000, guid: f8f778d9ec1bd894486d46ffd8de2af8, type: 3}

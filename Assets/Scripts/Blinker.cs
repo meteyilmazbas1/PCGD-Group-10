@@ -5,6 +5,8 @@ public class Blinker : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
     private Coroutine _blinkRoutine;
+    public delegate void OnBlinkEnd();
+    private event OnBlinkEnd OnBlinkEndCallback;
     private void OnEnable()
     {
         if (_blinkRoutine != null)
@@ -17,6 +19,10 @@ public class Blinker : MonoBehaviour
             _spriteRenderer.color = Color.white;
         }
 
+    }
+    public void SetBlinkEndCallback(OnBlinkEnd callback)
+    {
+        OnBlinkEndCallback = callback;
     }
     public void SetSpriteRenderer(SpriteRenderer spriteRenderer)
     {
@@ -60,5 +66,19 @@ public class Blinker : MonoBehaviour
             
             _spriteRenderer.color = i%2==0? color1: color2;
         }
+        color2.a = 0f;
+        _spriteRenderer.color = color2;
+        OnBlinkEndCallback?.Invoke();
+    }
+    [SerializeField] private float _delayedDeathTime;
+    private Coroutine _delayedDeath;
+    public void DelayedBlinkerDeath()
+    {
+        _delayedDeath = StartCoroutine(DelayedBlinkerDeathRoutine());
+    }
+    public IEnumerator DelayedBlinkerDeathRoutine()
+    {
+        yield return new WaitForSecondsRealtime(_delayedDeathTime);
+        yield return BlinkerDeathCoroutine();
     }
 }

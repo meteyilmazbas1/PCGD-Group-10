@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace UrbanNinja
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class EnemyController : MonoBehaviour
+    public class EnemyController : MonoBehaviour, IPickUpTaker
     {
         [SerializeField] private EnemyData _enemyData;
         [SerializeField] private DamageDealer _fist;   // ADDED
@@ -29,12 +31,17 @@ namespace UrbanNinja
         private Rigidbody2D _rb;
         private SpriteRenderer _spriteRenderer;
         private Blinker _blinker;
+        private Weapon _weapon;
+        private Collider2D _collider;
+        private bool _isAlive = true;
+        private Coroutine _wanderRoutine;
         private void Awake()
         {
             _tier = new EnemyTier();
             _fist.SetOwner(gameObject);
             _foot.SetOwner(gameObject);
             GetReferences();
+            _animationHandler.SetAnimationData(_enemyData.AnimationData);
             Randomize();
             //DisableFistAndFoot();  // ADDED
             SetStats();
@@ -51,11 +58,16 @@ namespace UrbanNinja
         }
         private void OnEnable()
         {
+            _weapon = null;
+
+
             UnStun();
             if(_enemyHealth == null)
             {
                 GetReferences();
             }
+            _isAlive = true;
+            _collider.enabled = true;
             _enemyHealth.OnDeathEvent += OnDeath;
             _enemyHealth.OnHealthChangedEvent += OnHealthChaged;
             //DisableFistAndFoot();
@@ -70,6 +82,10 @@ namespace UrbanNinja
             {
                 _enemyHealth.OnDeathEvent -= OnDeath;
                 _enemyHealth.OnHealthChangedEvent -= OnHealthChaged;
+            }
+            if(_weapon != null)
+            {
+                Destroy(_weapon);
             }
         }
         private void Randomize()
@@ -89,12 +105,18 @@ namespace UrbanNinja
             _blinker.SetSpriteRenderer(_spriteRenderer);
 
             _rb.gravityScale = 0f;
+            _collider = GetComponent<Collider2D>();
         }
         private bool _stunned = false;
         private void OnHealthChaged(int value, bool isDamage = false)
         {
             _stunned = true;
             //DisableFistAndFoot();
+            if(_weapon != null)
+            {
+                _weapon.Drop();
+                _weapon = null;
+            }
             if (_enemyHealth.CurrentHealth <= 0) return;
             _blinker.BlinkDamage();
             _animationHandler.Request(AnimationType.Damage, onAnimationEnd: UnStun);
@@ -106,20 +128,72 @@ namespace UrbanNinja
         }
         void FixedUpdate()
         {
+            if (!_isAlive) return;
             if (_stunned) return;
-            
+
+
             // Re-acquire player reference if lost
             if (_playerController == null)
             {
                 _playerController = GameManager.GetPlayerController();
                 if (_playerController == null) return;
             }
-            
-            MoveToPlayer();
+
+            if (_playerController.Alive)
+            {
+                MoveToPlayer();
+            }
+            else if (_wanderRoutine == null)
+            {
+                _wanderRoutine = StartCoroutine(Wander());
+            }
+
             FlipTransform();
+            ReduceCooldown();
             Attack();
+            RangedAttack();
+            if (_weapon != null)
+            {
+                _weapon.SetSortOrder(_spriteRenderer.sortingOrder - 1);
+            }
         }
-        
+
+        private void ReduceCooldown()
+        {
+            _attackCooldown -= Time.fixedDeltaTime;
+        }
+
+        /// <summary>
+        /// This routine makes the enemy wander around aimlessly.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator Wander()
+        {
+            Vector2 target = new Vector2(transform.position.x + Random.Range(-20,20),Random.Range(-.45f, 1.4f));
+            _canAttack = false;
+            while (!_playerController.Alive && _isAlive)
+            {
+                Vector2 positionDifference = target - (Vector2)transform.position;
+                _movementDirection = Vector2.zero;
+                if (Mathf.Abs(positionDifference.x) > .1f)
+                {
+                    _movementDirection = (target - (Vector2)transform.position).normalized; ;
+                }
+                if (_movementDirection != Vector2.zero)
+                {
+                    _animationHandler.Request(AnimationType.Walk);
+                }
+                else
+                {
+                    _animationHandler.Request(AnimationType.Idle);
+                    yield return new WaitForSecondsRealtime(2f);
+                    target =  new Vector2(transform.position.x+ Random.Range(-20, 20), Random.Range(-0.45f, 1.4f));
+
+                }
+                transform.Translate(_movementDirection.normalized * _XmovementSpeed * _movementRandomizer * Time.fixedDeltaTime);
+                yield return new WaitForFixedUpdate();
+            }
+        }
         private void MoveToPlayer()
         {
             if (!_playerController.Alive)
@@ -153,7 +227,8 @@ namespace UrbanNinja
             {
                 _animationHandler.Request(AnimationType.Idle);
             }
-            transform.Translate(_movementDirection.normalized * _XmovementSpeed * _movementRandomizer * Time.deltaTime);
+            transform.Translate(_movementDirection.normalized * _XmovementSpeed * _movementRandomizer
+                * Time.fixedDeltaTime);
         }
         
         private void FlipTransform()
@@ -169,18 +244,30 @@ namespace UrbanNinja
                 transform.localScale = _movementDirection.x > 0 ? _right : _left;
             }
         }
-        
+        private void RangedAttack()
+        {
+            if (!_playerController.Alive) return;
+            if(_weapon == null) return;
+            if (_attackCooldown > 0) return;
+            if((transform.position - _playerController.transform.position).magnitude <
+                _enemyData.RangedAttackDistance)
+            {
+                _fist.PlaySwoosh();
+                _animationHandler.Request(AnimationType.Punch);
+                _attackCooldown = _baseCooldown;
+            } 
+        }
         private void Attack()
         {
             if (!_canAttack) return;
             if (_attackCooldown > 0)
             {
-                _attackCooldown -= Time.deltaTime;
                 return;
             }
             _attackCooldown = _baseCooldown;
             int select = Random.Range(0,2);
             AnimationType attack = select == 1 ? AnimationType.Punch : AnimationType.Kick;
+            _fist.PlaySwoosh();
             _animationHandler.Request(attack);  // CHANGED
             //Debug.Log($"Enemy {_enemyData.Name} attacking player");
         }
@@ -204,6 +291,11 @@ namespace UrbanNinja
         public void ActivateFist()
         {
             _fist.Activate();
+            if (_weapon != null)
+            {
+                _weapon.Attack(new Vector2(transform.localScale.x, 0));
+                _weapon = null;
+            }
             /*
             if (_fist != null && !_fist.gameObject.activeSelf)
             {
@@ -224,7 +316,10 @@ namespace UrbanNinja
         }
         private void OnDeath()
         {
-            if(Random.Range(0,1f)<0.99f) RandomLootService.RequestLoot(transform.position);
+            if (!_isAlive) return;
+            _isAlive = false;
+            _collider.enabled = false;
+            if(Random.Range(0,1f) < _enemyData.LootDropChange) RandomLootService.RequestLoot(transform.position);
             GameManager.AddScore(_enemyData.ScoreYield * _tier.TierLevel);
             StartCoroutine(KnockBack());
         }
@@ -260,6 +355,55 @@ namespace UrbanNinja
             }
             yield return new WaitForSecondsRealtime(2f);
             gameObject.SetActive(false);
+        }
+
+        public void Take()
+        {
+            throw new System.NotImplementedException();
+        }
+        public void AddWeapon(Weapon weapon)
+        {
+            _weapon = weapon;
+            weapon.transform.position = _fist.transform.position;
+            weapon.transform.localScale = transform.localScale;
+            weapon.SetOwner(gameObject);
+            weapon.transform.SetParent(_fist.transform);
+        }
+
+        public bool CanTake(Pickup pickup)
+        {
+            if (pickup.Type == Pickup.PickupType.Weapon && _weapon == null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void TakeWeapon(Weapon weapon)
+        {
+            AddWeapon(weapon);
+        }
+
+        public void TakeHealth(int amount)
+        {
+            //NOT applicaple on enemies
+            throw new System.NotImplementedException();
+        }
+
+        public void TakeScore(int amount)
+        {
+            //NOT applicaple on enemies
+            throw new System.NotImplementedException();
+        }
+        public void RandomizeWeaponWield()
+        {
+            if (Random.Range(0f, 1f) < _enemyData.SpawnWithWeaponChange)
+            {
+                List<Weapon> weapons = _enemyData.Weapons;
+                int randomWeapon = Random.Range(0, weapons.Count);
+                Weapon weapon = Instantiate(weapons[randomWeapon]);
+                AddWeapon(weapon);
+            }
         }
     }
 

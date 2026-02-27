@@ -1,5 +1,4 @@
 
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -23,30 +22,45 @@ namespace UrbanNinja
 
         void Awake()
         {
-            backButton.onClick.AddListener(() =>
-            {
-                gameObject.SetActive(false);
-                SoundManager.Instance.PlayButtonClick();
-            });
+            backButton.onClick.AddListener(BackButtonAction);
 
             musicToggle.onValueChanged.AddListener(MusicToggleAction);
             soundToggle.onValueChanged.AddListener(SoundToggleAction);
 
             controlsButton.onClick.AddListener(ControlButtonAction);
+            controlsBackButton.onClick.AddListener(ControlsPanelBackButtonAction);
 
             CheckValues();
 
-            controlsBackButton.onClick.AddListener(() =>
-            {
-                controlsPanel.SetActive(false);
-                SoundManager.Instance.PlayButtonClick();
-            });
             controlsPanel.SetActive(false);
         }
 
         void OnEnable()
         {
             CheckValues();
+        }
+
+        void Start()
+        {
+             SoundManager.Instance.OnMusicToggle += SoundManager_OnMusicToggle;
+            SoundManager.Instance.OnSFXToggle += SoundManager_OnSFXToggle;
+        }
+
+        private void SoundManager_OnMusicToggle(object sender, SoundManager.OnMusicToggleEventArgs e)
+        {
+            //musicToggle.isOn = e.IsMusicOn;
+        }
+
+        private void SoundManager_OnSFXToggle(object sender, SoundManager.OnSFXToggleEventArgs e)
+        {
+            //soundToggle.isOn = e.IsSFXOn;
+        }
+
+
+        void OnDestroy()
+        {
+            SoundManager.Instance.OnMusicToggle -= SoundManager_OnMusicToggle;
+            SoundManager.Instance.OnSFXToggle -= SoundManager_OnSFXToggle;
         }
 
         void CheckValues()
@@ -60,23 +74,35 @@ namespace UrbanNinja
 
         private void MusicToggleAction(bool arg0)
         {
-            print("Music Toggled");
+            //print("Music Toggled");
             SoundManager.Instance.ToggleMusic(arg0);
-            //GlobalEvents.SendMusicToggle(arg0);
         }
 
         private void SoundToggleAction(bool arg0)
         {
-            print("SoundToggled   " + arg0);
+            //print("SoundToggled   " + arg0);
             SoundManager.Instance.ToggleSFX(arg0);
-            //GlobalEvents.SendSFXToggle(arg0);
         }
 
         private void ControlButtonAction()
         {
+            EventSystem.current.SetSelectedGameObject(controlsBackButton.gameObject);
             controlsPanel.SetActive(true);
             SoundManager.Instance.PlayButtonClick();
         }
-    }
 
+        private void ControlsPanelBackButtonAction()
+        {
+            EventSystem.current.SetSelectedGameObject(controlsButton.gameObject);
+            controlsPanel.SetActive(false);
+            SoundManager.Instance.PlayButtonClick();
+        }
+
+        private void BackButtonAction()
+        {
+            gameObject.SetActive(false);
+            SoundManager.Instance.PlayButtonClick();
+        }
+
+    }
 }

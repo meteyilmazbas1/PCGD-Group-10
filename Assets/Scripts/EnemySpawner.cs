@@ -16,7 +16,8 @@ namespace UrbanNinja
         private List<EnemyController> _enemyPool;
         private int _spawnedCount;
         private EnemyTier _tier;
-
+        public delegate void EnemySpawn(Vector3 position);
+        public static event EnemySpawn OnEnemySpawn;
         
         public void InitializeEnemyPool()
         {
@@ -77,7 +78,7 @@ namespace UrbanNinja
                 //Debug.LogWarning("EnemySpawner: Enemy pool is empty! Cannot spawn enemy.");
                 return;
             }
-
+            _enemyPool.Shuffle();
             EnemyController enemy = _enemyPool.Find(x => !x.gameObject.activeInHierarchy);
             if (enemy == null)
             {
@@ -96,6 +97,8 @@ namespace UrbanNinja
             }
             enemy.gameObject.SetActive(true);
             enemy.transform.position = position;
+            enemy.RandomizeWeaponWield();
+            OnEnemySpawn?.Invoke(position);
         }
         private void Start()
         {
