@@ -285,6 +285,7 @@ namespace UrbanNinja
         private void Punch()
         {
             if (_movementBlocked || !isGrounded || _isDead) return;
+            if (_fist == null || _animationHandler == null) return;
             _fist.PlaySwoosh();
             //Debug.Log("PUNCH!");
             _movementBlocked = true;
@@ -296,6 +297,7 @@ namespace UrbanNinja
         private void Kick()
         {
             if (_movementBlocked || !isGrounded || _isDead) return;
+            if (_foot == null || _fist == null || _animationHandler == null) return;
             _foot.PlaySwoosh();
             _fist.ShowWeapon(false);
             //Debug.Log("KICK!");
@@ -341,6 +343,7 @@ namespace UrbanNinja
         public void ActivateFist()
         {
             //Debug.Log("Fist ACTIVE");
+            if (_fist == null) return;
             _fist.Activate();
             if (_weapon != null)
             {
@@ -356,6 +359,7 @@ namespace UrbanNinja
         public void ActivateFoot()
         {
             //Debug.Log("FOOT ACTIVE");
+            if (_foot == null) return;
             _foot.Activate();
         }
         private bool _isDead = false;
