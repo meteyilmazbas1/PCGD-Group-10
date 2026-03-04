@@ -171,6 +171,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5508640414558518471, guid: 552fdffe5fde91546aecb0f06b5f732e, type: 3}
+      propertyPath: Priority
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 5508640414558518471, guid: 552fdffe5fde91546aecb0f06b5f732e, type: 3}
+      propertyPath: m_Volume
+      value: 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5508640414558518471, guid: 552fdffe5fde91546aecb0f06b5f732e, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: fc5af015011ea3745b7f78ea1dd1049f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
